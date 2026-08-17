@@ -201,9 +201,23 @@
             line-height: 2.1;
             color: #f1f5f9;
             margin-bottom: 35px;
-            white-space: pre-line;
             min-height: 240px;
             font-weight: 300;
+        }
+
+        /* Paragraph Hover Styling */
+        .story-p {
+            padding: 6px 12px;
+            margin: 4px 0;
+            border-radius: 6px;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .story-p:hover {
+            background: rgba(212, 175, 55, 0.12);
+            color: #ffffff;
+            box-shadow: inset 3px 0 0 #d4af37;
         }
 
         .choices-grid {
@@ -310,6 +324,17 @@ function playSFX(type) {
         noise.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
         noise.start(now);
 
+    } else if (type === 'phone') {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.setValueAtTime(1000, now + 0.1);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.linearRampToValueAtTime(0, now + 0.25);
+        osc.start(now); osc.stop(now + 0.25);
+
     } else if (type === 'gunshot') {
         triggerScreenShake();
         const bufferSize = audioCtx.sampleRate * 0.6;
@@ -347,7 +372,7 @@ function playSFX(type) {
         osc.type = 'sine';
         osc.frequency.setValueAtTime(75, now);
         osc.frequency.exponentialRampToValueAtTime(35, now + 0.18);
-        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.setValueAtTime(0.35, now);
         gain.gain.linearRampToValueAtTime(0, now + 0.18);
         osc.start(now); osc.stop(now + 0.18);
 
@@ -373,7 +398,49 @@ function triggerScreenShake() {
     card.classList.add('shake');
 }
 
-// Snow System
+// Hover Text-To-Speech & Auto Sound Detection
+let currentUtterance = null;
+
+function speakAndTriggerSound(text) {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel(); // หยุดเสียงอ่านเก่าถ้ามี
+        
+        // ตรวจจับคำสำคัญในข้อความเพื่อเล่น SFX ที่ตรงกัน
+        if (text.includes("ปืน") || text.includes("กระสุน") || text.includes("ยิง") || text.includes("ปัง")) {
+            playSFX('gunshot');
+        } else if (text.includes("โทรศัพท์") || text.includes("ข้อความ") || text.includes("สั่น") || text.includes("ไซเรน")) {
+            playSFX('phone');
+        } else if (text.includes("หัวใจ") || text.includes("กอด") || text.includes("ลมหายใจ") || text.includes("ตื่นเต้น")) {
+            playSFX('heartbeat');
+        } else if (text.includes("ระเบิด") || text.includes("เปลวไฟ")) {
+            playSFX('explosion');
+        } else if (text.includes("ลม") || text.includes("หิมะ") || text.includes("คลื่น")) {
+            playSFX('wind');
+        } else if (text.includes("นาฬิกา") || text.includes("เอกสาร") || text.includes("ข้อความ")) {
+            playSFX('paper');
+        }
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'th-TH';
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+
+        // ดึงเสียงภาษาไทยถ้ามี
+        const voices = window.speechSynthesis.getVoices();
+        const thVoice = voices.find(v => v.lang.includes('th'));
+        if (thVoice) utterance.voice = thVoice;
+
+        window.speechSynthesis.speak(utterance);
+    }
+}
+
+function stopSpeech() {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+    }
+}
+
+// Snow Canvas
 const canvas = document.getElementById('snow-canvas');
 const ctx = canvas.getContext('2d');
 let width = canvas.width = window.innerWidth;
@@ -565,6 +632,7 @@ function startGame() {
 }
 
 function renderScene(sceneKey, isGoingBack = false) {
+    stopSpeech();
     const scene = STORY_DATA[sceneKey];
     if (!scene) return;
 
@@ -596,7 +664,22 @@ function renderScene(sceneKey, isGoingBack = false) {
 
     const totalEvidence = Math.min(100, scene.evidence || 0);
     document.getElementById("evidence-text").innerText = `ระดับความจริง: ${totalEvidence}%`;
-    document.getElementById("story-display").innerText = scene.text;
+    
+    // แบ่งเนื้อเรื่องออกเป็นย่อหน้า และใส่ Event ชี้เมาส์ (Hover)
+    const storyContainer = document.getElementById("story-display");
+    storyContainer.innerHTML = "";
+    
+    const paragraphs = scene.text.split("\n\n");
+    paragraphs.forEach(paraText => {
+        if (paraText.trim()) {
+            const p = document.createElement("p");
+            p.className = "story-p";
+            p.innerText = paraText;
+            p.onmouseenter = () => speakAndTriggerSound(paraText);
+            p.onmouseleave = () => stopSpeech();
+            storyContainer.appendChild(p);
+        }
+    });
 
     const choicesContainer = document.getElementById("choices-display");
     choicesContainer.innerHTML = "";
@@ -606,6 +689,8 @@ function renderScene(sceneKey, isGoingBack = false) {
             const btn = document.createElement("button");
             btn.className = "btn-choice";
             btn.innerText = choice.text;
+            btn.onmouseenter = () => speakAndTriggerSound(choice.text);
+            btn.onmouseleave = () => stopSpeech();
             btn.onclick = () => renderScene(choice.next, false);
             choicesContainer.appendChild(btn);
         });
@@ -616,6 +701,7 @@ function renderScene(sceneKey, isGoingBack = false) {
         restartBtn.innerText = "🔄 เริ่มต้นย้อนเวลาสืบสวนใหม่";
         restartBtn.onclick = () => {
             playSFX('click');
+            stopSpeech();
             historyStack = [];
             document.getElementById("game-screen").style.display = "none";
             document.getElementById("start-screen").style.display = "block";
@@ -628,6 +714,7 @@ function renderScene(sceneKey, isGoingBack = false) {
 function goBack() {
     if (historyStack.length > 1) {
         playSFX('click');
+        stopSpeech();
         historyStack.pop();
         const previousScene = historyStack[historyStack.length - 1];
         renderScene(previousScene, true);
