@@ -175,18 +175,6 @@
             color: #fff;
             padding-left: 28px;
         }
-
-        .sound-toggle {
-            position: absolute;
-            top: 20px; right: 25px;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px;
-            color: #aaa;
-            padding: 5px 14px;
-            cursor: pointer;
-            font-size: 13px;
-        }
     </style>
 </head>
 <body>
@@ -194,12 +182,7 @@
 <div class="bg-overlay"></div>
 <canvas id="snow-canvas"></canvas>
 
-<!-- เพลงประกอบ BGM สืบสวนดราม่าผ่าน CDN Direct Link -->
-<audio id="bgm" loop preload="auto" src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=sad-soul-114407.mp3"></audio>
-
 <div class="game-card">
-    <button class="sound-toggle" onclick="toggleSound()" id="sound-btn">🎵 BGM: เปิด</button>
-
     <div id="start-screen">
         <div class="season-badge">🍂 AUTUMN TO WINTER ❄️</div>
         <div class="title">🕵️‍♂️ สายลมที่ไร้ตัวตน</div>
@@ -260,21 +243,6 @@ function moveSnow() {
     }
 }
 setInterval(drawSnow, 33);
-
-// Audio System
-const bgm = document.getElementById('bgm');
-let soundEnabled = true;
-
-function toggleSound() {
-    soundEnabled = !soundEnabled;
-    if (soundEnabled) {
-        bgm.play().catch(e => console.log("Audio play blocked", e));
-        document.getElementById('sound-btn').innerText = "🎵 BGM: เปิด";
-    } else {
-        bgm.pause();
-        document.getElementById('sound-btn').innerText = "🔇 BGM: ปิด";
-    }
-}
     const STORY_DATA = {
     "start": {
         "text": "ปลายฤดูใบไม้ร่วง... เกล็ดหิมะแรกของปีเริ่มโปรยปรายรดใบไม้สีส้มบนพื้นดิน\nคุณ 'นักสืบเรย์' กำลังชันสูตรศพมหาเศรษฐีในคฤหาสน์ตระกูลดัง\nแต่สิ่งที่คุณพบในมือผู้เสียชีวิตกลับเป็น 'นาฬิกาพกสลักชื่อ' ของ 'ธันน์'...\nอดีตคนรักและคู่หูของคุณที่ทิ้งคุณไปพร้อมคำโกหกเมื่อ 3 ปีก่อน",
@@ -369,9 +337,6 @@ function toggleSound() {
 let historyStack = [];
 
 function startGame() {
-    if (soundEnabled) {
-        bgm.play().catch(() => console.log("Click to play audio"));
-    }
     document.getElementById("start-screen").style.display = "none";
     document.getElementById("game-screen").style.display = "block";
     historyStack = [];
@@ -386,7 +351,6 @@ function renderScene(sceneKey, isGoingBack = false) {
         historyStack.push(sceneKey);
     }
 
-    // Toggle Back Button Visibility
     document.getElementById("back-btn").style.display = historyStack.length > 1 ? "inline-block" : "none";
 
     const totalEvidence = Math.min(100, scene.evidence || 0);
@@ -419,7 +383,7 @@ function renderScene(sceneKey, isGoingBack = false) {
 
 function goBack() {
     if (historyStack.length > 1) {
-        historyStack.pop(); // Remove current scene
+        historyStack.pop();
         const previousScene = historyStack[historyStack.length - 1];
         renderScene(previousScene, true);
     }
