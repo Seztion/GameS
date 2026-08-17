@@ -25,12 +25,11 @@
             position: relative;
         }
 
-        /* Background Image พร้อมหิมะตก */
         .bg-overlay {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(5, 7, 10, 0.75), rgba(15, 20, 30, 0.9)),
+            background: linear-gradient(to bottom, rgba(5, 7, 10, 0.78), rgba(15, 20, 30, 0.92)),
                         url('https://images.unsplash.com/photo-1517299321609-52687d1bc55a?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
             z-index: 1;
         }
@@ -44,7 +43,7 @@
         }
 
         .game-card {
-            background: rgba(12, 16, 26, 0.88);
+            background: rgba(12, 16, 26, 0.9);
             border: 1px solid rgba(212, 175, 55, 0.35);
             box-shadow: 0 0 35px rgba(0, 0, 0, 0.9), 0 0 15px rgba(212, 175, 55, 0.1);
             border-radius: 16px;
@@ -113,6 +112,7 @@
         .status-bar {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             padding-bottom: 14px;
             margin-bottom: 22px;
@@ -123,6 +123,23 @@
         .evidence-tag {
             color: #d4af37;
             font-weight: 600;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+            padding: 4px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .btn-back:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+            color: #fff;
         }
 
         .story-box {
@@ -162,11 +179,11 @@
         .sound-toggle {
             position: absolute;
             top: 20px; right: 25px;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.5);
             border: 1px solid rgba(255,255,255,0.2);
             border-radius: 20px;
             color: #aaa;
-            padding: 5px 12px;
+            padding: 5px 14px;
             cursor: pointer;
             font-size: 13px;
         }
@@ -177,13 +194,12 @@
 <div class="bg-overlay"></div>
 <canvas id="snow-canvas"></canvas>
 
-<!-- เสียง BGM คลาสสิกสืบสวนโทนเศร้าจากเว็บบอร์ดเปิด -->
-<audio id="bgm" loop src="https://assets.mixkit.co/music/preview/mixkit-sad-violin-01-664.mp3"></audio>
+<!-- เพลงประกอบ BGM สืบสวนดราม่าผ่าน CDN Direct Link -->
+<audio id="bgm" loop preload="auto" src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=sad-soul-114407.mp3"></audio>
 
 <div class="game-card">
     <button class="sound-toggle" onclick="toggleSound()" id="sound-btn">🎵 BGM: เปิด</button>
 
-    <!-- หน้าเริ่มเกมอลังการ -->
     <div id="start-screen">
         <div class="season-badge">🍂 AUTUMN TO WINTER ❄️</div>
         <div class="title">🕵️‍♂️ สายลมที่ไร้ตัวตน</div>
@@ -191,11 +207,11 @@
         <button class="btn-main" onclick="startGame()">เริ่มการสืบสวน</button>
     </div>
 
-    <!-- หน้าเล่นเกม -->
     <div id="game-screen">
         <div class="status-bar">
             <span>🍁 คดี: เงาร่างในหิมะแรก</span>
             <span class="evidence-tag" id="evidence-text">ระดับความจริง: 0%</span>
+            <button class="btn-back" id="back-btn" onclick="goBack()">↩️ ย้อนกลับ</button>
         </div>
         <div class="story-box" id="story-display"></div>
         <div class="choices-grid" id="choices-display"></div>
@@ -203,7 +219,7 @@
 </div>
 
 <script>
-// ระบบ Snow Animation
+// Snow Animation
 const canvas = document.getElementById('snow-canvas');
 const ctx = canvas.getContext('2d');
 let width = canvas.width = window.innerWidth;
@@ -245,14 +261,14 @@ function moveSnow() {
 }
 setInterval(drawSnow, 33);
 
-// ระบบเสียง
+// Audio System
 const bgm = document.getElementById('bgm');
 let soundEnabled = true;
 
 function toggleSound() {
     soundEnabled = !soundEnabled;
     if (soundEnabled) {
-        bgm.play();
+        bgm.play().catch(e => console.log("Audio play blocked", e));
         document.getElementById('sound-btn').innerText = "🎵 BGM: เปิด";
     } else {
         bgm.pause();
@@ -328,8 +344,6 @@ function toggleSound() {
             {"text": "1. ดูผลลัพธ์สุดท้าย...", "next": "end_sad_sacrifice"}
         ]
     },
-
-    // SAD ENDINGS
     "end_sad_sacrifice": {
         "text": "💔 [SAD ENDING: ลมหายใจสุดท้ายในคืนหิมะแรก]\nธันน์กระซิบข้างหูคุณด้วยรอยยิ้มก่อนสิ้นใจ: 'โชคดีนะ... ยอดนักสืบของฉัน'\nคุณไขคดีสำเร็จ กลายเป็นนักสืบชื่อดัง แต่หัวใจของคุณได้ถูกแช่แข็งและตายไปพร้อมกับเขาในคืนหิมะตกนั้นตลอดกาล...",
         "evidence": 100,
@@ -352,16 +366,28 @@ function toggleSound() {
     }
 };
 
+let historyStack = [];
+
 function startGame() {
-    if (soundEnabled) bgm.play();
+    if (soundEnabled) {
+        bgm.play().catch(() => console.log("Click to play audio"));
+    }
     document.getElementById("start-screen").style.display = "none";
     document.getElementById("game-screen").style.display = "block";
-    renderScene("start");
+    historyStack = [];
+    renderScene("start", false);
 }
 
-function renderScene(sceneKey) {
+function renderScene(sceneKey, isGoingBack = false) {
     const scene = STORY_DATA[sceneKey];
     if (!scene) return;
+
+    if (!isGoingBack && (historyStack.length === 0 || historyStack[historyStack.length - 1] !== sceneKey)) {
+        historyStack.push(sceneKey);
+    }
+
+    // Toggle Back Button Visibility
+    document.getElementById("back-btn").style.display = historyStack.length > 1 ? "inline-block" : "none";
 
     const totalEvidence = Math.min(100, scene.evidence || 0);
     document.getElementById("evidence-text").innerText = `ระดับความจริง: ${totalEvidence}%`;
@@ -375,7 +401,7 @@ function renderScene(sceneKey) {
             const btn = document.createElement("button");
             btn.className = "btn-choice";
             btn.innerText = choice.text;
-            btn.onclick = () => renderScene(choice.next);
+            btn.onclick = () => renderScene(choice.next, false);
             choicesContainer.appendChild(btn);
         });
     } else {
@@ -384,9 +410,18 @@ function renderScene(sceneKey) {
         restartBtn.style.marginTop = "20px";
         restartBtn.innerText = "🔄 เริ่มต้นย้อนเวลาสืบสวนใหม่";
         restartBtn.onclick = () => {
-            renderScene("start");
+            historyStack = [];
+            renderScene("start", false);
         };
         choicesContainer.appendChild(restartBtn);
+    }
+}
+
+function goBack() {
+    if (historyStack.length > 1) {
+        historyStack.pop(); // Remove current scene
+        const previousScene = historyStack[historyStack.length - 1];
+        renderScene(previousScene, true);
     }
 }
 </script>
