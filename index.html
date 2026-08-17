@@ -3,194 +3,297 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เกมสืบสวนคดีปริศนา (LIVE)</title>
+    <title>สายลมที่ไร้ตัวตน (Detective BL Interactive)</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+
         body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #090a0f;
+            color: #e0e0e0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
             padding: 20px;
-            box-sizing: border-box;
+            overflow: hidden;
         }
-        .game-container {
-            background-color: rgba(30, 30, 30, 0.95);
-            border: 2px solid #ffcc00;
+
+        /* Container หลัก */
+        .game-card {
+            background: rgba(18, 20, 29, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(212, 175, 55, 0.05);
             border-radius: 12px;
-            padding: 30px;
-            max-width: 700px;
             width: 100%;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.8);
+            max-width: 750px;
+            padding: 35px;
+            position: relative;
+            backdrop-filter: blur(10px);
         }
-        .header {
-            color: #ffcc00;
-            font-size: 24px;
-            font-weight: bold;
-            border-bottom: 2px solid #444;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
+
+        /* หน้า Start Screen */
+        #start-screen {
+            text-align: center;
+            padding: 40px 20px;
         }
-        .stats {
-            color: #00ffcc;
+
+        .title {
+            font-size: 32px;
+            color: #d4af37;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #8a8d9b;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .btn-main {
+            background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%);
+            color: #000;
+            border: none;
+            padding: 14px 40px;
             font-size: 18px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-main:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+        }
+
+        /* หน้า gameplay */
+        #game-screen {
+            display: none;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 12px;
             margin-bottom: 20px;
+            font-size: 14px;
+            color: #aaa;
         }
-        .story-text {
-            font-size: 20px;
-            line-height: 1.6;
-            margin-bottom: 25px;
+
+        .evidence-tag {
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        .story-box {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #ececec;
+            margin-bottom: 30px;
             white-space: pre-line;
+            min-height: 140px;
         }
-        .choices-container {
+
+        .choices-grid {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
+
         .btn-choice {
-            background-color: #2a2a2a;
-            color: #fff;
-            border: 1px solid #ffcc00;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: #d0d0d0;
             padding: 14px 20px;
-            font-size: 18px;
+            font-size: 16px;
             border-radius: 8px;
             cursor: pointer;
             text-align: left;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
         }
+
         .btn-choice:hover {
-            background-color: #ffcc00;
-            color: #000;
-            font-weight: bold;
+            background: rgba(212, 175, 55, 0.15);
+            border-color: #d4af37;
+            color: #fff;
+            padding-left: 25px;
         }
-        .restart-btn {
-            margin-top: 20px;
-            background-color: #ff4444;
-            color: white;
+
+        /* Sound Control Button */
+        .sound-toggle {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
             border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 6px;
+            color: #666;
             cursor: pointer;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-<div class="game-container">
-    <div class="header">🔍 รายการสืบสวนคดีปริศนา (LIVE)</div>
-    <div class="stats" id="evidence-text">📊 ระดับความคลี่คลายคดี: 0%</div>
-    <div class="story-text" id="story-display">กำลังโหลดเนื้อเรื่อง...</div>
-    <div class="choices-container" id="choices-display"></div>
+<div class="game-card">
+    <button class="sound-toggle" onclick="toggleMute()" id="mute-btn">🔊 เสียง: เปิด</button>
+
+    <!-- หน้าเริ่มเกม -->
+    <div id="start-screen">
+        <div class="title">🕵️‍♂️ สายลมที่ไร้ตัวตน</div>
+        <div class="subtitle">"เมื่อเบาะแสเดียวของคดีฆาตกรรม... คือคนรักที่คุณคิดว่าตายไปแล้วเมื่อ 3 ปีก่อน"</div>
+        <button class="btn-main" onclick="startGame()">เริ่มการสืบสวน</button>
+    </div>
+
+    <!-- หน้าเล่นเกม -->
+    <div id="game-screen">
+        <div class="status-bar">
+            <span>คดี: ความลับในเงามืด</span>
+            <span class="evidence-tag" id="evidence-text">ระดับความจริง: 0%</span>
+        </div>
+        <div class="story-box" id="story-display"></div>
+        <div class="choices-grid" id="choices-display"></div>
+    </div>
 </div>
 
 <script>
+// Web Audio API สำหรับสร้างเสียงเอฟเฟกต์โดยไม่ต้องพึ่งไฟล์ภายนอก
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let isMuted = false;
+
+function playSound(type) {
+    if (isMuted) return;
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    if (type === 'click') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.08);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.08);
+    } else if (type === 'start') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.3);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.3);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.3);
+    }
+}
+
+function toggleMute() {
+    isMuted = !isMuted;
+    document.getElementById('mute-btn').innerText = isMuted ? "🔇 เสียง: ปิด" : "🔊 เสียง: เปิด";
+}
+
+// ฐานข้อมูลเนื้อเรื่อง (BL สืบสวนดราม่า-จบเศร้า)
 const STORY_DATA = {
     "start": {
-        "text": "[คดี: คฤหาสน์เสียงสะอื้น]\nคืนฝนตก... มหาเศรษฐีถูกพบเป็นศพในห้องทำงานที่ล็อคจากข้างใน\nเบาะแสแรกที่คุณเลือกตรวจในที่เกิดเหตุคืออะไร?",
-        "evidence_gain": 0,
+        "text": "คืนฝนตก... คุณ 'นักสืบเรย์' กำลังชันสูตรศพนักการเมืองคนดัง\nแต่สิ่งที่คุณพบในมือผู้เสียชีวิตกลับเป็น 'นาฬิกาพกสลักชื่อ' ของ 'ธันน์'...\nอดีตคนรักและคู่หูนักสืบของคุณที่ทิ้งคุณไปพร้อมคำโกหกเมื่อ 3 ปีก่อน",
+        "evidence": 10,
         "choices": [
-            {"text": "1. แก้วกาแฟที่ยังมีควันฉุยบนโต๊ะ", "next": "scene_coffee"},
-            {"text": "2. รอยโคลนตรงหน้าต่างที่เปิดแย้มไว้", "next": "scene_window"},
-            {"text": "3. รอยแผลประหลาดที่หลังคอผู้เสียชีวิต", "next": "scene_wound"}
+            {"text": "1. สืบหาร่องรอยของธันน์จากลายนิ้วมือบนนาฬิกา", "next": "fingerprint"},
+            {"text": "2. แกะรอยตำแหน่งสุดท้ายจากพิกัด GPS ในนาฬิกาพก", "next": "gps"}
         ]
     },
-    "scene_coffee": {
-        "text": "[เบาะแส: แก้วกาแฟ]\nพบกลิ่นอัลมอนด์จางๆ (พิษไซยาไนด์!)\nทันใดนั้น แม่บ้านเดินเข้ามาในห้องด้วยท่าทีลุกลี้ลุกลน...",
-        "evidence_gain": 20,
+    "fingerprint": {
+        "text": "[เบาะแส: ลายนิ้วมือ]\nผลตรวจลายนิ้วมือตรงกับธันน์จริงๆ! แต่กลับมีบันทึกว่าธันน์กลายเป็น 'สายลับสองหน้า' ให้องค์กรมาเฟีย\nคุณได้รับข้อความปริศนาส่งเข้ามือถือ: 'อย่าตามหาฉันเลยเรย์... ยิ่งนายใกล้ความจริง นายยิ่งอันตราย'",
+        "evidence": 20,
         "choices": [
-            {"text": "1. กดดันเค้นสอบแม่บ้านทันที", "next": "scene_interrogate_maid"},
-            {"text": "2. แกล้งทำเป็นไม่สงสัย แล้วขอไปตรวจห้องครัว", "next": "scene_kitchen"}
+            {"text": "1. นัดเจอนัดพบตามพิกัดแนบท้ายข้อความคนเดียว", "next": "meet_alone"},
+            {"text": "2. แจ้งตำรวจหน่วยพิเศษเพื่อล้อมจับธันน์", "next": "call_police"}
         ]
     },
-    "scene_window": {
-        "text": "[เบาะแส: รอยโคลน]\nรอยเท้าประทับเป็นขนาดเล็กเกินกว่าจะเป็นของผู้ชาย\nและมีเศษผ้าราคาแพงเกี่ยวติดอยู่กับกรอบหน้าต่าง...",
-        "evidence_gain": 15,
+    "gps": {
+        "text": "[เบาะแส: พิกัด GPS]\nพิกัดนำคุณไปสู่โกดังร้างชายฝั่ง... ที่นั่นคุณพบธันน์ยืนรออยู่กลางสายฝน\nใบหน้าของเขาซีดเซียวและมีรอยแผลเป็นใหญ่ เรย์... สายตาของเขาที่มองคุณยังคงเต็มไปด้วยความอาลัยอาวรณ์เหมือนเดิม",
+        "evidence": 30,
         "choices": [
-            {"text": "1. ตามรอยเท้าออกไปค้นในสวนหลังบ้าน", "next": "scene_garden"},
-            {"text": "2. นำเศษผ้าไปสอบถามคุณนายผู้เป็นภรรยา", "next": "scene_wife"}
+            {"text": "1. วิ่งเข้าไปกอดเขาแล้วถามความจริงทั้งหมด", "next": "hug_him"},
+            {"text": "2. ชักปืนขึ้นเล็ง 'ตอบมาว่าทำไมตอนนั้นถึงทิ้งฉันไป!'", "next": "aim_gun"}
         ]
     },
-    "scene_wound": {
-        "text": "[เบาะแส: รอยแผล]\nรอยแผลเหมือนถูกเข็มฉีดยาขนาดเล็กแทงอย่างแม่นยำ\nสันนิษฐานได้ว่าผู้ลงมือต้องมีความรู้ทางการแพทย์!",
-        "evidence_gain": 25,
+    "meet_alone": {
+        "text": "[สถานการณ์: การนัดพบลับๆ]\nธันน์ ปรากฏตัวจากเงามืด เขาโอบกอดคุณจากด้านหลังเบาๆ กลิ่นน้ำหอมเดิมที่คุ้นเคยทำให้หัวใจคุณสั่นคลอน\n'ฉันไม่ได้ฆ่าเขา เรย์... ฉันแฝงตัวมาเพื่อปกป้องนายจากองค์กรนี้ต่างหาก'",
+        "evidence": 30,
         "choices": [
-            {"text": "1. เรียกตัว 'หมอประจำตัว' เข้ามาสอบสวน", "next": "scene_doctor"},
-            {"text": "2. ค้นหีบยาและเอกสารในตู้หนังสือ", "next": "scene_safe"}
+            {"text": "1. เลือกที่จะเชื่อใจเขา แล้วหนีไปด้วยกันคืนนี้", "next": "escape_together"},
+            {"text": "2. ขอหลักฐานพิสูจน์ความบริสุทธิ์ของเขาก่อน", "next": "ask_proof"}
         ]
     },
-    "scene_interrogate_maid": {
-        "text": "[สถานการณ์: เค้นสอบแม่บ้าน]\nแม่บ้านตกใจกลัวจนร้องไห้โฮ และหลุดปากว่า 'คุณนายสั่งให้ฉันชงกาแฟแก้วนี้!'",
-        "evidence_gain": 25,
+    "call_police": {
+        "text": "[สถานการณ์: ตำรวจเข้าล้อม]\nกำลังตำรวจบุกเข้าพื้นที่! ธันน์มองหน้าคุณด้วยสายตาแตกสลาย เขาไม่ได้ยิงตอบโต้\n'เรย์... นายไม่เคยเชื่อใจฉันเลยเหรอ?' เขาถูกยิงเข้าที่อกต่อหน้าต่อตาคุณ!",
+        "evidence": 40,
         "choices": [
-            {"text": "1. ไปจับกุมคุณนายทันที", "next": "end_arrest_wife_early"},
-            {"text": "2. ตรวจสอบบัญชีธนาคารของแม่บ้านก่อน", "next": "scene_bank"}
+            {"text": "1. วิ่งเข้าไปรับร่างของเขาที่กำลังหมดลมหายใจ", "next": "end_tragic_shot"}
         ]
     },
-    "scene_kitchen": {
-        "text": "[สถานการณ์: ห้องครัว]\nคุณพบขวดยาพิษซ่อนอยู่ในถังขยะ และมีลายนิ้วมือสืบไปถึงคุณนาย!",
-        "evidence_gain": 45,
+    "hug_him": {
+        "text": "ธันน์กอดตอบคุณแน่นจนสัมผัสได้ถึงหัวใจที่เต้นระรัว\n'ตลอด 3 ปีที่ผ่านมา... ไม่เคยมีวันไหนที่ฉันไม่รักนายเลยนะเรย์'\nแต่แล้ว... เสียงปืนจากซุ่มยิง (Sniper) ขององค์กรก็ดังขึ้นทะลุหน้าอกของธันน์!",
+        "evidence": 40,
         "choices": [
-            {"text": "1. รวบรวมหลักฐานเปิดโปงคุณนายต่อหน้าทุกคน", "next": "end_true"}
+            {"text": "1. ประคองร่างของเขาเอาไว้...", "next": "end_sad_sacrifice"}
         ]
     },
-    "scene_garden": {
-        "text": "[สถานการณ์: สวนหลังบ้าน]\nฝนตกหนักกลบรอยเท้า แต่คุณพบถุงมือเปื้อนเลือดถูกทิ้งไว้ในพุ่มไม้",
-        "evidence_gain": 30,
+    "aim_gun": {
+        "text": "ธันน์ยิ้มเศร้าๆ แล้วค่อยๆ เดินเข้ามาเอาอกชนกับปากกระบอกปืนของคุณ\n'ถ้านายคิดว่าฉันเป็นคนร้าย... ยิงฉันเลยเรย์ มือคู่นี้ของฉัน ยินดีตายด้วยน้ำมือของนาย'",
+        "evidence": 30,
         "choices": [
-            {"text": "1. นำถุงมือไปให้หมอประจำตัวพิสูจน์", "next": "scene_doctor"}
+            {"text": "1. ลั่นไกด้วยความสับสนและโทสะ", "next": "end_regret_kill"},
+            {"text": "2. ลดปืนลงแล้วโผเข้าหาเขา", "next": "hug_him"}
         ]
     },
-    "scene_wife": {
-        "text": "[สถานการณ์: ห้องรับแขก]\nคุณนายปฏิเสธรอยผ้า แต่แสดงอาการลนลานเมื่อเห็นคุณพูดถึงเรื่องมรดก",
-        "evidence_gain": 20,
+    "ask_proof": {
+        "text": "ธันน์ยิ้มบางๆ แล้วส่งแฟ้มเอกสาร秘密ให้คุณ ในนั้นคือหลักฐานเปิดโปงองค์กรชั่วร้ายทั้งหมด\n'เท่านี้... นายก็จะเป็นฮีโร่ที่ไขคดีนี้ได้สำเร็จแล้วนะ เรย์' สิ้นคำพูด เสียงระเบิดก็ดังขึ้นท่วมโกดัง!",
+        "evidence: 50,
         "choices": [
-            {"text": "1. สั่งเปิดตู้เซฟของผู้เสียชีวิต", "next": "scene_safe"}
+            {"text": "1. ดูผลลัพธ์สุดท้าย...", "next": "end_bittersweet"}
         ]
     },
-    "scene_doctor": {
-        "text": "[สถานการณ์: สอบหมอประจำตัว]\nหมอปฏิเสธทุกข้อกล่าวหา แต่แอบซ่อนสลิงฉีดยาไว้ในกระเป๋าเสื้อ",
-        "evidence_gain": 30,
+    "escape_together": {
+        "text": "ขณะกำลังหลบหนี มือมาเฟียเล็งยิงมาทางคุณ ธันน์เอาตัวเข้าเอาชีวิตบังกระสุนแทนคุณจนล้มลง...",
+        "evidence": 50,
         "choices": [
-            {"text": "1. จับกุมหมอประจำตัวทันที", "next": "end_arrest_doctor"},
-            {"text": "2. ค้นกระเป๋าหมอเพื่อดูตัวยา", "next": "end_true"}
+            {"text": "1. ดูผลลัพธ์สุดท้าย...", "next": "end_sad_sacrifice"}
         ]
     },
-    "scene_safe": {
-        "text": "[สถานการณ์: ตู้เซฟ]\nคุณพบพินัยกรรมฉบับใหม่ที่ระบุยกมรดกทั้งหมดให้ 'มูลนิธิ' ไม่ใช่คนในครอบครัว!",
-        "evidence_gain": 30,
-        "choices": [
-            {"text": "1. เรียกทุกคนมารวมตัวเพื่อชี้ตัวคนร้ายตัวจริง", "next": "end_true"}
-        ]
-    },
-    "scene_bank": {
-        "text": "[สถานการณ์: บัญชีธนาคาร]\nพบเงินโอนลึกลับเข้าบัญชีแม่บ้านจาก 'หมอประจำตัว'!",
-        "evidence_gain": 40,
-        "choices": [
-            {"text": "1. จับกุมหมอและแม่บ้านที่เป็นผู้ร่วมขบวนการ", "next": "end_mastermind"}
-        ]
-    },
-    "end_true": {
-        "text": "🏆 [TRUE ENDING: ไขคดีสมบูรณ์แบบ]\nคุณชี้ตัวคนร้ายพร้อมหลักฐานมัดตัวแน่นหนา! คนดูในแชทปรบมือแซ่ซ้อง คุณคือยอดนักสืบระดับโลก!",
-        "evidence_gain": 0,
+
+    // BAD / SAD ENDINGS
+    "end_sad_sacrifice": {
+        "text": "💔 [SAD ENDING: ลมหายใจสุดท้ายเพื่อเธอ]\nธันน์กระซิบข้างหูคุณด้วยรอยยิ้มก่อนสิ้นลม: 'โชคดีนะ... ยอดนักสืบของฉัน'\nคุณไขคดีสำเร็จและกลายเป็นนักสืบชื่อดัง แต่หัวใจของคุณได้ตายไปพร้อมกับเขาในคืนฝนตกนั้นตลอดกาล...",
+        "evidence": 100,
         "choices": []
     },
-    "end_mastermind": {
-        "text": "🌟 [SPECIAL ENDING: แฉบงการซ้อนแผน]\nคุณพบว่าหมอและแม่บ้านร่วมมือกันเพื่อฆ่าเอาเงินประกัน! จับกุมยกแก๊งสำเร็จ!",
-        "evidence_gain": 0,
+    "end_tragic_shot": {
+        "text": "🥀 [BAD ENDING: ตราบาปที่ลบไม่ออก]\nธันน์สิ้นใจในอ้อมกอดคุณ พร้อมความจริงที่พบล่าสุดว่าเขาคือสายลับที่ยอมแลกชีวิตเพื่อปกป้องคุณ\nคุณเป็นคนพาเขาไปสู่จุดจบ... ภาพสายตาแตกสลายของเขาจะหลอกหลอนคุณไปตลอดชีวิต",
+        "evidence": 100,
         "choices": []
     },
-    "end_arrest_wife_early": {
-        "text": "❌ [BAD ENDING: จับผิดคน]\nคุณรีบร้อนจับคุณนาย แต่หลักฐานไม่พอ คุณนายถูกปล่อยตัวและทนายฟ้องคุณกลับ! (GAME OVER)",
-        "evidence_gain": 0,
+    "end_regret_kill": {
+        "text": "😭 [TRAGIC ENDING: กระสุนแห่งความเสียใจ]\nกระสุนเจาะเข้าหัวใจของธันน์... ก่อนล้มลงเขายิ้มและยัดแฟ้มความจริงใส่มือคุณ\nเขายอมตายเพื่อให้คุณได้ผลงานคดีนี้ คุณได้กลายเป็นฮีโร่บนคราบน้ำตาและความรู้สึกผิดที่ไม่มีวันให้อภัยตัวเองได้",
+        "evidence": 100,
         "choices": []
     },
-    "end_arrest_doctor": {
-        "text": "⚠️ [NORMAL ENDING: จับได้แค่ตัวเบ้ง]\nหมอถูกจับ แต่นักสืบรู้สึกว่ายังมีผู้บงการคนอื่นที่ยังลอยนวลอยู่...",
-        "evidence_gain": 0,
+    "end_bittersweet": {
+        "text": "🌧️ [BITTERSWEET ENDING: เหลือเพียงความทรงจำ]\nคุณรอดชีวิตและเปิดโปงองค์กรสำเร็จตามความตั้งใจของธันน์ แต่ร่างของเขาหายสาบสูญไปกับกองเพลิง\nทุกครั้งที่ฝนตก คุณยังคงนั่งมองนาฬิกาพกเรือนนั้น... เฝ้ารอวันที่สายลมจะพาเขากลับมาอีกครั้ง",
+        "evidence": 100,
         "choices": []
     }
 };
@@ -198,38 +301,48 @@ const STORY_DATA = {
 let currentScene = "start";
 let totalEvidence = 0;
 
+function startGame() {
+    playSound('start');
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("game-screen").style.display = "block";
+    renderScene("start");
+}
+
 function renderScene(sceneKey) {
     const scene = STORY_DATA[sceneKey];
     if (!scene) return;
 
-    totalEvidence = Math.min(100, totalEvidence + scene.evidence_gain);
-    document.getElementById("evidence-text").innerText = `📊 ระดับความคลี่คลายคดี: ${totalEvidence}%`;
+    totalEvidence = Math.min(100, totalEvidence + (scene.evidence || 0));
+    document.getElementById("evidence-text").innerText = `ระดับความจริง: ${totalEvidence}%`;
     document.getElementById("story-display").innerText = scene.text;
 
     const choicesContainer = document.getElementById("choices-display");
     choicesContainer.innerHTML = "";
 
-    if (scene.choices.length > 0) {
+    if (scene.choices && scene.choices.length > 0) {
         scene.choices.forEach(choice => {
             const btn = document.createElement("button");
             btn.className = "btn-choice";
             btn.innerText = choice.text;
-            btn.onclick = () => renderScene(choice.next);
+            btn.onclick = () => {
+                playSound('click');
+                renderScene(choice.next);
+            };
             choicesContainer.appendChild(btn);
         });
     } else {
         const restartBtn = document.createElement("button");
-        restartBtn.className = "restart-btn";
-        restartBtn.innerText = "🔄 เริ่มเกมใหม่";
+        restartBtn.className = "btn-main";
+        restartBtn.style.marginTop = "20px";
+        restartBtn.innerText = "🔄 เริ่มต้นย้อนเวลาสืบสวนใหม่";
         restartBtn.onclick = () => {
+            playSound('start');
             totalEvidence = 0;
             renderScene("start");
         };
         choicesContainer.appendChild(restartBtn);
     }
 }
-
-renderScene("start");
 </script>
 
 </body>
