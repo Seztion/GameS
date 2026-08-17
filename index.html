@@ -14,8 +14,8 @@
         }
 
         body {
-            background: #030508;
-            color: #e2e8f0;
+            background: #020509;
+            color: #d0e1fd;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -41,9 +41,10 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(3, 5, 8, 0.88), rgba(12, 17, 28, 0.96)),
+            background: linear-gradient(to bottom, rgba(2, 6, 12, 0.92), rgba(10, 18, 30, 0.98)),
                         url('https://images.unsplash.com/photo-1517299321609-52687d1bc55a?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
             z-index: 1;
+            filter: grayscale(40%) contrast(110%);
         }
 
         #snow-canvas {
@@ -54,38 +55,57 @@
             pointer-events: none;
         }
 
+        /* Base Card Styling with Snow Cap */
         .game-card {
-            background: rgba(8, 12, 20, 0.94);
-            border: 1px solid rgba(212, 175, 55, 0.35);
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 20px rgba(212, 175, 55, 0.12);
+            background: rgba(10, 16, 26, 0.92);
+            border: 1px solid rgba(180, 215, 255, 0.25);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 25px rgba(135, 180, 235, 0.1);
             border-radius: 20px;
             width: 100%;
-            max-width: 880px;
+            max-width: 800px;
             padding: 45px;
             position: relative;
             z-index: 3;
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
             transition: all 0.5s ease;
+        }
+
+        /* Snow Frosting Effect (หิมะเกาะขอบบน) */
+        .snow-cap {
+            position: relative;
+        }
+        .snow-cap::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: 10px;
+            right: 10px;
+            height: 6px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(220, 240, 255, 0.7) 60%, transparent 100%);
+            border-radius: 10px 10px 4px 4px;
+            filter: drop-shadow(0 2px 4px rgba(200, 230, 255, 0.5));
+            pointer-events: none;
+            z-index: 10;
         }
 
         /* Ending Card Themes */
         .game-card.end-sad {
-            border-color: rgba(147, 197, 253, 0.6);
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(147, 197, 253, 0.25);
+            border-color: rgba(147, 197, 253, 0.5);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(147, 197, 253, 0.2);
         }
         .game-card.end-bad {
-            border-color: rgba(239, 68, 68, 0.6);
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(239, 68, 68, 0.25);
+            border-color: rgba(239, 68, 68, 0.5);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(239, 68, 68, 0.2);
         }
         .game-card.end-bitter {
-            border-color: rgba(251, 191, 36, 0.6);
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(251, 191, 36, 0.25);
+            border-color: rgba(251, 191, 36, 0.5);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(251, 191, 36, 0.2);
         }
 
         /* Start Screen Styling */
         #start-screen {
             text-align: center;
-            padding: 30px 15px;
+            padding: 20px 10px;
             position: relative;
         }
 
@@ -93,69 +113,71 @@
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 250px; height: 250px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(0,0,0,0) 70%);
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(160, 210, 255, 0.08) 0%, rgba(0,0,0,0) 70%);
             z-index: -1;
-            animation: pulseGlow 4s infinite alternate;
+            animation: pulseGlow 5s infinite alternate;
         }
 
         @keyframes pulseGlow {
-            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
-            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.4; }
+            100% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.8; }
         }
 
         .season-badge {
             display: inline-block;
-            background: rgba(212, 175, 55, 0.1);
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            color: #d4af37;
-            padding: 6px 22px;
+            background: rgba(180, 215, 255, 0.06);
+            border: 1px solid rgba(180, 215, 255, 0.25);
+            color: #b0d4ff;
+            padding: 6px 20px;
             border-radius: 20px;
             font-size: 13px;
-            letter-spacing: 3px;
-            margin-bottom: 22px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
             font-family: 'Prompt', sans-serif;
             text-transform: uppercase;
         }
 
         .title {
             font-family: 'Prompt', sans-serif;
-            font-size: 44px;
-            color: #f8fafc;
-            letter-spacing: 3px;
-            margin-bottom: 12px;
-            text-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+            font-size: 42px;
+            color: #e2f1ff;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(180, 215, 255, 0.35);
             font-weight: 600;
         }
 
         .subtitle {
             font-size: 16px;
             color: #94a3b8;
-            margin-bottom: 45px;
-            font-style: italic;
-            line-height: 1.9;
+            margin: 0 auto 35px auto;
+            max-width: 620px;
+            line-height: 1.8;
             font-weight: 300;
+            text-align: center;
         }
 
         .btn-main {
             font-family: 'Prompt', sans-serif;
-            background: linear-gradient(135deg, #d4af37 0%, #997409 100%);
-            color: #030508;
-            border: none;
-            padding: 18px 55px;
-            font-size: 18px;
-            font-weight: 600;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);
+            color: #f0f8ff;
+            border: 1px solid rgba(191, 219, 254, 0.4);
+            padding: 16px 50px;
+            font-size: 17px;
+            font-weight: 500;
             border-radius: 40px;
             cursor: pointer;
-            box-shadow: 0 4px 25px rgba(212, 175, 55, 0.35);
-            transition: all 0.35s ease;
+            box-shadow: 0 4px 20px rgba(30, 58, 138, 0.5);
+            transition: all 0.3s ease;
             letter-spacing: 1px;
         }
 
         .btn-main:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6);
-            background: linear-gradient(135deg, #f3ca52 0%, #b88e0e 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+            background: linear-gradient(135deg, #60a5fa 0%, #1d4ed8 100%);
+            color: #ffffff;
         }
 
         /* Game Screen Styling */
@@ -165,24 +187,24 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(180, 215, 255, 0.12);
             padding-bottom: 18px;
-            margin-bottom: 28px;
+            margin-bottom: 25px;
             font-size: 14px;
-            color: #94a3b8;
+            color: #64748b;
         }
 
         .evidence-tag {
-            color: #d4af37;
-            font-weight: 600;
+            color: #93c5fd;
+            font-weight: 500;
             font-family: 'Prompt', sans-serif;
             letter-spacing: 0.5px;
         }
 
         .btn-back {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(180, 215, 255, 0.2);
+            color: #94a3b8;
             padding: 6px 16px;
             border-radius: 8px;
             cursor: pointer;
@@ -191,76 +213,65 @@
         }
 
         .btn-back:hover {
-            background: rgba(212, 175, 55, 0.2);
-            border-color: #d4af37;
-            color: #fff;
+            background: rgba(147, 197, 253, 0.15);
+            border-color: #93c5fd;
+            color: #e2e8f0;
         }
 
         .story-box {
-            font-size: 17.5px;
-            line-height: 2.1;
-            color: #f1f5f9;
-            margin-bottom: 35px;
-            min-height: 240px;
+            font-size: 17px;
+            line-height: 1.9;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+            min-height: 220px;
             font-weight: 300;
         }
 
-        /* Paragraph Hover Styling */
         .story-p {
-            padding: 6px 12px;
-            margin: 4px 0;
-            border-radius: 6px;
-            transition: all 0.25s ease;
-            cursor: pointer;
-        }
-
-        .story-p:hover {
-            background: rgba(212, 175, 55, 0.12);
-            color: #ffffff;
-            box-shadow: inset 3px 0 0 #d4af37;
+            margin: 0 0 16px 0;
+            text-align: justify;
         }
 
         .choices-grid {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
         }
 
         .btn-choice {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(212, 175, 55, 0.22);
-            color: #cbd5e1;
-            padding: 17px 26px;
-            font-size: 15.5px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(180, 215, 255, 0.18);
+            color: #94a3b8;
+            padding: 16px 22px;
+            font-size: 15px;
             border-radius: 12px;
             cursor: pointer;
             text-align: left;
-            transition: all 0.3s ease;
-            line-height: 1.6;
+            transition: all 0.25s ease;
+            line-height: 1.5;
         }
 
         .btn-choice:hover {
-            background: rgba(212, 175, 55, 0.16);
-            border-color: #d4af37;
-            color: #ffffff;
-            padding-left: 34px;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+            background: rgba(30, 41, 59, 0.8);
+            border-color: #93c5fd;
+            color: #f1f5f9;
+            padding-left: 28px;
         }
 
         /* Ending Banner Decoration */
         .ending-badge {
             display: inline-block;
             font-family: 'Prompt', sans-serif;
-            font-size: 20px;
-            font-weight: 600;
+            font-size: 17px;
+            font-weight: 500;
             padding: 8px 20px;
             border-radius: 8px;
             margin-bottom: 20px;
             letter-spacing: 1px;
         }
-        .badge-sad { background: rgba(147, 197, 253, 0.15); color: #93c5fd; border: 1px solid #93c5fd; }
-        .badge-bad { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid #f87171; }
-        .badge-bitter { background: rgba(251, 191, 36, 0.15); color: #fbbf24; border: 1px solid #fbbf24; }
+        .badge-sad { background: rgba(147, 197, 253, 0.12); color: #bfdbfe; border: 1px solid rgba(147, 197, 253, 0.4); }
+        .badge-bad { background: rgba(239, 68, 68, 0.12); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .badge-bitter { background: rgba(251, 191, 36, 0.12); color: #fde68a; border: 1px solid rgba(251, 191, 36, 0.4); }
     </style>
 </head>
 <body>
@@ -268,20 +279,24 @@
 <div class="bg-overlay"></div>
 <canvas id="snow-canvas"></canvas>
 
-<div class="game-card" id="main-card">
+<div class="game-card snow-cap" id="main-card">
     <div id="start-screen">
         <div class="decor-glow"></div>
-        <div class="season-badge">🍂 AUTUMN TO WINTER ❄️</div>
+        <div class="season-badge snow-cap">❄️ FROSTED MEMORIES ❄️</div>
         <div class="title">SnowMemories</div>
-        <div class="subtitle">"ความทรงจำในสายลมหนาว: ท่ามกลางใบไม้สีเหลืองหม่นที่ลอยปลิว และเกล็ดหิมะแรกอันเยียบเย็น...<br>เงาร่างของชายคนเดียวที่คุณรักสุดหัวใจ จะนำพาไปสู่ความจริงอันแสนอบอุ่น หรือโศกนาฏกรรมที่ไม่ติดอยู่ในความทรงจำอีกเลย"</div>
-        <button class="btn-main" onclick="startGame()">เริ่มการสืบสวน</button>
+        <div class="subtitle">
+            ท่ามกลางเกล็ดหิมะแรกที่ร่วงหล่นและความลับที่ถูกซ่อนไว้<br>
+            เบาะแสเดียวที่คุณมี จะพาไปสู่ความจริงอันแสนอบอุ่น<br>
+            หรือโศกนาฏกรรมที่ไม่ติดอยู่ในความทรงจำอีกเลย
+        </div>
+        <button class="btn-main snow-cap" onclick="startGame()">เริ่มการสืบสวน</button>
     </div>
 
     <div id="game-screen">
         <div class="status-bar">
-            <span id="case-title">🍁 SnowMemories: ความทรงจำในสายลมหนาว</span>
+            <span id="case-title">❄️ SnowMemories: ความทรงจำในสายลมหนาว</span>
             <span class="evidence-tag" id="evidence-text">ระดับความจริง: 0%</span>
-            <button class="btn-back" id="back-btn" onclick="goBack()">↩️ ย้อนกลับ</button>
+            <button class="btn-back snow-cap" id="back-btn" onclick="goBack()">↩️ ย้อนกลับ</button>
         </div>
         <div id="ending-badge-container"></div>
         <div class="story-box" id="story-display"></div>
@@ -302,9 +317,9 @@ function playSFX(type) {
         const gain = audioCtx.createGain();
         osc.connect(gain); gain.connect(audioCtx.destination);
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(480, now);
-        osc.frequency.exponentialRampToValueAtTime(200, now + 0.08);
-        gain.gain.setValueAtTime(0.08, now);
+        osc.frequency.setValueAtTime(420, now);
+        osc.frequency.exponentialRampToValueAtTime(180, now + 0.08);
+        gain.gain.setValueAtTime(0.06, now);
         gain.gain.linearRampToValueAtTime(0, now + 0.08);
         osc.start(now); osc.stop(now + 0.08);
 
@@ -319,25 +334,14 @@ function playSFX(type) {
         filter.type = 'bandpass';
         filter.frequency.setValueAtTime(1200, now);
         const gain = audioCtx.createGain();
-        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.setValueAtTime(0.06, now);
         gain.gain.linearRampToValueAtTime(0, now + 0.12);
         noise.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
         noise.start(now);
 
-    } else if (type === 'phone') {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain); gain.connect(audioCtx.destination);
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(800, now);
-        osc.frequency.setValueAtTime(1000, now + 0.1);
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.linearRampToValueAtTime(0, now + 0.25);
-        osc.start(now); osc.stop(now + 0.25);
-
     } else if (type === 'gunshot') {
         triggerScreenShake();
-        const bufferSize = audioCtx.sampleRate * 0.6;
+        const bufferSize = audioCtx.sampleRate * 0.5;
         const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
         const data = buffer.getChannelData(0);
         for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
@@ -345,11 +349,11 @@ function playSFX(type) {
         noise.buffer = buffer;
         const filter = audioCtx.createBiquadFilter();
         filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(3000, now);
-        filter.frequency.exponentialRampToValueAtTime(100, now + 0.5);
+        filter.frequency.setValueAtTime(2800, now);
+        filter.frequency.exponentialRampToValueAtTime(100, now + 0.45);
         const gain = audioCtx.createGain();
-        gain.gain.setValueAtTime(0.5, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.55);
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
         noise.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
         noise.start(now);
 
@@ -359,20 +363,20 @@ function playSFX(type) {
         const gain = audioCtx.createGain();
         osc.connect(gain); gain.connect(audioCtx.destination);
         osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(120, now);
-        osc.frequency.exponentialRampToValueAtTime(20, now + 0.8);
-        gain.gain.setValueAtTime(0.4, now);
-        gain.gain.linearRampToValueAtTime(0, now + 0.8);
-        osc.start(now); osc.stop(now + 0.8);
+        osc.frequency.setValueAtTime(100, now);
+        osc.frequency.exponentialRampToValueAtTime(20, now + 0.7);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.linearRampToValueAtTime(0, now + 0.7);
+        osc.start(now); osc.stop(now + 0.7);
 
     } else if (type === 'heartbeat') {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.connect(gain); gain.connect(audioCtx.destination);
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(75, now);
-        osc.frequency.exponentialRampToValueAtTime(35, now + 0.18);
-        gain.gain.setValueAtTime(0.35, now);
+        osc.frequency.setValueAtTime(70, now);
+        osc.frequency.exponentialRampToValueAtTime(30, now + 0.18);
+        gain.gain.setValueAtTime(0.25, now);
         gain.gain.linearRampToValueAtTime(0, now + 0.18);
         osc.start(now); osc.stop(now + 0.18);
 
@@ -381,11 +385,11 @@ function playSFX(type) {
         const gain = audioCtx.createGain();
         osc.connect(gain); gain.connect(audioCtx.destination);
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(220, now);
-        osc.frequency.linearRampToValueAtTime(380, now + 0.3);
-        osc.frequency.linearRampToValueAtTime(180, now + 0.6);
+        osc.frequency.setValueAtTime(180, now);
+        osc.frequency.linearRampToValueAtTime(320, now + 0.3);
+        osc.frequency.linearRampToValueAtTime(130, now + 0.6);
         gain.gain.setValueAtTime(0.01, now);
-        gain.gain.linearRampToValueAtTime(0.08, now + 0.3);
+        gain.gain.linearRampToValueAtTime(0.05, now + 0.3);
         gain.gain.linearRampToValueAtTime(0, now + 0.6);
         osc.start(now); osc.stop(now + 0.6);
     }
@@ -398,49 +402,7 @@ function triggerScreenShake() {
     card.classList.add('shake');
 }
 
-// Hover Text-To-Speech & Auto Sound Detection
-let currentUtterance = null;
-
-function speakAndTriggerSound(text) {
-    if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel(); // หยุดเสียงอ่านเก่าถ้ามี
-        
-        // ตรวจจับคำสำคัญในข้อความเพื่อเล่น SFX ที่ตรงกัน
-        if (text.includes("ปืน") || text.includes("กระสุน") || text.includes("ยิง") || text.includes("ปัง")) {
-            playSFX('gunshot');
-        } else if (text.includes("โทรศัพท์") || text.includes("ข้อความ") || text.includes("สั่น") || text.includes("ไซเรน")) {
-            playSFX('phone');
-        } else if (text.includes("หัวใจ") || text.includes("กอด") || text.includes("ลมหายใจ") || text.includes("ตื่นเต้น")) {
-            playSFX('heartbeat');
-        } else if (text.includes("ระเบิด") || text.includes("เปลวไฟ")) {
-            playSFX('explosion');
-        } else if (text.includes("ลม") || text.includes("หิมะ") || text.includes("คลื่น")) {
-            playSFX('wind');
-        } else if (text.includes("นาฬิกา") || text.includes("เอกสาร") || text.includes("ข้อความ")) {
-            playSFX('paper');
-        }
-
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'th-TH';
-        utterance.rate = 1.0;
-        utterance.pitch = 1.0;
-
-        // ดึงเสียงภาษาไทยถ้ามี
-        const voices = window.speechSynthesis.getVoices();
-        const thVoice = voices.find(v => v.lang.includes('th'));
-        if (thVoice) utterance.voice = thVoice;
-
-        window.speechSynthesis.speak(utterance);
-    }
-}
-
-function stopSpeech() {
-    if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-    }
-}
-
-// Snow Canvas
+// Snow Canvas Effect (หนาขึ้นเล็กน้อยเพื่อเพิ่มฟีลลิ่ง)
 const canvas = document.getElementById('snow-canvas');
 const ctx = canvas.getContext('2d');
 let width = canvas.width = window.innerWidth;
@@ -451,16 +413,16 @@ window.addEventListener('resize', () => {
     height = canvas.height = window.innerHeight;
 });
 
-const flakes = Array.from({ length: 65 }, () => ({
+const flakes = Array.from({ length: 85 }, () => ({
     x: Math.random() * width,
     y: Math.random() * height,
-    r: Math.random() * 3 + 1,
-    d: Math.random() * 0.8 + 0.4
+    r: Math.random() * 2.5 + 1,
+    d: Math.random() * 0.7 + 0.3
 }));
 
 function drawSnow() {
     ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = "rgba(255, 255, 255, 0.72)";
+    ctx.fillStyle = "rgba(220, 235, 255, 0.75)";
     ctx.beginPath();
     for (let f of flakes) {
         ctx.moveTo(f.x, f.y);
@@ -472,8 +434,8 @@ function drawSnow() {
 
 function moveSnow() {
     for (let f of flakes) {
-        f.y += Math.pow(f.d, 2) + 0.4;
-        f.x += Math.sin(f.y / 35);
+        f.y += Math.pow(f.d, 2) + 0.35;
+        f.x += Math.sin(f.y / 40) * 0.8;
         if (f.y > height) {
             f.y = -10;
             f.x = Math.random() * width;
@@ -565,7 +527,6 @@ const STORY_DATA = {
 
     // ==================== MULTI-ENDINGS ====================
 
-    // ENDING 1: พระเอกตาย (ธันน์รับกระสุนแทน)
     "end_sad_sacrifice": {
         "type": "sad",
         "badge": "💔 SAD ENDING (พระเอกตาย)",
@@ -576,7 +537,6 @@ const STORY_DATA = {
         "choices": []
     },
 
-    // ENDING 2: นายเอกตาย (เรย์รับกระสุนแทน)
     "end_ray_dies": {
         "type": "bad",
         "badge": "😭 TRAGIC ENDING (นายเอกตาย)",
@@ -587,7 +547,6 @@ const STORY_DATA = {
         "choices": []
     },
 
-    // ENDING 3: ยิงคนรักด้วยความเข้าใจผิด
     "end_regret_kill": {
         "type": "bad",
         "badge": "🥀 BAD ENDING (ตราบาปในใจ)",
@@ -598,7 +557,6 @@ const STORY_DATA = {
         "choices": []
     },
 
-    // ENDING 4: ตำรวจยิงคนรักตาย
     "end_tragic_shot": {
         "type": "bad",
         "badge": "🥀 BAD ENDING (สายเกินไป)",
@@ -609,7 +567,6 @@ const STORY_DATA = {
         "choices": []
     },
 
-    // ENDING 5: หายสาบสูญ
     "end_bittersweet": {
         "type": "bitter",
         "badge": "🌧️ BITTERSWEET ENDING (เหลือเพียงความคิดถึง)",
@@ -632,7 +589,6 @@ function startGame() {
 }
 
 function renderScene(sceneKey, isGoingBack = false) {
-    stopSpeech();
     const scene = STORY_DATA[sceneKey];
     if (!scene) return;
 
@@ -645,7 +601,7 @@ function renderScene(sceneKey, isGoingBack = false) {
     const card = document.getElementById("main-card");
     const badgeContainer = document.getElementById("ending-badge-container");
     badgeContainer.innerHTML = "";
-    card.className = "game-card";
+    card.className = "game-card snow-cap";
 
     if (scene.type) {
         document.getElementById("back-btn").style.display = "none";
@@ -656,16 +612,16 @@ function renderScene(sceneKey, isGoingBack = false) {
         else if (scene.type === "sad") { card.classList.add("end-sad"); badgeClass = "badge-sad"; }
         else if (scene.type === "bitter") { card.classList.add("end-bitter"); badgeClass = "badge-bitter"; }
 
-        badgeContainer.innerHTML = `<div class="ending-badge ${badgeClass}">${scene.badge}</div>`;
+        badgeContainer.innerHTML = `<div class="ending-badge snow-cap ${badgeClass}">${scene.badge}</div>`;
     } else {
         document.getElementById("back-btn").style.display = historyStack.length > 1 ? "inline-block" : "none";
-        document.getElementById("case-title").innerText = "🍁 SnowMemories: ความทรงจำในสายลมหนาว";
+        document.getElementById("case-title").innerText = "❄️ SnowMemories: ความทรงจำในสายลมหนาว";
     }
 
     const totalEvidence = Math.min(100, scene.evidence || 0);
     document.getElementById("evidence-text").innerText = `ระดับความจริง: ${totalEvidence}%`;
     
-    // แบ่งเนื้อเรื่องออกเป็นย่อหน้า และใส่ Event ชี้เมาส์ (Hover)
+    // Render Paragraphs
     const storyContainer = document.getElementById("story-display");
     storyContainer.innerHTML = "";
     
@@ -675,8 +631,6 @@ function renderScene(sceneKey, isGoingBack = false) {
             const p = document.createElement("p");
             p.className = "story-p";
             p.innerText = paraText;
-            p.onmouseenter = () => speakAndTriggerSound(paraText);
-            p.onmouseleave = () => stopSpeech();
             storyContainer.appendChild(p);
         }
     });
@@ -687,25 +641,22 @@ function renderScene(sceneKey, isGoingBack = false) {
     if (scene.choices && scene.choices.length > 0) {
         scene.choices.forEach(choice => {
             const btn = document.createElement("button");
-            btn.className = "btn-choice";
+            btn.className = "btn-choice snow-cap";
             btn.innerText = choice.text;
-            btn.onmouseenter = () => speakAndTriggerSound(choice.text);
-            btn.onmouseleave = () => stopSpeech();
             btn.onclick = () => renderScene(choice.next, false);
             choicesContainer.appendChild(btn);
         });
     } else {
         const restartBtn = document.createElement("button");
-        restartBtn.className = "btn-main";
-        restartBtn.style.marginTop = "25px";
+        restartBtn.className = "btn-main snow-cap";
+        restartBtn.style.marginTop = "20px";
         restartBtn.innerText = "🔄 เริ่มต้นย้อนเวลาสืบสวนใหม่";
         restartBtn.onclick = () => {
             playSFX('click');
-            stopSpeech();
             historyStack = [];
             document.getElementById("game-screen").style.display = "none";
             document.getElementById("start-screen").style.display = "block";
-            card.className = "game-card";
+            card.className = "game-card snow-cap";
         };
         choicesContainer.appendChild(restartBtn);
     }
@@ -714,7 +665,6 @@ function renderScene(sceneKey, isGoingBack = false) {
 function goBack() {
     if (historyStack.length > 1) {
         playSFX('click');
-        stopSpeech();
         historyStack.pop();
         const previousScene = historyStack[historyStack.length - 1];
         renderScene(previousScene, true);
@@ -723,4 +673,4 @@ function goBack() {
 </script>
 
 </body>
-</html>
+</html>+
