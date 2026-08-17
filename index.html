@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>สายลมที่ไร้ตัวตน (Detective BL Interactive)</title>
+    <title>สายลมที่ไร้ตัวตน: หิมะแรกในคืนใบไม้ร่วง</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
 
@@ -13,7 +13,7 @@
         }
 
         body {
-            background: #090a0f;
+            background: #05070a;
             color: #e0e0e0;
             display: flex;
             justify-content: center;
@@ -22,73 +22,102 @@
             margin: 0;
             padding: 20px;
             overflow: hidden;
-        }
-
-        /* Container หลัก */
-        .game-card {
-            background: rgba(18, 20, 29, 0.95);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(212, 175, 55, 0.05);
-            border-radius: 12px;
-            width: 100%;
-            max-width: 750px;
-            padding: 35px;
             position: relative;
-            backdrop-filter: blur(10px);
         }
 
-        /* หน้า Start Screen */
+        /* Background Image พร้อมหิมะตก */
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(5, 7, 10, 0.75), rgba(15, 20, 30, 0.9)),
+                        url('https://images.unsplash.com/photo-1517299321609-52687d1bc55a?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+            z-index: 1;
+        }
+
+        #snow-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .game-card {
+            background: rgba(12, 16, 26, 0.88);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            box-shadow: 0 0 35px rgba(0, 0, 0, 0.9), 0 0 15px rgba(212, 175, 55, 0.1);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 780px;
+            padding: 40px;
+            position: relative;
+            z-index: 3;
+            backdrop-filter: blur(12px);
+        }
+
         #start-screen {
             text-align: center;
-            padding: 40px 20px;
+            padding: 30px 10px;
+        }
+
+        .season-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #d4af37;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
         }
 
         .title {
-            font-size: 32px;
-            color: #d4af37;
+            font-size: 36px;
+            color: #f1f5f9;
             letter-spacing: 2px;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            margin-bottom: 12px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            font-weight: 600;
         }
 
         .subtitle {
             font-size: 16px;
-            color: #8a8d9b;
-            margin-bottom: 40px;
+            color: #94a3b8;
+            margin-bottom: 35px;
             font-style: italic;
+            line-height: 1.6;
         }
 
         .btn-main {
             background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%);
-            color: #000;
+            color: #0b0d13;
             border: none;
-            padding: 14px 40px;
-            font-size: 18px;
+            padding: 16px 48px;
+            font-size: 19px;
             font-weight: 600;
-            border-radius: 30px;
+            border-radius: 35px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
             transition: all 0.3s ease;
         }
 
         .btn-main:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
         }
 
-        /* หน้า gameplay */
-        #game-screen {
-            display: none;
-        }
+        #game-screen { display: none; }
 
         .status-bar {
             display: flex;
             justify-content: space-between;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 12px;
-            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            padding-bottom: 14px;
+            margin-bottom: 22px;
             font-size: 14px;
-            color: #aaa;
+            color: #94a3b8;
         }
 
         .evidence-tag {
@@ -98,11 +127,11 @@
 
         .story-box {
             font-size: 18px;
-            line-height: 1.8;
-            color: #ececec;
+            line-height: 1.85;
+            color: #f8fafc;
             margin-bottom: 30px;
             white-space: pre-line;
-            min-height: 140px;
+            min-height: 150px;
         }
 
         .choices-grid {
@@ -112,53 +141,60 @@
         }
 
         .btn-choice {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            color: #d0d0d0;
-            padding: 14px 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            color: #cbd5e1;
+            padding: 15px 22px;
             font-size: 16px;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             text-align: left;
             transition: all 0.25s ease;
         }
 
         .btn-choice:hover {
-            background: rgba(212, 175, 55, 0.15);
+            background: rgba(212, 175, 55, 0.18);
             border-color: #d4af37;
             color: #fff;
-            padding-left: 25px;
+            padding-left: 28px;
         }
 
-        /* Sound Control Button */
         .sound-toggle {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: #666;
+            top: 20px; right: 25px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            color: #aaa;
+            padding: 5px 12px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
 
-<div class="game-card">
-    <button class="sound-toggle" onclick="toggleMute()" id="mute-btn">🔊 เสียง: เปิด</button>
+<div class="bg-overlay"></div>
+<canvas id="snow-canvas"></canvas>
 
-    <!-- หน้าเริ่มเกม -->
+<!-- เสียง BGM คลาสสิกสืบสวนโทนเศร้าจากเว็บบอร์ดเปิด -->
+<audio id="bgm" loop src="https://assets.mixkit.co/music/preview/mixkit-sad-violin-01-664.mp3"></audio>
+
+<div class="game-card">
+    <button class="sound-toggle" onclick="toggleSound()" id="sound-btn">🎵 BGM: เปิด</button>
+
+    <!-- หน้าเริ่มเกมอลังการ -->
     <div id="start-screen">
+        <div class="season-badge">🍂 AUTUMN TO WINTER ❄️</div>
         <div class="title">🕵️‍♂️ สายลมที่ไร้ตัวตน</div>
-        <div class="subtitle">"เมื่อเบาะแสเดียวของคดีฆาตกรรม... คือคนรักที่คุณคิดว่าตายไปแล้วเมื่อ 3 ปีก่อน"</div>
+        <div class="subtitle">"ท่ามกลางใบไม้ร่วงและหิมะแรก... เบาะแสเดียวของคดีฆาตกรรม<br>คือคนรักที่คุณคิดว่าตายไปแล้วเมื่อ 3 ปีก่อน"</div>
         <button class="btn-main" onclick="startGame()">เริ่มการสืบสวน</button>
     </div>
 
     <!-- หน้าเล่นเกม -->
     <div id="game-screen">
         <div class="status-bar">
-            <span>คดี: ความลับในเงามืด</span>
+            <span>🍁 คดี: เงาร่างในหิมะแรก</span>
             <span class="evidence-tag" id="evidence-text">ระดับความจริง: 0%</span>
         </div>
         <div class="story-box" id="story-display"></div>
@@ -167,47 +203,65 @@
 </div>
 
 <script>
-// Web Audio API สำหรับสร้างเสียงเอฟเฟกต์โดยไม่ต้องพึ่งไฟล์ภายนอก
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-let isMuted = false;
+// ระบบ Snow Animation
+const canvas = document.getElementById('snow-canvas');
+const ctx = canvas.getContext('2d');
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
 
-function playSound(type) {
-    if (isMuted) return;
-    if (audioCtx.state === 'suspended') audioCtx.resume();
+window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+});
 
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
+const flakes = Array.from({ length: 65 }, () => ({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    r: Math.random() * 3 + 1,
+    d: Math.random() * 1 + 0.5
+}));
 
-    if (type === 'click') {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.08);
-        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.08);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.08);
-    } else if (type === 'start') {
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.3);
-        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-        gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.3);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.3);
+function drawSnow() {
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+    ctx.beginPath();
+    for (let f of flakes) {
+        ctx.moveTo(f.x, f.y);
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
+    }
+    ctx.fill();
+    moveSnow();
+}
+
+function moveSnow() {
+    for (let f of flakes) {
+        f.y += Math.pow(f.d, 2) + 0.5;
+        f.x += Math.sin(f.y / 30);
+        if (f.y > height) {
+            f.y = -10;
+            f.x = Math.random() * width;
+        }
     }
 }
+setInterval(drawSnow, 33);
 
-function toggleMute() {
-    isMuted = !isMuted;
-    document.getElementById('mute-btn').innerText = isMuted ? "🔇 เสียง: ปิด" : "🔊 เสียง: เปิด";
+// ระบบเสียง
+const bgm = document.getElementById('bgm');
+let soundEnabled = true;
+
+function toggleSound() {
+    soundEnabled = !soundEnabled;
+    if (soundEnabled) {
+        bgm.play();
+        document.getElementById('sound-btn').innerText = "🎵 BGM: เปิด";
+    } else {
+        bgm.pause();
+        document.getElementById('sound-btn').innerText = "🔇 BGM: ปิด";
+    }
 }
-
-// ฐานข้อมูลเนื้อเรื่อง (BL สืบสวนดราม่า-จบเศร้า)
-const STORY_DATA = {
+    const STORY_DATA = {
     "start": {
-        "text": "คืนฝนตก... คุณ 'นักสืบเรย์' กำลังชันสูตรศพนักการเมืองคนดัง\nแต่สิ่งที่คุณพบในมือผู้เสียชีวิตกลับเป็น 'นาฬิกาพกสลักชื่อ' ของ 'ธันน์'...\nอดีตคนรักและคู่หูนักสืบของคุณที่ทิ้งคุณไปพร้อมคำโกหกเมื่อ 3 ปีก่อน",
+        "text": "ปลายฤดูใบไม้ร่วง... เกล็ดหิมะแรกของปีเริ่มโปรยปรายรดใบไม้สีส้มบนพื้นดิน\nคุณ 'นักสืบเรย์' กำลังชันสูตรศพมหาเศรษฐีในคฤหาสน์ตระกูลดัง\nแต่สิ่งที่คุณพบในมือผู้เสียชีวิตกลับเป็น 'นาฬิกาพกสลักชื่อ' ของ 'ธันน์'...\nอดีตคนรักและคู่หูของคุณที่ทิ้งคุณไปพร้อมคำโกหกเมื่อ 3 ปีก่อน",
         "evidence": 10,
         "choices": [
             {"text": "1. สืบหาร่องรอยของธันน์จากลายนิ้วมือบนนาฬิกา", "next": "fingerprint"},
@@ -215,45 +269,45 @@ const STORY_DATA = {
         ]
     },
     "fingerprint": {
-        "text": "[เบาะแส: ลายนิ้วมือ]\nผลตรวจลายนิ้วมือตรงกับธันน์จริงๆ! แต่กลับมีบันทึกว่าธันน์กลายเป็น 'สายลับสองหน้า' ให้องค์กรมาเฟีย\nคุณได้รับข้อความปริศนาส่งเข้ามือถือ: 'อย่าตามหาฉันเลยเรย์... ยิ่งนายใกล้ความจริง นายยิ่งอันตราย'",
+        "text": "[เบาะแส: ลายนิ้วมือ]\nผลตรวจลายนิ้วมือตรงกับธันน์จริงๆ! แต่กลับพบว่าธันน์ถูกขึ้นบัญชีเป็น 'สายลับสองหน้า'\nข้อความปริศนาถูกส่งเข้ามือถือคุณ: 'หิมะแรกตกแล้วนะเรย์... อย่าตามหาฉันเลย ยิ่งนายใกล้ความจริง นายยิ่งอันตราย'",
         "evidence": 20,
         "choices": [
-            {"text": "1. นัดเจอนัดพบตามพิกัดแนบท้ายข้อความคนเดียว", "next": "meet_alone"},
+            {"text": "1. นัดพบตามพิกัดแนบท้ายข้อความกลางสวนสาธารณะร้าง", "next": "meet_alone"},
             {"text": "2. แจ้งตำรวจหน่วยพิเศษเพื่อล้อมจับธันน์", "next": "call_police"}
         ]
     },
     "gps": {
-        "text": "[เบาะแส: พิกัด GPS]\nพิกัดนำคุณไปสู่โกดังร้างชายฝั่ง... ที่นั่นคุณพบธันน์ยืนรออยู่กลางสายฝน\nใบหน้าของเขาซีดเซียวและมีรอยแผลเป็นใหญ่ เรย์... สายตาของเขาที่มองคุณยังคงเต็มไปด้วยความอาลัยอาวรณ์เหมือนเดิม",
+        "text": "[เบาะแส: พิกัด GPS]\nพิกัดนำคุณไปสู่โกดังร้างชายฝั่ง... ที่นั่นคุณพบธันน์ยืนรออยู่ท่ามกลางลมหนาว\nใบหน้าของเขาซีดเซียว มีรอยแผลเป็นใหญ่ แต่สายตาที่มองคุณยังคงอบอุ่นและปวดร้าวเหมือนวันเก่า",
         "evidence": 30,
         "choices": [
             {"text": "1. วิ่งเข้าไปกอดเขาแล้วถามความจริงทั้งหมด", "next": "hug_him"},
-            {"text": "2. ชักปืนขึ้นเล็ง 'ตอบมาว่าทำไมตอนนั้นถึงทิ้งฉันไป!'", "next": "aim_gun"}
+            {"text": "2. ชักปืนขึ้นเล็ง 'ตอบมานะ... ทำไมตอนนั้นถึงทิ้งฉันไป!'", "next": "aim_gun"}
         ]
     },
     "meet_alone": {
-        "text": "[สถานการณ์: การนัดพบลับๆ]\nธันน์ ปรากฏตัวจากเงามืด เขาโอบกอดคุณจากด้านหลังเบาๆ กลิ่นน้ำหอมเดิมที่คุ้นเคยทำให้หัวใจคุณสั่นคลอน\n'ฉันไม่ได้ฆ่าเขา เรย์... ฉันแฝงตัวมาเพื่อปกป้องนายจากองค์กรนี้ต่างหาก'",
+        "text": "[สถานการณ์: การนัดพบลับๆ]\nธันน์ปรากฏตัวท่ามกลางหิมะตก สวมเสื้อโค้ดตัวใหญ่ที่คุ้นตา เขาโอบกอดคุณจากด้านหลังเบาๆ ลมหายใจอุ่นๆ ถอนรดข้างหู\n'ฉันไม่ได้ฆ่าเขา เรย์... ฉันแฝงตัวมาเพื่อปกป้องนายจากองค์กรนี้ต่างหาก'",
         "evidence": 30,
         "choices": [
-            {"text": "1. เลือกที่จะเชื่อใจเขา แล้วหนีไปด้วยกันคืนนี้", "next": "escape_together"},
+            {"text": "1. เชื่อใจเขา แล้วหนีไปด้วยกันในคืนหิมะตกนี้", "next": "escape_together"},
             {"text": "2. ขอหลักฐานพิสูจน์ความบริสุทธิ์ของเขาก่อน", "next": "ask_proof"}
         ]
     },
     "call_police": {
-        "text": "[สถานการณ์: ตำรวจเข้าล้อม]\nกำลังตำรวจบุกเข้าพื้นที่! ธันน์มองหน้าคุณด้วยสายตาแตกสลาย เขาไม่ได้ยิงตอบโต้\n'เรย์... นายไม่เคยเชื่อใจฉันเลยเหรอ?' เขาถูกยิงเข้าที่อกต่อหน้าต่อตาคุณ!",
+        "text": "[สถานการณ์: ตำรวจเข้าล้อม]\nเสียงไซเรนและกำลังตำรวจบุกเข้าพื้นที่! ธันน์มองหน้าคุณด้วยสายตาแตกสลาย เขาไม่ได้ยิงตอบโต้\n'เรย์... นายไม่เคยเชื่อใจฉันเลยเหรอ?' เขาถูกยิงเข้าที่อก ล้มลงบนลานหิมะที่แปดเปื้อนไปด้วยเลือด...",
         "evidence": 40,
         "choices": [
             {"text": "1. วิ่งเข้าไปรับร่างของเขาที่กำลังหมดลมหายใจ", "next": "end_tragic_shot"}
         ]
     },
     "hug_him": {
-        "text": "ธันน์กอดตอบคุณแน่นจนสัมผัสได้ถึงหัวใจที่เต้นระรัว\n'ตลอด 3 ปีที่ผ่านมา... ไม่เคยมีวันไหนที่ฉันไม่รักนายเลยนะเรย์'\nแต่แล้ว... เสียงปืนจากซุ่มยิง (Sniper) ขององค์กรก็ดังขึ้นทะลุหน้าอกของธันน์!",
+        "text": "ธันน์กอดตอบคุณแน่น ท่ามกลางหิมะที่เริ่มตกหนักขึ้น\n'ตลอด 3 ปีที่ผ่านมา... ไม่เคยมีวันไหนที่ฉันไม่รักนายเลยนะเรย์'\nแต่แล้ว... เสียงสไนเปอร์ขององค์กรก็ดังขึ้น กระสุนส่องทะลุหน้าอกของธันน์!",
         "evidence": 40,
         "choices": [
             {"text": "1. ประคองร่างของเขาเอาไว้...", "next": "end_sad_sacrifice"}
         ]
     },
     "aim_gun": {
-        "text": "ธันน์ยิ้มเศร้าๆ แล้วค่อยๆ เดินเข้ามาเอาอกชนกับปากกระบอกปืนของคุณ\n'ถ้านายคิดว่าฉันเป็นคนร้าย... ยิงฉันเลยเรย์ มือคู่นี้ของฉัน ยินดีตายด้วยน้ำมือของนาย'",
+        "text": "ธันน์ยิ้มเศร้าๆ เดินเข้ามาเอาอกชนกับปากกระบอกปืนของคุณ\n'ถ้านายคิดว่าฉันเป็นคนร้าย... ยิงฉันเลยเรย์ มือคู่นี้ของฉัน ยินดีตายด้วยน้ำมือของนาย'",
         "evidence": 30,
         "choices": [
             {"text": "1. ลั่นไกด้วยความสับสนและโทสะ", "next": "end_regret_kill"},
@@ -261,48 +315,45 @@ const STORY_DATA = {
         ]
     },
     "ask_proof": {
-        "text": "ธันน์ยิ้มบางๆ แล้วส่งแฟ้มเอกสาร秘密ให้คุณ ในนั้นคือหลักฐานเปิดโปงองค์กรชั่วร้ายทั้งหมด\n'เท่านี้... นายก็จะเป็นฮีโร่ที่ไขคดีนี้ได้สำเร็จแล้วนะ เรย์' สิ้นคำพูด เสียงระเบิดก็ดังขึ้นท่วมโกดัง!",
-        "evidence: 50,
+        "text": "ธันน์ยิ้มบางๆ ยื่นแฟ้มเอกสารเปื้อนเลือดให้คุณ ในนั้นคือหลักฐานเปิดโปงองค์กรชั่วร้ายทั้งหมด\n'เท่านี้... นายก็จะเป็นฮีโร่ที่ไขคดีนี้ได้สำเร็จแล้วนะ เรย์' สิ้นคำพูด เสียงระเบิดก็ดังขึ้นท่วมโกดัง!",
+        "evidence": 50,
         "choices": [
             {"text": "1. ดูผลลัพธ์สุดท้าย...", "next": "end_bittersweet"}
         ]
     },
     "escape_together": {
-        "text": "ขณะกำลังหลบหนี มือมาเฟียเล็งยิงมาทางคุณ ธันน์เอาตัวเข้าเอาชีวิตบังกระสุนแทนคุณจนล้มลง...",
+        "text": "ขณะกำลังหลบหนี มือสังหารเล็งยิงมาทางคุณ ธันน์ใช้แผ่นหลังเอาตัวเข้าบังกระสุนแทนคุณจนล้มลงบนพื้นหิมะ...",
         "evidence": 50,
         "choices": [
             {"text": "1. ดูผลลัพธ์สุดท้าย...", "next": "end_sad_sacrifice"}
         ]
     },
 
-    // BAD / SAD ENDINGS
+    // SAD ENDINGS
     "end_sad_sacrifice": {
-        "text": "💔 [SAD ENDING: ลมหายใจสุดท้ายเพื่อเธอ]\nธันน์กระซิบข้างหูคุณด้วยรอยยิ้มก่อนสิ้นลม: 'โชคดีนะ... ยอดนักสืบของฉัน'\nคุณไขคดีสำเร็จและกลายเป็นนักสืบชื่อดัง แต่หัวใจของคุณได้ตายไปพร้อมกับเขาในคืนฝนตกนั้นตลอดกาล...",
+        "text": "💔 [SAD ENDING: ลมหายใจสุดท้ายในคืนหิมะแรก]\nธันน์กระซิบข้างหูคุณด้วยรอยยิ้มก่อนสิ้นใจ: 'โชคดีนะ... ยอดนักสืบของฉัน'\nคุณไขคดีสำเร็จ กลายเป็นนักสืบชื่อดัง แต่หัวใจของคุณได้ถูกแช่แข็งและตายไปพร้อมกับเขาในคืนหิมะตกนั้นตลอดกาล...",
         "evidence": 100,
         "choices": []
     },
     "end_tragic_shot": {
-        "text": "🥀 [BAD ENDING: ตราบาปที่ลบไม่ออก]\nธันน์สิ้นใจในอ้อมกอดคุณ พร้อมความจริงที่พบล่าสุดว่าเขาคือสายลับที่ยอมแลกชีวิตเพื่อปกป้องคุณ\nคุณเป็นคนพาเขาไปสู่จุดจบ... ภาพสายตาแตกสลายของเขาจะหลอกหลอนคุณไปตลอดชีวิต",
+        "text": "🥀 [BAD ENDING: ตราบาปบนลานหิมะ]\nธันน์สิ้นใจในอ้อมกอดคุณ บนพื้นหิมะสีขาวที่กลายเป็นสีแดงชาด\nคุณคือคนที่นำตำรวจมาสังหารสายลับที่ยอมแลกชีวิตเพื่อปกป้องคุณ... สายตาปวดร้าวของเขาจะหลอกหลอนคุณไปตลอดชีวิต",
         "evidence": 100,
         "choices": []
     },
     "end_regret_kill": {
-        "text": "😭 [TRAGIC ENDING: กระสุนแห่งความเสียใจ]\nกระสุนเจาะเข้าหัวใจของธันน์... ก่อนล้มลงเขายิ้มและยัดแฟ้มความจริงใส่มือคุณ\nเขายอมตายเพื่อให้คุณได้ผลงานคดีนี้ คุณได้กลายเป็นฮีโร่บนคราบน้ำตาและความรู้สึกผิดที่ไม่มีวันให้อภัยตัวเองได้",
+        "text": "😭 [TRAGIC ENDING: กระสุนแห่งความเสียใจ]\nกระสุนเจาะเข้าหัวใจธันน์... ก่อนล้มลงเขายิ้มและยัดแฟ้มความจริงใส่มือคุณ\nเขายอมตายเพื่อให้คุณได้ผลงานคดีนี้ คุณกลายเป็นฮีโร่บนคราบน้ำตาและความรู้สึกผิดที่ไม่มีวันให้อภัยตัวเองได้",
         "evidence": 100,
         "choices": []
     },
     "end_bittersweet": {
-        "text": "🌧️ [BITTERSWEET ENDING: เหลือเพียงความทรงจำ]\nคุณรอดชีวิตและเปิดโปงองค์กรสำเร็จตามความตั้งใจของธันน์ แต่ร่างของเขาหายสาบสูญไปกับกองเพลิง\nทุกครั้งที่ฝนตก คุณยังคงนั่งมองนาฬิกาพกเรือนนั้น... เฝ้ารอวันที่สายลมจะพาเขากลับมาอีกครั้ง",
+        "text": "🌧️ [BITTERSWEET ENDING: เหลือเพียงความทรงจำ]\nคุณรอดชีวิตและเปิดโปงองค์กรสำเร็จตามความตั้งใจของธันน์ แต่ร่างของเขาหายสาบสูญไปกับกองเพลิง\nทุกครั้งที่หิมะตก คุณยังคงมองนาฬิกาพกเรือนนั้น... เฝ้ารอวันที่สายลมจะพาเขากลับมาอีกครั้ง",
         "evidence": 100,
         "choices": []
     }
 };
 
-let currentScene = "start";
-let totalEvidence = 0;
-
 function startGame() {
-    playSound('start');
+    if (soundEnabled) bgm.play();
     document.getElementById("start-screen").style.display = "none";
     document.getElementById("game-screen").style.display = "block";
     renderScene("start");
@@ -312,7 +363,7 @@ function renderScene(sceneKey) {
     const scene = STORY_DATA[sceneKey];
     if (!scene) return;
 
-    totalEvidence = Math.min(100, totalEvidence + (scene.evidence || 0));
+    const totalEvidence = Math.min(100, scene.evidence || 0);
     document.getElementById("evidence-text").innerText = `ระดับความจริง: ${totalEvidence}%`;
     document.getElementById("story-display").innerText = scene.text;
 
@@ -324,10 +375,7 @@ function renderScene(sceneKey) {
             const btn = document.createElement("button");
             btn.className = "btn-choice";
             btn.innerText = choice.text;
-            btn.onclick = () => {
-                playSound('click');
-                renderScene(choice.next);
-            };
+            btn.onclick = () => renderScene(choice.next);
             choicesContainer.appendChild(btn);
         });
     } else {
@@ -336,8 +384,6 @@ function renderScene(sceneKey) {
         restartBtn.style.marginTop = "20px";
         restartBtn.innerText = "🔄 เริ่มต้นย้อนเวลาสืบสวนใหม่";
         restartBtn.onclick = () => {
-            playSound('start');
-            totalEvidence = 0;
             renderScene("start");
         };
         choicesContainer.appendChild(restartBtn);
