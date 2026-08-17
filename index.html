@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>สายลมที่ไร้ตัวตน: หิมะแรกในคืนใบไม้ร่วง</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,600;1,400&family=Prompt:wght@400;600&display=swap');
 
         * {
             box-sizing: border-box;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Sarabun', sans-serif;
         }
 
         body {
             background: #05070a;
-            color: #e0e0e0;
+            color: #e2e8f0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -29,7 +29,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(5, 7, 10, 0.78), rgba(15, 20, 30, 0.92)),
+            background: linear-gradient(to bottom, rgba(5, 7, 10, 0.82), rgba(15, 20, 30, 0.94)),
                         url('https://images.unsplash.com/photo-1517299321609-52687d1bc55a?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
             z-index: 1;
         }
@@ -43,68 +43,72 @@
         }
 
         .game-card {
-            background: rgba(12, 16, 26, 0.9);
-            border: 1px solid rgba(212, 175, 55, 0.35);
-            box-shadow: 0 0 35px rgba(0, 0, 0, 0.9), 0 0 15px rgba(212, 175, 55, 0.1);
+            background: rgba(10, 14, 23, 0.92);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.95), 0 0 15px rgba(212, 175, 55, 0.08);
             border-radius: 16px;
             width: 100%;
-            max-width: 780px;
-            padding: 40px;
+            max-width: 820px;
+            padding: 42px;
             position: relative;
             z-index: 3;
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
         }
 
         #start-screen {
             text-align: center;
-            padding: 30px 10px;
+            padding: 40px 10px;
         }
 
         .season-badge {
             display: inline-block;
-            background: rgba(212, 175, 55, 0.15);
-            border: 1px solid rgba(212, 175, 55, 0.4);
+            background: rgba(212, 175, 55, 0.12);
+            border: 1px solid rgba(212, 175, 55, 0.35);
             color: #d4af37;
-            padding: 4px 16px;
+            padding: 6px 20px;
             border-radius: 20px;
-            font-size: 14px;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
+            font-size: 13px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-family: 'Prompt', sans-serif;
         }
 
         .title {
-            font-size: 36px;
-            color: #f1f5f9;
+            font-family: 'Prompt', sans-serif;
+            font-size: 38px;
+            color: #f8fafc;
             letter-spacing: 2px;
-            margin-bottom: 12px;
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            margin-bottom: 14px;
+            text-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
             font-weight: 600;
         }
 
         .subtitle {
             font-size: 16px;
             color: #94a3b8;
-            margin-bottom: 35px;
+            margin-bottom: 40px;
             font-style: italic;
-            line-height: 1.6;
+            line-height: 1.8;
+            font-weight: 300;
         }
 
         .btn-main {
+            font-family: 'Prompt', sans-serif;
             background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%);
-            color: #0b0d13;
+            color: #05070a;
             border: none;
-            padding: 16px 48px;
-            font-size: 19px;
+            padding: 16px 50px;
+            font-size: 18px;
             font-weight: 600;
             border-radius: 35px;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.35);
             transition: all 0.3s ease;
         }
 
         .btn-main:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.55);
         }
 
         #game-screen { display: none; }
@@ -113,9 +117,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-            padding-bottom: 14px;
-            margin-bottom: 22px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 16px;
+            margin-bottom: 25px;
             font-size: 14px;
             color: #94a3b8;
         }
@@ -123,13 +127,14 @@
         .evidence-tag {
             color: #d4af37;
             font-weight: 600;
+            font-family: 'Prompt', sans-serif;
         }
 
         .btn-back {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #e2e8f0;
-            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #cbd5e1;
+            padding: 5px 14px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 13px;
@@ -143,37 +148,39 @@
         }
 
         .story-box {
-            font-size: 18px;
-            line-height: 1.85;
-            color: #f8fafc;
-            margin-bottom: 30px;
+            font-size: 17px;
+            line-height: 2;
+            color: #f1f5f9;
+            margin-bottom: 32px;
             white-space: pre-line;
-            min-height: 150px;
+            min-height: 200px;
+            font-weight: 300;
         }
 
         .choices-grid {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .btn-choice {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(212, 175, 55, 0.25);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.2);
             color: #cbd5e1;
-            padding: 15px 22px;
-            font-size: 16px;
+            padding: 16px 24px;
+            font-size: 15px;
             border-radius: 10px;
             cursor: pointer;
             text-align: left;
             transition: all 0.25s ease;
+            line-height: 1.5;
         }
 
         .btn-choice:hover {
-            background: rgba(212, 175, 55, 0.18);
+            background: rgba(212, 175, 55, 0.15);
             border-color: #d4af37;
-            color: #fff;
-            padding-left: 28px;
+            color: #ffffff;
+            padding-left: 30px;
         }
     </style>
 </head>
@@ -184,9 +191,9 @@
 
 <div class="game-card">
     <div id="start-screen">
-        <div class="season-badge">🍂 AUTUMN TO WINTER ❄️</div>
-        <div class="title">🕵️‍♂️ สายลมที่ไร้ตัวตน</div>
-        <div class="subtitle">"ท่ามกลางใบไม้ร่วงและหิมะแรก... เบาะแสเดียวของคดีฆาตกรรม<br>คือคนรักที่คุณคิดว่าตายไปแล้วเมื่อ 3 ปีก่อน"</div>
+        <div class="season-badge">AUTUMN TO WINTER ❄️</div>
+        <div class="title">สายลมที่ไร้ตัวตน</div>
+        <div class="subtitle">"ท่ามกลางใบไม้สีส้มปลิดปลิวและหิมะแรกที่เริ่มโปรยปราย...<br>เบาะแสเดียวของคดีฆาตกรรมปริศนา คือเงาร่างของคนที่คุณรักที่สุดซึ่งหายสาบสูญไปเมื่อสามปีก่อน"</div>
         <button class="btn-main" onclick="startGame()">เริ่มการสืบสวน</button>
     </div>
 
@@ -202,7 +209,45 @@
 </div>
 
 <script>
-// Snow Animation
+// Web Audio SFX Generator (ไม่ต้องพึ่งไฟล์ภายนอก เล่นเสียงได้แน่นอน)
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playSFX(type) {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    if (type === 'click') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(520, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(220, audioCtx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.08);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.08);
+    } else if (type === 'start') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(180, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.35);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.35);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.35);
+    } else if (type === 'heartbeat') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(80, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.15);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.15);
+    }
+}
+
+// Snow Particle System
 const canvas = document.getElementById('snow-canvas');
 const ctx = canvas.getContext('2d');
 let width = canvas.width = window.innerWidth;
@@ -213,16 +258,16 @@ window.addEventListener('resize', () => {
     height = canvas.height = window.innerHeight;
 });
 
-const flakes = Array.from({ length: 65 }, () => ({
+const flakes = Array.from({ length: 60 }, () => ({
     x: Math.random() * width,
     y: Math.random() * height,
     r: Math.random() * 3 + 1,
-    d: Math.random() * 1 + 0.5
+    d: Math.random() * 0.8 + 0.4
 }));
 
 function drawSnow() {
     ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+    ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
     ctx.beginPath();
     for (let f of flakes) {
         ctx.moveTo(f.x, f.y);
@@ -234,8 +279,8 @@ function drawSnow() {
 
 function moveSnow() {
     for (let f of flakes) {
-        f.y += Math.pow(f.d, 2) + 0.5;
-        f.x += Math.sin(f.y / 30);
+        f.y += Math.pow(f.d, 2) + 0.4;
+        f.x += Math.sin(f.y / 35);
         if (f.y > height) {
             f.y = -10;
             f.x = Math.random() * width;
@@ -245,90 +290,92 @@ function moveSnow() {
 setInterval(drawSnow, 33);
     const STORY_DATA = {
     "start": {
-        "text": "ปลายฤดูใบไม้ร่วง... เกล็ดหิมะแรกของปีเริ่มโปรยปรายรดใบไม้สีส้มบนพื้นดิน\nคุณ 'นักสืบเรย์' กำลังชันสูตรศพมหาเศรษฐีในคฤหาสน์ตระกูลดัง\nแต่สิ่งที่คุณพบในมือผู้เสียชีวิตกลับเป็น 'นาฬิกาพกสลักชื่อ' ของ 'ธันน์'...\nอดีตคนรักและคู่หูของคุณที่ทิ้งคุณไปพร้อมคำโกหกเมื่อ 3 ปีก่อน",
-        "evidence": 10,
+        "text": "สายลมหนาวพัดเอาใบไม้สีส้มแดงหมุนเกลื่อนลานหิน คืนนี้เป็นคืนแรกที่เกล็ดหิมะโปรยปรายลงรดคฤหาสน์ร้างชายป่า\nคุณ 'นักสืบเรย์' คลุมเสื้อโค้ดตัวยาว ยืนชันสูตรศพมหาเศรษฐีผู้ทรงอิทธิพลที่ถูกพบเป็นศพอยู่ริมหน้าต่าง\n\nทว่า ท่ามกลางหยดเลือดที่เริ่มเย็นชืดในฝ่ามือผู้เสียชีวิต... กลับมี 'นาฬิกาพกเรือนทอง' สลักอักษรย่อที่คุ้นตา\n'T.S.' ... นาฬิกาพกเรือนนี้เป็นของ 'ธันน์' คนรักและคู่หูสืบสวนของคุณ ผู้ซึ่งหายสาบสูญไปพร้อมกับคำโกหกและความเงียบงันเมื่อสามปีก่อน",
+        "evidence": 15,
         "choices": [
-            {"text": "1. สืบหาร่องรอยของธันน์จากลายนิ้วมือบนนาฬิกา", "next": "fingerprint"},
-            {"text": "2. แกะรอยตำแหน่งสุดท้ายจากพิกัด GPS ในนาฬิกาพก", "next": "gps"}
+            {"text": "1. ใช้กล้องขยายส่องตรวจลายนิ้วมือลับและคราบสารเคมีบนเรือนนาฬิกาอย่างละเอียด", "next": "fingerprint"},
+            {"text": "2. ถอดฝาหลังนาฬิกาพกเพื่อดึงชิปพิกัด GPS ซ่อนเร้นทำงานอยู่ด้านใน", "next": "gps"}
         ]
     },
     "fingerprint": {
-        "text": "[เบาะแส: ลายนิ้วมือ]\nผลตรวจลายนิ้วมือตรงกับธันน์จริงๆ! แต่กลับพบว่าธันน์ถูกขึ้นบัญชีเป็น 'สายลับสองหน้า'\nข้อความปริศนาถูกส่งเข้ามือถือคุณ: 'หิมะแรกตกแล้วนะเรย์... อย่าตามหาฉันเลย ยิ่งนายใกล้ความจริง นายยิ่งอันตราย'",
-        "evidence": 20,
+        "text": "[การวิเคราะห์เบาะแส: ลายนิ้วมือและสารเคมี]\nผลการสแกนลายนิ้วมือบนเรือนแก้วยืนยันชัดเจน... เป็นลายนิ้วมือของ 'ธันน์' ไม่ผิดเพี้ยน\nแต่ข้อมูลในระบบแฟ้มคดีลับกลับระบุว่า ธันน์ถูกขึ้นบัญชีเป็น 'สายลับแฝงตัวระดับสูง' ขององค์กรมาเฟียข้ามชาติ\n\nทันใดนั้น เสียงสั่นจากมือถือของคุณก็ดังขึ้น ข้อความจากเบอร์ปริศนาส่งเข้ามา:\n'หิมะแรกตกแล้วนะเรย์... ถ้านายไม่อยากให้ความจริงแผดเผาชีวิตนาย จงหันหลังกลับไปซะ อย่าตามหาฉันอีกเลย'",
+        "evidence": 35,
         "choices": [
-            {"text": "1. นัดพบตามพิกัดแนบท้ายข้อความกลางสวนสาธารณะร้าง", "next": "meet_alone"},
-            {"text": "2. แจ้งตำรวจหน่วยพิเศษเพื่อล้อมจับธันน์", "next": "call_police"}
+            {"text": "1. ตอบกลับข้อความ แล้วออกเดินทางไปพบตามพิกัดสวนสาธารณะร้างท้ายเมืองคนเดียว", "next": "meet_alone"},
+            {"text": "2. ส่งพิกัดและข้อมูลให้ 'หน่วยปฏิบัติการพิเศษ' เพื่อเตรียมกำลังเข้าปิดล้อมจับกุม", "next": "call_police"}
         ]
     },
     "gps": {
-        "text": "[เบาะแส: พิกัด GPS]\nพิกัดนำคุณไปสู่โกดังร้างชายฝั่ง... ที่นั่นคุณพบธันน์ยืนรออยู่ท่ามกลางลมหนาว\nใบหน้าของเขาซีดเซียว มีรอยแผลเป็นใหญ่ แต่สายตาที่มองคุณยังคงอบอุ่นและปวดร้าวเหมือนวันเก่า",
-        "evidence": 30,
+        "text": "[การวิเคราะห์เบาะแส: สัญญาณพิกัด GPS]\nสัญญาณพิกัดดาวเทียมนำทางคุณผ่านเส้นทางสายเก่า ละอองหิมะเริ่มตกลงมาหนาตาขึ้นเรื่อยๆ จนมองไม่เห็นทาง\nคุณเดินทางมาถึงโกดังเก็บสินค้าเก่าริมชายฝั่งทะเล ลมทะเลพัดหอบเอาความหนวดกัดขั้วหัวใจ\n\nกลางลานกว้าง... เงาร่างสูงคุ้นตาในชุดเสื้อโค้ดสีเข้มยืนรออยู่ท่ามกลางสายลม\nธันน์หันกลับมามองคุณ ใบหน้าของเขาซีดเซียวและมีรอยแผลเป็นยาวที่แก้มซ้าย แต่สายตาคู่เดิมที่มองคุณ... ยังคงเต็มไปด้วยความปวดร้าวและโหยหาอย่างปิดไม่มิด",
+        "evidence": 40,
         "choices": [
-            {"text": "1. วิ่งเข้าไปกอดเขาแล้วถามความจริงทั้งหมด", "next": "hug_him"},
-            {"text": "2. ชักปืนขึ้นเล็ง 'ตอบมานะ... ทำไมตอนนั้นถึงทิ้งฉันไป!'", "next": "aim_gun"}
+            {"text": "1. ทิ้งความแค้นและข้อสงสัยไว้ข้างหลัง โผเข้ากอดเขาแล้วถามความจริงทั้งหมด", "next": "hug_him"},
+            {"text": "2. ชักปืนสั้นขึ้นเล็งตรงไปที่เขา 'ตอบมา... ทำไมวันนั้นนายถึงทิ้งฉันไปโดยไม่พูดอะไรเลย!'", "next": "aim_gun"}
         ]
     },
     "meet_alone": {
-        "text": "[สถานการณ์: การนัดพบลับๆ]\nธันน์ปรากฏตัวท่ามกลางหิมะตก สวมเสื้อโค้ดตัวใหญ่ที่คุ้นตา เขาโอบกอดคุณจากด้านหลังเบาๆ ลมหายใจอุ่นๆ ถอนรดข้างหู\n'ฉันไม่ได้ฆ่าเขา เรย์... ฉันแฝงตัวมาเพื่อปกป้องนายจากองค์กรนี้ต่างหาก'",
-        "evidence": 30,
+        "text": "[การนัดพบลับกลางหิมะตก]\nท่ามกลางม้านั่งไม้ที่ถูกปกคลุมด้วยเกล็ดหิมะขาวโพลน ธันน์ก้าวออกมาจากเงามืดอย่างเงียบเชียบ\nเขาเข้ามากอดคุณจากด้านหลังเบาๆ ไออุ่นและกลิ่นน้ำหอมไม้สนอันคุ้นเคยทำให้น้ำตาของคุณคลอเบ้า\n\n'ฉันไม่ได้ฆ่าชายคนนั้น... เรย์' เสียงทุ้มต่ำของเขาสั่นเครือข้างหูคุณ 'สามปีที่ผ่านมา ฉันยอมตกอยู่ในนรก ก็เพื่อปกป้องนายจากองค์กรนี้ต่างหาก'",
+        "evidence": 50,
         "choices": [
-            {"text": "1. เชื่อใจเขา แล้วหนีไปด้วยกันในคืนหิมะตกนี้", "next": "escape_together"},
-            {"text": "2. ขอหลักฐานพิสูจน์ความบริสุทธิ์ของเขาก่อน", "next": "ask_proof"}
+            {"text": "1. เลือกที่จะละทิ้งอดีตและเชื่อใจเขา กอดเขาไว้แล้วชวนหลบหนีไปด้วยกันในคืนนี้", "next": "escape_together"},
+            {"text": "2. ถอยห่างออกมาก้าวหนึ่ง 'ถ้าบริสุทธิ์ใจจริง... ยื่นหลักฐานพิสูจน์ความจริงมาให้ฉัน'", "next": "ask_proof"}
         ]
     },
     "call_police": {
-        "text": "[สถานการณ์: ตำรวจเข้าล้อม]\nเสียงไซเรนและกำลังตำรวจบุกเข้าพื้นที่! ธันน์มองหน้าคุณด้วยสายตาแตกสลาย เขาไม่ได้ยิงตอบโต้\n'เรย์... นายไม่เคยเชื่อใจฉันเลยเหรอ?' เขาถูกยิงเข้าที่อก ล้มลงบนลานหิมะที่แปดเปื้อนไปด้วยเลือด...",
-        "evidence": 40,
+        "text": "[สถานการณ์: การเข้าปิดล้อมของตำรวจ]\nเสียงไซเรนดังกระหึ่มพร้อมไฟสัญญาณสีแดงฟ้าส่องสว่างไปทั่วบริเวณ! กำลังตำรวจอาวุธครบมือเข้าโอบล้อมพื้นที่\nธันน์หันมามองหน้าคุณ ดวงตาของเขาค่อยๆ แตกร้าวและเต็มไปด้วยความผิดหวัง... เขาไม่ได้ชักปืนขึ้นสู้แม้แต่น้อย\n\n'เรย์... ตลอดเวลาที่ผ่านมา นายไม่เคยเชื่อใจฉันเลยงั้นเหรอ?'\nเสียงปืนลั่นดังสนั่นขึ้นสองนัด! ร่างของธันน์ทรุดลงบนลานหิมะที่เริ่มถูกย้อมด้วยสีแดงสดต่อหน้าต่อตาคุณ",
+        "evidence": 65,
         "choices": [
-            {"text": "1. วิ่งเข้าไปรับร่างของเขาที่กำลังหมดลมหายใจ", "next": "end_tragic_shot"}
+            {"text": "1. วิ่งเข้าไปประคองร่างที่กำลังหมดลมหายใจของเขาขึ้นมาจากพื้นหิมะ", "next": "end_tragic_shot"}
         ]
     },
     "hug_him": {
-        "text": "ธันน์กอดตอบคุณแน่น ท่ามกลางหิมะที่เริ่มตกหนักขึ้น\n'ตลอด 3 ปีที่ผ่านมา... ไม่เคยมีวันไหนที่ฉันไม่รักนายเลยนะเรย์'\nแต่แล้ว... เสียงสไนเปอร์ขององค์กรก็ดังขึ้น กระสุนส่องทะลุหน้าอกของธันน์!",
-        "evidence": 40,
+        "text": "ธันน์ตระกองกอดคุณตอบแน่นจนแผ่นอกแนบชิดกัน คุณสัมผัสได้ถึงเสียงหัวใจของเขาที่เต้นระรัวและอุณหภูมิร่างกายที่สั่นเทา\n'ตลอดสามปีที่ผ่านมา... ไม่เคยมีวันไหนที่ฉันไม่คิดถึงนายเลยนะ เรย์'\n\nทว่า ท่ามกลางเสียงสายลมหวีดหวิว... เสียงปืนซุ่มยิงสไนเปอร์ระยะไกลก็ดังแผดเสียงขึ้น!\nกระสุนสังหารทะลวงผ่านแผ่นหลังและส่องผ่านอกของธันน์ในเสี้ยววินาที ร่างของเขาล้มลงในอ้อมแขนของคุณ...",
+        "evidence": 70,
         "choices": [
-            {"text": "1. ประคองร่างของเขาเอาไว้...", "next": "end_sad_sacrifice"}
+            {"text": "1. โอบประคองร่างที่เลือนหายของเขาไว้แน่นที่สุดเท่าที่จะทำได้...", "next": "end_sad_sacrifice"}
         ]
     },
     "aim_gun": {
-        "text": "ธันน์ยิ้มเศร้าๆ เดินเข้ามาเอาอกชนกับปากกระบอกปืนของคุณ\n'ถ้านายคิดว่าฉันเป็นคนร้าย... ยิงฉันเลยเรย์ มือคู่นี้ของฉัน ยินดีตายด้วยน้ำมือของนาย'",
-        "evidence": 30,
+        "text": "ธันน์มองปากกระบอกปืนในมือคุณด้วยรอยยิ้มเศร้าหมอง เขาค่อยๆ ก้าวเท้าเข้าหาคุณทีละก้าว จนกระทั่งแผ่นอกของเขาชนกับปลายปืน\n'ถ้าการตายของฉันจะช่วยลบล้างความแค้นในใจของนายได้... ยิงเลยสิเรย์'\n\n'มือคู่นี้ของฉัน ยินดีที่จะดับสูญด้วยน้ำมือของคนที่ฉันรักที่สุดในชีวิต'",
+        "evidence": 55,
         "choices": [
-            {"text": "1. ลั่นไกด้วยความสับสนและโทสะ", "next": "end_regret_kill"},
-            {"text": "2. ลดปืนลงแล้วโผเข้าหาเขา", "next": "hug_him"}
+            {"text": "1. เหนี่ยวกลไกลั่นไกปืนด้วยความสับสนและความอัดอั้นตันใจ", "next": "end_regret_kill"},
+            {"text": "2. ลดปืนลงด้วยมือที่สั่นเทา แล้วโผเข้ากอดเขาด้วยความรักทั้งหมดที่มี", "next": "hug_him"}
         ]
     },
     "ask_proof": {
-        "text": "ธันน์ยิ้มบางๆ ยื่นแฟ้มเอกสารเปื้อนเลือดให้คุณ ในนั้นคือหลักฐานเปิดโปงองค์กรชั่วร้ายทั้งหมด\n'เท่านี้... นายก็จะเป็นฮีโร่ที่ไขคดีนี้ได้สำเร็จแล้วนะ เรย์' สิ้นคำพูด เสียงระเบิดก็ดังขึ้นท่วมโกดัง!",
-        "evidence": 50,
+        "text": "ธันน์ยิ้มออกมาอย่างขมขื่น ก่อนจะค่อยๆ หยิบแฟ้มเอกสารลับเปื้อนคราบเลือดออกมาจากเสื้อโค้ดแล้วส่งให้คุณ\nในนั้นคือข้อมูลเปิดโปงผู้อยู่เบื้องหลังองค์กรทั้งหมด รวมถึงบันทึกที่เขายอมปกป้องคุณมาตลอดสามปี\n\n'เท่านี้... นายก็จะเป็นฮีโร่ที่ไขคดีใหญ่ได้สำเร็จแล้วนะ เรย์'\nสิ้นเสียงหวานเศร้า... เสียงระเบิดที่ฝังอยู่รอบโกดังก็ดังระงมขึ้น ท่วมท้นพื้นที่ทั้งหมดไปกับกองเพลิง!",
+        "evidence": 80,
         "choices": [
-            {"text": "1. ดูผลลัพธ์สุดท้าย...", "next": "end_bittersweet"}
+            {"text": "1. เผชิญหน้ากับฉากจบสุดท้ายของการสืบสวน...", "next": "end_bittersweet"}
         ]
     },
     "escape_together": {
-        "text": "ขณะกำลังหลบหนี มือสังหารเล็งยิงมาทางคุณ ธันน์ใช้แผ่นหลังเอาตัวเข้าบังกระสุนแทนคุณจนล้มลงบนพื้นหิมะ...",
-        "evidence": 50,
+        "text": "ขณะที่คุณและธันน์กำลังก้าวขาหลบหนีไปตามเส้นทางป่าหิมะ มือสังหารลับขององค์กรที่ซุ่มอยู่ก็ลั่นไกยิงตรงมาทางคุณ!\nธันน์ใช้ร่างของตัวเองหมุนตัวกลับมารับกระสุนแทนคุณอย่างไม่ลังเล ร่างของเขาล้มลงกระแทกพื้นหิมะขาวโพลน...",
+        "evidence": 85,
         "choices": [
-            {"text": "1. ดูผลลัพธ์สุดท้าย...", "next": "end_sad_sacrifice"}
+            {"text": "1. เผชิญหน้ากับฉากจบสุดท้ายของการสืบสวน...", "next": "end_sad_sacrifice"}
         ]
     },
+
+    // BAD & SAD ENDINGS
     "end_sad_sacrifice": {
-        "text": "💔 [SAD ENDING: ลมหายใจสุดท้ายในคืนหิมะแรก]\nธันน์กระซิบข้างหูคุณด้วยรอยยิ้มก่อนสิ้นใจ: 'โชคดีนะ... ยอดนักสืบของฉัน'\nคุณไขคดีสำเร็จ กลายเป็นนักสืบชื่อดัง แต่หัวใจของคุณได้ถูกแช่แข็งและตายไปพร้อมกับเขาในคืนหิมะตกนั้นตลอดกาล...",
+        "text": "💔 [SAD ENDING: ลมหายใจสุดท้ายในคืนหิมะแรก]\nธันน์ยกมืออันสั่นเทาขึ้นแตะแก้มของคุณเบาๆ รอยยิ้มสุดท้ายของเขายังคงอบอุ่นเสมอ\n'โชคดีนะ... ยอดนักสืบของฉัน'\n\nคุณปิดคดีนี้ได้สำเร็จและกลายเป็นนักสืบผู้โด่งดัง ทว่าหัวใจของคุณได้ถูกแช่แข็งและแหลกสลายไปพร้อมกับอ้อมกอดของเขาในคืนหิมะตกนั้น... ตลอดกาล",
         "evidence": 100,
         "choices": []
     },
     "end_tragic_shot": {
-        "text": "🥀 [BAD ENDING: ตราบาปบนลานหิมะ]\nธันน์สิ้นใจในอ้อมกอดคุณ บนพื้นหิมะสีขาวที่กลายเป็นสีแดงชาด\nคุณคือคนที่นำตำรวจมาสังหารสายลับที่ยอมแลกชีวิตเพื่อปกป้องคุณ... สายตาปวดร้าวของเขาจะหลอกหลอนคุณไปตลอดชีวิต",
+        "text": "🥀 [BAD ENDING: ตราบาปบนลานหิมะ]\nธันน์สิ้นใจลงในอ้อมกอดของคุณ บนพื้นหิมะสีขาวที่แปดเปื้อนไปด้วยโลหิตสีแดงชาด\nความจริงปรากฏในภายหลังว่าเขาคือสายลับที่ยอมแลกทุกอย่างเพื่อปกป้องคุณ แต่กลับเป็นคุณเองที่นำพาตำรวจมาปลิดชีพเขา...\nสายตาที่แตกสลายของเขาจะกลายเป็นตราบาปหลอกหลอนคุณไปตลอดชีวิต",
         "evidence": 100,
         "choices": []
     },
     "end_regret_kill": {
-        "text": "😭 [TRAGIC ENDING: กระสุนแห่งความเสียใจ]\nกระสุนเจาะเข้าหัวใจธันน์... ก่อนล้มลงเขายิ้มและยัดแฟ้มความจริงใส่มือคุณ\nเขายอมตายเพื่อให้คุณได้ผลงานคดีนี้ คุณกลายเป็นฮีโร่บนคราบน้ำตาและความรู้สึกผิดที่ไม่มีวันให้อภัยตัวเองได้",
+        "text": "😭 [TRAGIC ENDING: กระสุนแห่งความเสียใจ]\nคมกระสุนเจาะเข้าขั้วหัวใจของธันน์... ร่างของเขาร่วงลงกับพื้น พร้อมกับยัดแฟ้มเอกสารความจริงใส่มือคุณ\nเขายอมตายด้วยน้ำมือของคุณ เพื่อมอบผลงานการไขคดีครั้งใหญ่ให้คุณได้ก้าวหน้า\nคุณกลายเป็นนักสืบระดับประเทศ บนคราบน้ำตาและความรู้สึกผิดที่ไม่สามารถให้อภัยตัวเองได้อีกเลย",
         "evidence": 100,
         "choices": []
     },
     "end_bittersweet": {
-        "text": "🌧️ [BITTERSWEET ENDING: เหลือเพียงความทรงจำ]\nคุณรอดชีวิตและเปิดโปงองค์กรสำเร็จตามความตั้งใจของธันน์ แต่ร่างของเขาหายสาบสูญไปกับกองเพลิง\nทุกครั้งที่หิมะตก คุณยังคงมองนาฬิกาพกเรือนนั้น... เฝ้ารอวันที่สายลมจะพาเขากลับมาอีกครั้ง",
+        "text": "🌧️ [BITTERSWEET ENDING: เหลือเพียงความทรงจำในสายลม]\nคุณรอดชีวิตและเปิดโปงองค์กรชั่วร้ายได้สำเร็จตามเจตนารมณ์ของธันน์ แต่ร่างของเขาหายสาบสูญไปในกองเพลิงและสายลมหนาว\nทุกครั้งที่ฤดูใบไม้ร่วงเวียนมาถึงและหิมะแรกเริ่มโปรยปราย คุณยังคงนั่งมองนาฬิกาพกเรือนนั้น... เฝ้ารอคอยวันที่สายลมจะพาเขากลับมาหาคุณอีกครั้ง",
         "evidence": 100,
         "choices": []
     }
@@ -337,6 +384,7 @@ setInterval(drawSnow, 33);
 let historyStack = [];
 
 function startGame() {
+    playSFX('start');
     document.getElementById("start-screen").style.display = "none";
     document.getElementById("game-screen").style.display = "block";
     historyStack = [];
@@ -365,15 +413,20 @@ function renderScene(sceneKey, isGoingBack = false) {
             const btn = document.createElement("button");
             btn.className = "btn-choice";
             btn.innerText = choice.text;
-            btn.onclick = () => renderScene(choice.next, false);
+            btn.onclick = () => {
+                playSFX('click');
+                renderScene(choice.next, false);
+            };
             choicesContainer.appendChild(btn);
         });
     } else {
+        playSFX('heartbeat');
         const restartBtn = document.createElement("button");
         restartBtn.className = "btn-main";
         restartBtn.style.marginTop = "20px";
         restartBtn.innerText = "🔄 เริ่มต้นย้อนเวลาสืบสวนใหม่";
         restartBtn.onclick = () => {
+            playSFX('start');
             historyStack = [];
             renderScene("start", false);
         };
@@ -383,6 +436,7 @@ function renderScene(sceneKey, isGoingBack = false) {
 
 function goBack() {
     if (historyStack.length > 1) {
+        playSFX('click');
         historyStack.pop();
         const previousScene = historyStack[historyStack.length - 1];
         renderScene(previousScene, true);
