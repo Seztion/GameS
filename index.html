@@ -5,13 +5,15 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Snow Memories : The First Snow</title>
+<title>Snow Letter : เมื่อหิมะพัดพาความทรงจำกลับมา</title>
 
-<link
-href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap"
-rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -23,14 +25,18 @@ rel="stylesheet">
 }
 
 body{
-    background:#07111f;
-    color:white;
-    min-height:100vh;
-    overflow:hidden;
-    position:relative;
-}
 
-/* ================= BG ================= */
+    background:#07111f;
+
+    color:#fff;
+
+    overflow:hidden;
+
+    height:100vh;
+
+    position:relative;
+
+}
 
 .background{
 
@@ -39,53 +45,21 @@ body{
     inset:0;
 
     background:
+
     linear-gradient(
-    180deg,
-    rgba(3,7,18,.4),
-    rgba(3,7,18,.9)
+        rgba(0,0,0,.45),
+        rgba(0,0,0,.75)
     ),
 
-    url("https://images.unsplash.com/photo-1511131341194-24e2eeeebb09?q=80&w=1920&auto=format&fit=crop")
-    center center/cover;
+    radial-gradient(
+        circle at top,
+        #1e3a8a,
+        #07111f 70%
+    );
 
     z-index:-5;
 
 }
-
-.fog{
-
-    position:fixed;
-
-    inset:0;
-
-    background:
-    radial-gradient(
-    circle at 20% 50%,
-    rgba(255,255,255,.12),
-    transparent 40%
-    );
-
-    filter:blur(70px);
-
-    animation:fog 18s infinite alternate;
-
-    z-index:-4;
-
-}
-
-@keyframes fog{
-
-    from{
-        transform:translateX(-150px);
-    }
-
-    to{
-        transform:translateX(150px);
-    }
-
-}
-
-/* ================= AURORA ================= */
 
 .aurora{
 
@@ -96,28 +70,22 @@ body{
     background:
 
     radial-gradient(
-    circle at 20% 20%,
-    rgba(0,255,255,.18),
-    transparent 40%
+        circle at 20% 20%,
+        rgba(0,255,255,.18),
+        transparent 40%
     ),
 
     radial-gradient(
-    circle at 80% 30%,
-    rgba(0,255,128,.15),
-    transparent 40%
+        circle at 80% 20%,
+        rgba(0,255,120,.15),
+        transparent 40%
     ),
 
-    radial-gradient(
-    circle at 50% 80%,
-    rgba(130,100,255,.15),
-    transparent 40%
-    );
+    filter:blur(100px);
 
-    filter:blur(90px);
+    animation:aurora 10s infinite alternate;
 
-    animation:aurora 12s infinite alternate;
-
-    z-index:-3;
+    z-index:-4;
 
 }
 
@@ -137,7 +105,43 @@ body{
 
 }
 
-/* ================= SNOW ================= */
+.fog{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+
+    radial-gradient(
+        circle,
+        rgba(255,255,255,.08),
+        transparent 60%
+    );
+
+    filter:blur(80px);
+
+    animation:fog 20s infinite alternate;
+
+    z-index:-3;
+
+}
+
+@keyframes fog{
+
+    from{
+
+        transform:translateX(-150px);
+
+    }
+
+    to{
+
+        transform:translateX(150px);
+
+    }
+
+}
 
 #snow{
 
@@ -151,42 +155,6 @@ body{
 
 }
 
-/* ================= STARS ================= */
-
-.star{
-
-    position:absolute;
-
-    width:3px;
-
-    height:3px;
-
-    border-radius:50%;
-
-    background:white;
-
-    animation:twinkle 3s infinite;
-
-}
-
-@keyframes twinkle{
-
-    0%,100%{
-
-        opacity:.2;
-
-    }
-
-    50%{
-
-        opacity:1;
-
-    }
-
-}
-
-/* ================= CONTAINER ================= */
-
 .container{
 
     display:flex;
@@ -195,13 +163,13 @@ body{
 
     align-items:center;
 
-    min-height:100vh;
+    height:100vh;
 
     padding:20px;
 
 }
 
-.card{
+.panel{
 
     width:100%;
 
@@ -209,42 +177,17 @@ body{
 
     background:rgba(15,23,42,.75);
 
-    border:1px solid rgba(255,255,255,.1);
+    backdrop-filter:blur(25px);
 
-    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.1);
 
     border-radius:30px;
 
     padding:45px;
 
-    box-shadow:
-    0 30px 60px rgba(0,0,0,.5);
-
-    animation:cardAppear .8s;
+    box-shadow:0 30px 60px rgba(0,0,0,.5);
 
 }
-
-@keyframes cardAppear{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(40px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
-}
-
-/* ================= START SCREEN ================= */
 
 #startScreen{
 
@@ -256,39 +199,31 @@ body{
 
     display:inline-block;
 
-    padding:8px 20px;
+    padding:10px 25px;
 
-    border-radius:30px;
+    border-radius:50px;
 
-    border:1px solid rgba(147,197,253,.3);
-
-    color:#93c5fd;
-
-    background:rgba(147,197,253,.12);
+    background:rgba(255,255,255,.08);
 
     margin-bottom:25px;
 
 }
 
-.gameTitle{
+.title{
 
-    font-size:58px;
-
-    font-weight:700;
+    font-size:60px;
 
     margin-bottom:15px;
 
 }
 
-.gameSub{
+.subtitle{
 
-    color:#cbd5e1;
+    line-height:2;
 
-    line-height:1.9;
+    color:#d1d5db;
 
-    max-width:700px;
-
-    margin:auto auto 35px;
+    margin-bottom:40px;
 
 }
 
@@ -298,9 +233,9 @@ body{
 
     justify-content:center;
 
-    flex-wrap:wrap;
-
     gap:15px;
+
+    flex-wrap:wrap;
 
 }
 
@@ -308,13 +243,13 @@ body{
 
     border:none;
 
-    cursor:pointer;
-
     border-radius:50px;
 
-    padding:15px 40px;
+    padding:15px 35px;
 
-    font-size:15px;
+    cursor:pointer;
+
+    color:white;
 
     transition:.3s;
 
@@ -322,21 +257,13 @@ body{
 
 .primary{
 
-    background:linear-gradient(
-    135deg,
-    #3b82f6,
-    #2563eb
-    );
-
-    color:white;
+    background:#2563eb;
 
 }
 
 .secondary{
 
     background:rgba(255,255,255,.1);
-
-    color:white;
 
 }
 
@@ -346,25 +273,21 @@ body{
 
 }
 
-/* ================= GAME ================= */
-
 #gameScreen{
 
     display:none;
 
 }
 
-.topbar{
+.header{
 
     display:flex;
 
     justify-content:space-between;
 
-    align-items:center;
-
     margin-bottom:25px;
 
-    padding-bottom:20px;
+    padding-bottom:15px;
 
     border-bottom:1px solid rgba(255,255,255,.1);
 
@@ -372,39 +295,17 @@ body{
 
 .story{
 
-    min-height:220px;
+    min-height:250px;
 
     line-height:2;
 
-    color:#dbe4f0;
-
-    animation:fadeStory .5s;
+    color:#e5e7eb;
 
 }
 
-@keyframes fadeStory{
+.choices{
 
-    from{
-
-        opacity:0;
-
-        transform:translateY(20px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
-}
-
-.choiceBox{
-
-    margin-top:30px;
+    margin-top:25px;
 
     display:flex;
 
@@ -418,15 +319,17 @@ body{
 
     padding:18px;
 
+    border:none;
+
     border-radius:15px;
 
     cursor:pointer;
 
-    border:1px solid rgba(255,255,255,.1);
-
-    background:rgba(255,255,255,.05);
+    background:rgba(255,255,255,.06);
 
     color:white;
+
+    text-align:left;
 
     transition:.3s;
 
@@ -434,55 +337,37 @@ body{
 
 .choice:hover{
 
+    background:rgba(37,99,235,.4);
+
     transform:translateX(8px);
 
-    background:rgba(59,130,246,.2);
+}
 
-    border-color:#60a5fa;
+.settings{
+
+    display:none;
+
+    margin-top:25px;
 
 }
 
-/* ================= ENDING ================= */
+.setting-item{
 
-.ending{
-
-    text-align:center;
+    margin:15px 0;
 
 }
-
-.ending h2{
-
-    margin-bottom:20px;
-
-}
-
-.restart{
-
-    margin-top:30px;
-
-}
-
-/* ================= MOBILE ================= */
 
 @media(max-width:768px){
 
-    .card{
+    .title{
+
+        font-size:40px;
+
+    }
+
+    .panel{
 
         padding:25px;
-
-    }
-
-    .gameTitle{
-
-        font-size:38px;
-
-    }
-
-    .topbar{
-
-        flex-direction:column;
-
-        gap:10px;
 
     }
 
@@ -496,51 +381,51 @@ body{
 
 <div class="background"></div>
 
-<div class="fog"></div>
-
 <div class="aurora"></div>
+
+<div class="fog"></div>
 
 <canvas id="snow"></canvas>
 
-<div id="stars"></div>
-
 <div class="container">
 
-<div class="card">
+<div class="panel">
 
 <div id="startScreen">
 
 <div class="badge">
 
-❄ Interactive Snow Story
+❄ Winter Visual Novel
 
 </div>
 
-<h1 class="gameTitle">
+<h1 class="title">
 
-Snow Memories
+Snow Letter
 
 </h1>
 
-<p class="gameSub">
+<p class="subtitle">
 
-ห้าปีก่อน คนรักของคุณหายตัวไปพร้อมกับคดีปริศนา
+เมื่อหิมะแรกของปีพัดพาความทรงจำกลับมา
 
-คืนนี้ หิมะแรกของปีพัดพาคุณกลับมายังคฤหาสน์หลังเดิม
+คุณจะเลือกให้อภัย
 
-จดหมายปริศนาหนึ่งฉบับ
-
-นาฬิกาหยุดเดินหนึ่งเรือน
-
-และความจริงที่ไม่มีใครอยากให้คุณค้นพบ
+หรือปล่อยให้คนรักหายไปอีกครั้ง
 
 </p>
 
 <div class="menu">
 
-<button class="btn primary" onclick="startGame()">
+<button class="btn primary">
 
 🎮 New Game
+
+</button>
+
+<button class="btn secondary">
+
+▶ Continue
 
 </button>
 
@@ -550,37 +435,63 @@ Snow Memories
 
 </button>
 
-<button class="btn secondary">
-
-📖 Records
-
-</button>
-
 </div>
 
 </div>
 
 <div id="gameScreen">
 
-<div class="topbar">
+<div class="header">
 
 <div id="chapter">
 
-❄ Chapter 1
+Chapter 1
 
 </div>
 
-<div id="truth">
+<div id="progress">
 
-Truth 0%
+0%
+
+</div>
+
+</div>
+
+<div class="story" id="story">
+
+</div>
+
+<div class="choices" id="choices">
+
+</div>
+
+<div class="settings" id="settingsPanel">
+
+<div class="setting-item">
+
+🎵 Music
+
+<input type="checkbox" checked>
+
+</div>
+
+<div class="setting-item">
+
+❄ Snow
+
+<input type="checkbox" checked>
+
+</div>
+
+<div class="setting-item">
+
+⌨ Text Speed
+
+<input type="range" min="10" max="80" value="25">
 
 </div>
 
 </div>
-
-<div class="story" id="story"></div>
-
-<div class="choiceBox" id="choices"></div>
 
 </div>
 
@@ -588,204 +499,644 @@ Truth 0%
 
 </div>
 <script>
+/* ==========================
+   DOM
+========================== */
 
-/* ================= SNOW EFFECT ================= */
+const startScreen = document.getElementById("startScreen");
+const gameScreen = document.getElementById("gameScreen");
 
-const snowCanvas = document.getElementById("snow");
+const storyBox = document.getElementById("story");
+const choicesBox = document.getElementById("choices");
 
-const snowCtx = snowCanvas.getContext("2d");
+const progress = document.getElementById("progress");
+const chapter = document.getElementById("chapter");
 
-let width = snowCanvas.width = window.innerWidth;
+const settingsPanel =
+document.getElementById("settingsPanel");
 
-let height = snowCanvas.height = window.innerHeight;
+/* ==========================
+   SETTINGS
+========================== */
 
-window.addEventListener("resize", () => {
+let textSpeed = 25;
 
-    width = snowCanvas.width = window.innerWidth;
+const sliders =
+document.querySelectorAll("input[type=range]");
 
-    height = snowCanvas.height = window.innerHeight;
+if (sliders.length) {
 
-});
+    sliders[0].addEventListener("input", e => {
 
-const flakes = [];
-
-for(let i=0;i<180;i++){
-
-    flakes.push({
-
-        x:Math.random()*width,
-
-        y:Math.random()*height,
-
-        r:Math.random()*3+1,
-
-        speed:Math.random()*2+0.5,
-
-        drift:Math.random()*2-1
+        textSpeed = Number(e.target.value);
 
     });
 
 }
 
-function drawSnow(){
+/* ==========================
+   BUTTONS
+========================== */
 
-    snowCtx.clearRect(0,0,width,height);
+const buttons =
+document.querySelectorAll(".menu .btn");
 
-    snowCtx.fillStyle="rgba(255,255,255,.8)";
+const newGameBtn = buttons[0];
+const continueBtn = buttons[1];
+const settingsBtn = buttons[2];
 
-    flakes.forEach(f=>{
+newGameBtn.onclick = () => {
 
-        snowCtx.beginPath();
+    localStorage.removeItem("snow_save");
 
-        snowCtx.arc(f.x,f.y,f.r,0,Math.PI*2);
+    openGame();
 
-        snowCtx.fill();
+};
 
-        f.y+=f.speed;
+continueBtn.onclick = () => {
 
-        f.x+=f.drift;
+    const save =
+    localStorage.getItem("snow_save");
 
-        if(f.y>height){
+    if (!save) {
 
-            f.y=-10;
+        alert("ยังไม่มีข้อมูลที่บันทึกไว้");
 
-            f.x=Math.random()*width;
+        return;
+
+    }
+
+    openGame();
+
+    loadScene(save);
+
+};
+
+settingsBtn.onclick = () => {
+
+    settingsPanel.style.display =
+    settingsPanel.style.display === "block"
+        ? "none"
+        : "block";
+
+};
+
+/* ==========================
+   OPEN GAME
+========================== */
+
+function openGame() {
+
+    startScreen.style.display = "none";
+
+    gameScreen.style.display = "block";
+
+    if (!localStorage.getItem("snow_save")) {
+
+        loadScene("intro");
+
+    }
+
+}
+
+/* ==========================
+   TYPEWRITER
+========================== */
+
+function typeWriter(text, callback) {
+
+    storyBox.innerHTML = "";
+
+    let index = 0;
+
+    const timer = setInterval(() => {
+
+        storyBox.innerHTML += text[index];
+
+        index++;
+
+        if (index >= text.length) {
+
+            clearInterval(timer);
+
+            if (callback) {
+
+                callback();
+
+            }
+
+        }
+
+    }, textSpeed);
+
+}
+
+/* ==========================
+   CREATE CHOICES
+========================== */
+
+function createChoices(scene) {
+
+    choicesBox.innerHTML = "";
+
+    scene.choices.forEach(choice => {
+
+        const button =
+        document.createElement("button");
+
+        button.className = "choice";
+
+        button.innerHTML = choice.text;
+
+        button.onclick = () => {
+
+            loadScene(choice.next);
+
+        };
+
+        choicesBox.appendChild(button);
+
+    });
+
+}
+
+/* ==========================
+   LOAD SCENE
+========================== */
+
+function loadScene(key) {
+
+    const scene = STORY[key];
+
+    localStorage.setItem(
+        "snow_save",
+        key
+    );
+
+    chapter.textContent =
+    scene.chapter;
+
+    progress.textContent =
+    scene.progress;
+
+    typeWriter(
+
+        scene.text,
+
+        () => {
+
+            createChoices(scene);
+
+        }
+
+    );
+
+}
+
+/* ==========================
+   SNOW EFFECT
+========================== */
+
+const canvas =
+document.getElementById("snow");
+
+const ctx =
+canvas.getContext("2d");
+
+function resize() {
+
+    canvas.width =
+    window.innerWidth;
+
+    canvas.height =
+    window.innerHeight;
+
+}
+
+resize();
+
+window.addEventListener(
+    "resize",
+    resize
+);
+
+const flakes = [];
+
+for (let i = 0; i < 180; i++) {
+
+    flakes.push({
+
+        x:
+        Math.random() *
+        canvas.width,
+
+        y:
+        Math.random() *
+        canvas.height,
+
+        r:
+        Math.random() * 4 + 1,
+
+        speed:
+        Math.random() * 2 + 0.5
+
+    });
+
+}
+
+function drawSnow() {
+
+    ctx.clearRect(
+
+        0,
+        0,
+        canvas.width,
+        canvas.height
+
+    );
+
+    flakes.forEach(flake => {
+
+        ctx.beginPath();
+
+        ctx.arc(
+
+            flake.x,
+            flake.y,
+            flake.r,
+            0,
+            Math.PI * 2
+
+        );
+
+        ctx.fillStyle =
+        "rgba(255,255,255,.8)";
+
+        ctx.fill();
+
+        flake.y +=
+        flake.speed;
+
+        if (
+
+            flake.y >
+            canvas.height
+
+        ) {
+
+            flake.y = -10;
+
+            flake.x =
+            Math.random() *
+            canvas.width;
 
         }
 
     });
 
-    requestAnimationFrame(drawSnow);
+    requestAnimationFrame(
+        drawSnow
+    );
 
 }
 
 drawSnow();
 
-/* ================= STAR EFFECT ================= */
+/* ==========================
+   STARS
+========================== */
 
-const stars=document.getElementById("stars");
+for (let i = 0; i < 100; i++) {
 
-for(let i=0;i<80;i++){
+    const star =
+    document.createElement("div");
 
-    const star=document.createElement("div");
+    star.style.position =
+    "fixed";
 
-    star.className="star";
+    star.style.width =
+    "2px";
 
-    star.style.left=Math.random()*100+"%";
+    star.style.height =
+    "2px";
 
-    star.style.top=Math.random()*100+"%";
+    star.style.background =
+    "white";
 
-    star.style.animationDelay=Math.random()*4+"s";
+    star.style.borderRadius =
+    "50%";
 
-    stars.appendChild(star);
+    star.style.left =
+    Math.random() * 100 + "%";
 
-}
+    star.style.top =
+    Math.random() * 100 + "%";
 
-/* ================= PARALLAX ================= */
+    star.style.opacity =
+    Math.random();
 
-document.addEventListener("mousemove",e=>{
-
-    const x=e.clientX/window.innerWidth;
-
-    const y=e.clientY/window.innerHeight;
-
-    document.querySelector(".background").style.transform=
-
-    `translate(${x*15}px,${y*15}px)`;
-
-});
-
-/* ================= SOUND ================= */
-
-const audioContext=new(
-
-window.AudioContext||
-
-window.webkitAudioContext
-
-)();
-
-function playSound(type){
-
-    if(audioContext.state==="suspended"){
-
-        audioContext.resume();
-
-    }
-
-    const oscillator=
-
-    audioContext.createOscillator();
-
-    const gain=
-
-    audioContext.createGain();
-
-    oscillator.connect(gain);
-
-    gain.connect(audioContext.destination);
-
-    const now=audioContext.currentTime;
-
-    if(type==="click"){
-
-        oscillator.frequency.value=400;
-
-        gain.gain.setValueAtTime(.08,now);
-
-        gain.gain.exponentialRampToValueAtTime(
-
-        .001,
-
-        now+.1
-
-        );
-
-        oscillator.start();
-
-        oscillator.stop(now+.1);
-
-    }
-
-    if(type==="wind"){
-
-        oscillator.frequency.value=180;
-
-        gain.gain.setValueAtTime(.05,now);
-
-        gain.gain.exponentialRampToValueAtTime(
-
-        .001,
-
-        now+.5
-
-        );
-
-        oscillator.start();
-
-        oscillator.stop(now+.5);
-
-    }
+    document.body.appendChild(
+        star
+    );
 
 }
 
-/* ================= TYPEWRITER ================= */
+/* ==========================
+   HISTORY
+========================== */
 
-function typeWriter(text,element,callback){
+const historyLog = [];
 
-    element.innerHTML="";
+function addHistory(text) {
 
-    let index=0;
+    historyLog.push(text);
 
-    const timer=setInterval(()=>{
+}
 
-        element.innerHTML+=text[index];
+</script>
+<script>
+
+/* =========================================================
+   SNOW LETTER
+   GAME ENGINE
+========================================================= */
+
+/* ---------------------------------------------------------
+   ELEMENTS
+--------------------------------------------------------- */
+
+const startScreen = document.getElementById("startScreen");
+const gameScreen = document.getElementById("gameScreen");
+
+const storyElement = document.getElementById("story");
+const choicesElement = document.getElementById("choices");
+
+const chapterElement = document.getElementById("chapter");
+const progressElement = document.getElementById("progress");
+
+const settingsPanel = document.getElementById("settingsPanel");
+
+const snowCanvas = document.getElementById("snow");
+const snowCtx = snowCanvas.getContext("2d");
+
+
+/* ---------------------------------------------------------
+   GAME STATE
+--------------------------------------------------------- */
+
+let currentScene = "intro";
+
+let currentChapter = 1;
+
+let affection = 0;
+
+let trust = 0;
+
+let memory = 0;
+
+let courage = 0;
+
+let truth = 0;
+
+let typingSpeed = 25;
+
+let typingTimer = null;
+
+let isTyping = false;
+
+let skipTyping = false;
+
+
+/* ---------------------------------------------------------
+   SAVE DATA
+--------------------------------------------------------- */
+
+const SAVE_KEY = "snow_letter_save";
+
+
+function getGameData(){
+
+    return {
+
+        currentScene,
+
+        currentChapter,
+
+        affection,
+
+        trust,
+
+        memory,
+
+        courage,
+
+        truth
+
+    };
+
+}
+
+
+function saveGame(){
+
+    const data = getGameData();
+
+    localStorage.setItem(
+
+        SAVE_KEY,
+
+        JSON.stringify(data)
+
+    );
+
+}
+
+
+function loadSave(){
+
+    const saved = localStorage.getItem(SAVE_KEY);
+
+    if(!saved){
+
+        return false;
+
+    }
+
+    try{
+
+        const data = JSON.parse(saved);
+
+        currentScene = data.currentScene || "intro";
+
+        currentChapter = data.currentChapter || 1;
+
+        affection = data.affection || 0;
+
+        trust = data.trust || 0;
+
+        memory = data.memory || 0;
+
+        courage = data.courage || 0;
+
+        truth = data.truth || 0;
+
+        return true;
+
+    }catch(error){
+
+        console.error(
+
+            "Save data error:",
+
+            error
+
+        );
+
+        return false;
+
+    }
+
+}
+
+
+function hasSave(){
+
+    return localStorage.getItem(SAVE_KEY) !== null;
+
+}
+
+
+/* ---------------------------------------------------------
+   NEW GAME
+--------------------------------------------------------- */
+
+function newGame(){
+
+    currentScene = "intro";
+
+    currentChapter = 1;
+
+    affection = 0;
+
+    trust = 0;
+
+    memory = 0;
+
+    courage = 0;
+
+    truth = 0;
+
+    saveGame();
+
+    openGame();
+
+}
+
+
+/* ---------------------------------------------------------
+   CONTINUE
+--------------------------------------------------------- */
+
+function continueGame(){
+
+    if(!loadSave()){
+
+        alert(
+
+            "ยังไม่มีเกมที่บันทึกไว้"
+
+        );
+
+        return;
+
+    }
+
+    openGame();
+
+}
+
+
+/* ---------------------------------------------------------
+   OPEN GAME
+--------------------------------------------------------- */
+
+function openGame(){
+
+    startScreen.style.display = "none";
+
+    gameScreen.style.display = "block";
+
+    settingsPanel.style.display = "none";
+
+    showScene(currentScene);
+
+}
+
+
+/* ---------------------------------------------------------
+   RETURN TO TITLE
+--------------------------------------------------------- */
+
+function returnToTitle(){
+
+    gameScreen.style.display = "none";
+
+    startScreen.style.display = "block";
+
+}
+
+
+/* ---------------------------------------------------------
+   TYPEWRITER
+--------------------------------------------------------- */
+
+function typeText(text, callback){
+
+    clearInterval(typingTimer);
+
+    storyElement.innerHTML = "";
+
+    isTyping = true;
+
+    skipTyping = false;
+
+    let index = 0;
+
+    typingTimer = setInterval(()=>{
+
+        if(skipTyping){
+
+            storyElement.innerHTML = text;
+
+            clearInterval(typingTimer);
+
+            typingTimer = null;
+
+            isTyping = false;
+
+            skipTyping = false;
+
+            if(callback){
+
+                callback();
+
+            }
+
+            return;
+
+        }
+
+        storyElement.innerHTML += text.charAt(index);
 
         index++;
 
-        if(index>=text.length){
+        if(index >= text.length){
 
-            clearInterval(timer);
+            clearInterval(typingTimer);
+
+            typingTimer = null;
+
+            isTyping = false;
 
             if(callback){
 
@@ -795,651 +1146,1908 @@ function typeWriter(text,element,callback){
 
         }
 
-    },18);
+    }, typingSpeed);
 
 }
 
-/* ================= GAME SYSTEM ================= */
 
-const storyElement=
+/* ---------------------------------------------------------
+   CLICK STORY TO SKIP TYPING
+--------------------------------------------------------- */
 
-document.getElementById("story");
+storyElement.addEventListener(
 
-const choicesElement=
+    "click",
 
-document.getElementById("choices");
+    ()=>{
 
-const truthElement=
+        if(isTyping){
 
-document.getElementById("truth");
+            skipTyping = true;
 
-let history=[];
+        }
 
-function startGame(){
-
-    playSound("click");
-
-    document.getElementById(
-
-    "startScreen"
-
-    ).style.display="none";
-
-    document.getElementById(
-
-    "gameScreen"
-
-    ).style.display="block";
-
-    loadScene("intro");
-
-}
-
-function createChoices(scene){
-
-    choicesElement.innerHTML="";
-
-    scene.choices.forEach(choice=>{
-
-        const button=
-
-        document.createElement("button");
-
-        button.className="choice";
-
-        button.innerText=choice.text;
-
-        button.onclick=()=>{
-
-            playSound("click");
-
-            loadScene(choice.next);
-
-        };
-
-        choicesElement.appendChild(button);
-
-    });
-
-}
-
-</script>
-<script>
-
-/* ================= STORY ================= */
-
-const STORY={
-
-intro:{
-
-truth:5,
-
-text:`
-
-หิมะแรกของปีโปรยปรายลงมาปกคลุมถนนบนภูเขา
-
-คุณ "เรน" เดินกลับมายังคฤหาสน์ที่ถูกปิดตายมานาน
-
-ในมือของคุณมีจดหมายเพียงฉบับเดียว
-
-"ถ้าหิมะแรกของปีมาถึง จงกลับมาที่นี่"
-
-ลายมือบนซองเป็นของ "อีธาน"
-
-คนรักที่หายตัวไปเมื่อห้าปีก่อน
-
-แต่เมื่อคุณเปิดประตูเข้าไป สิ่งที่พบกลับเป็นร่างไร้วิญญาณของเจ้าของคฤหาสน์
-
-และสมุดบันทึกของอีธานที่ตกอยู่ข้างศพ
-
-`,
-
-choices:[
-
-{
-
-text:"🔍 ตรวจสอบสมุดบันทึก",
-
-next:"diary"
-
-},
-
-{
-
-text:"🚪 สำรวจคฤหาสน์",
-
-next:"mansion"
-
-},
-
-{
-
-text:"❄️ ตามรอยรอยเท้าบนหิมะ",
-
-next:"footprints"
-
-}
-
-]
-
-},
-
-/* ================= DIARY ================= */
-
-diary:{
-
-truth:25,
-
-text:`
-
-หน้าสุดท้ายของสมุดบันทึกมีข้อความสั้น ๆ
-
-"อย่าไว้ใจใคร"
-
-"ถ้าเราหายไป ให้มองหานาฬิกา"
-
-เมื่อคุณพลิกไปหน้าถัดไป กระดาษบางส่วนถูกฉีกออกไป
-
-แต่มีแผนที่ถูกวาดเอาไว้
-
-ปลายทางคือห้องใต้ดิน
-
-`,
-
-choices:[
-
-{
-
-text:"🕰️ ตามหานาฬิกา",
-
-next:"watch"
-
-},
-
-{
-
-text:"⬇️ ลงไปที่ห้องใต้ดิน",
-
-next:"basement"
-
-},
-
-{
-
-text:"🌨️ ออกไปตามหาอีธาน",
-
-next:"ethan"
-
-}
-
-]
-
-},
-
-/* ================= MANSION ================= */
-
-mansion:{
-
-truth:20,
-
-text:`
-
-คฤหาสน์แห่งนี้เงียบผิดปกติ
-
-นาฬิกาโบราณหยุดเดินอยู่ที่เวลา 23:47
-
-ภาพถ่ายเก่า ๆ ถูกแขวนอยู่บนผนัง
-
-ภาพหนึ่งทำให้คุณหยุดหายใจ
-
-เป็นภาพของคุณกับอีธาน
-
-แต่มีชายอีกคนยืนอยู่ด้านหลัง
-
-คุณจำเขาไม่ได้
-
-`,
-
-choices:[
-
-{
-
-text:"📷 ตรวจสอบภาพถ่าย",
-
-next:"photo"
-
-},
-
-{
-
-text:"🚶 เดินขึ้นไปบนชั้นสอง",
-
-next:"secondfloor"
-
-},
-
-{
-
-text:"❄️ ออกจากบ้าน",
-
-next:"footprints"
-
-}
-
-]
-
-},
-
-/* ================= FOOTPRINT ================= */
-
-footprints:{
-
-truth:30,
-
-text:`
-
-รอยเท้าบนหิมะทอดยาวไปจนถึงป่าสน
-
-คุณเดินตามมันไปเรื่อย ๆ
-
-จนกระทั่งเห็นแสงไฟจากกระท่อมหลังหนึ่ง
-
-ประตูเปิดออกช้า ๆ
-
-และคนที่ยืนอยู่ตรงหน้าคืออีธาน
-
-`,
-
-choices:[
-
-{
-
-text:"❤️ เข้าไปหาเขา",
-
-next:"ethan"
-
-},
-
-{
-
-text:"❓ ถามว่าเกิดอะไรขึ้น",
-
-next:"truthroom"
-
-},
-
-{
-
-text:"⚠️ ถอยกลับ",
-
-next:"betrayal"
-
-}
-
-]
-
-},
-
-/* ================= WATCH ================= */
-
-watch:{
-
-truth:45,
-
-text:`
-
-คุณพบนาฬิกาพกซ่อนอยู่ในลิ้นชัก
-
-ด้านในมีชิปข้อมูลขนาดเล็ก
-
-เมื่อเปิดดู คุณพบรายชื่อผู้เกี่ยวข้องกับคดี
-
-แต่ชื่อสุดท้ายทำให้คุณตกใจ
-
-"Ethan"
-
-`,
-
-choices:[
-
-{
-
-text:"💾 เปิดข้อมูลทั้งหมด",
-
-next:"truthroom"
-
-},
-
-{
-
-text:"🏃 ไปหาอีธาน",
-
-next:"ethan"
-
-},
-
-{
-
-text:"🔥 ทำลายหลักฐาน",
-
-next:"lonely"
-
-}
-
-]
-
-},
-
-/* ================= BASEMENT ================= */
-
-basement:{
-
-truth:55,
-
-text:`
-
-ห้องใต้ดินเต็มไปด้วยเอกสารลับ
-
-บนผนังมีแผนผังขนาดใหญ่
-
-ทุกเส้นเชื่อมโยงไปยังบุคคลคนเดียว
-
-อีธาน
-
-เสียงฝีเท้าดังขึ้นด้านหลัง
-
-ใครบางคนกำลังเดินเข้ามา
-
-`,
-
-choices:[
-
-{
-
-text:"🔦 ซ่อนตัว",
-
-next:"truthroom"
-
-},
-
-{
-
-text:"🚪 เปิดประตูหนี",
-
-next:"footprints"
-
-},
-
-{
-
-text:"🔫 เผชิญหน้า",
-
-next:"betrayal"
-
-}
-
-]
-
-},
-
-/* ================= PHOTO ================= */
-
-photo:{
-
-truth:40,
-
-text:`
-
-ด้านหลังภาพถ่ายมีข้อความเขียนด้วยลายมือ
-
-"ความทรงจำอาจโกหกได้"
-
-คุณเริ่มสงสัยว่าเรื่องราวที่จำได้ตลอดห้าปีอาจไม่ใช่ความจริง
-
-`,
-
-choices:[
-
-{
-
-text:"🧩 สืบต่อ",
-
-next:"truthroom"
-
-},
-
-{
-
-text:"❤️ ตามหาอีธาน",
-
-next:"ethan"
-
-},
-
-{
-
-text:"🚪 ออกจากคฤหาสน์",
-
-next:"lonely"
-
-}
-
-]
-
-},
-
-/* ================= SECOND FLOOR ================= */
-
-secondfloor:{
-
-truth:50,
-
-text:`
-
-บนชั้นสองมีห้องหนึ่งถูกล็อกไว้
-
-เมื่อคุณเปิดเข้าไป คุณพบจดหมายหลายสิบฉบับ
-
-ทุกฉบับเขียนถึงคุณ
-
-แต่ไม่เคยถูกส่งออกไปเลย
-
-`,
-
-choices:[
-
-{
-
-text:"📖 อ่านจดหมาย",
-
-next:"ethan"
-
-},
-
-{
-
-text:"🕵️ ค้นหาความจริง",
-
-next:"truthroom"
-
-},
-
-{
-
-text:"❄️ กลับลงไป",
-
-next:"footprints"
-
-}
-
-]
-
-},
-
-/* ================= ETHAN ================= */
-
-ethan:{
-
-truth:80,
-
-text:`
-
-อีธานยังมีชีวิตอยู่
-
-เขาสารภาพว่าเขาหายตัวไปเพื่อสืบคดีองค์กรลับ
-
-แต่ยิ่งคุณค้นหาความจริงมากเท่าไร
-
-คุณก็ยิ่งตกอยู่ในอันตรายมากขึ้นเท่านั้น
-
-"คืนนี้นายต้องเลือก"
-
-เขาพูดพร้อมมองหิมะที่กำลังตก
-
-`,
-
-choices:[
-
-{
-
-text:"🤝 เชื่อใจอีธาน",
-
-next:"endhappy"
-
-},
-
-{
-
-text:"📂 เปิดโปงคดี",
-
-next:"endbittersweet"
-
-},
-
-{
-
-text:"💔 ปฏิเสธเขา",
-
-next:"endlonely"
-
-}
-
-]
-
-},
-
-/* ================= TRUTH ================= */
-
-truthroom:{
-
-truth:100,
-
-text:`
-
-ความจริงถูกเปิดเผย
-
-อีธานไม่ใช่คนร้าย
-
-แต่เขากำลังปกป้องคุณจากองค์กรที่อยู่เบื้องหลังทุกอย่าง
-
-อย่างไรก็ตาม
-
-ยังมีบางอย่างที่เขาไม่ยอมบอกคุณ
-
-`,
-
-choices:[
-
-{
-
-text:"❤️ อยู่กับเขา",
-
-next:"endtrue"
-
-},
-
-{
-
-text:"⚖️ ส่งหลักฐานให้ตำรวจ",
-
-next:"endbittersweet"
-
-},
-
-{
-
-text:"❌ จากไป",
-
-next:"endlonely"
-
-}
-
-]
-
-}
-
-};
-
-function loadScene(key){
-
-const scene=STORY[key];
-
-if(!scene){
-
-return;
-
-}
-
-truthElement.innerHTML=
-
-"Truth "+scene.truth+"%";
-
-typeWriter(
-
-scene.text,
-
-storyElement,
-
-()=>{
-
-createChoices(scene);
-
-}
+    }
 
 );
 
+
+/* ---------------------------------------------------------
+   UPDATE STATUS
+--------------------------------------------------------- */
+
+function updateStatus(scene){
+
+    if(scene.chapter){
+
+        currentChapter = scene.chapter;
+
+    }
+
+    chapterElement.innerText =
+
+        "Chapter " +
+
+        currentChapter;
+
+    const totalScore =
+
+        affection +
+
+        trust +
+
+        memory +
+
+        courage +
+
+        truth;
+
+    const percentage =
+
+        Math.min(
+
+            100,
+
+            Math.max(
+
+                0,
+
+                Math.round(
+
+                    totalScore / 5
+
+                )
+
+            )
+
+        );
+
+    progressElement.innerText =
+
+        percentage +
+
+        "%";
+
 }
+
+
+/* ---------------------------------------------------------
+   SHOW CHOICES
+--------------------------------------------------------- */
+
+function showChoices(choices){
+
+    choicesElement.innerHTML = "";
+
+    if(!choices || choices.length === 0){
+
+        return;
+
+    }
+
+    choices.forEach(
+
+        (choice,index)=>{
+
+            const button =
+
+                document.createElement("button");
+
+            button.className = "choice";
+
+            button.innerHTML =
+
+                "<span>" +
+
+                (index + 1) +
+
+                ". " +
+
+                choice.text +
+
+                "</span>";
+
+            button.addEventListener(
+
+                "click",
+
+                ()=>{
+
+                    makeChoice(choice);
+
+                }
+
+            );
+
+            choicesElement.appendChild(
+
+                button
+
+            );
+
+        }
+
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   MAKE CHOICE
+--------------------------------------------------------- */
+
+function makeChoice(choice){
+
+    if(isTyping){
+
+        skipTyping = true;
+
+        return;
+
+    }
+
+    if(choice.effect){
+
+        if(choice.effect.affection){
+
+            affection +=
+
+                choice.effect.affection;
+
+        }
+
+        if(choice.effect.trust){
+
+            trust +=
+
+                choice.effect.trust;
+
+        }
+
+        if(choice.effect.memory){
+
+            memory +=
+
+                choice.effect.memory;
+
+        }
+
+        if(choice.effect.courage){
+
+            courage +=
+
+                choice.effect.courage;
+
+        }
+
+        if(choice.effect.truth){
+
+            truth +=
+
+                choice.effect.truth;
+
+        }
+
+    }
+
+    currentScene = choice.next;
+
+    saveGame();
+
+    showScene(currentScene);
+
+}
+
+
+/* ---------------------------------------------------------
+   SHOW SCENE
+--------------------------------------------------------- */
+
+function showScene(sceneId){
+
+    const scene = STORY[sceneId];
+
+    if(!scene){
+
+        console.error(
+
+            "Scene not found:",
+
+            sceneId
+
+        );
+
+        return;
+
+    }
+
+    updateStatus(scene);
+
+    choicesElement.innerHTML = "";
+
+    storyElement.classList.remove(
+
+        "story-animation"
+
+    );
+
+    void storyElement.offsetWidth;
+
+    storyElement.classList.add(
+
+        "story-animation"
+
+    );
+
+    typeText(
+
+        scene.text,
+
+        ()=>{
+
+            showChoices(
+
+                scene.choices
+
+            );
+
+        }
+
+    );
+
+}
+
+
+/* =========================================================
+   SNOW SYSTEM
+========================================================= */
+
+let snowWidth =
+
+    window.innerWidth;
+
+let snowHeight =
+
+    window.innerHeight;
+
+
+function resizeSnow(){
+
+    snowWidth =
+
+        snowCanvas.width =
+
+        window.innerWidth;
+
+    snowHeight =
+
+        snowCanvas.height =
+
+        window.innerHeight;
+
+}
+
+
+window.addEventListener(
+
+    "resize",
+
+    resizeSnow
+
+);
+
+
+resizeSnow();
+
+
+const snowflakes = [];
+
+
+function createSnowflakes(){
+
+    snowflakes.length = 0;
+
+    const amount =
+
+        window.innerWidth < 700
+
+        ? 90
+
+        : 180;
+
+    for(
+
+        let i = 0;
+
+        i < amount;
+
+        i++
+
+    ){
+
+        snowflakes.push({
+
+            x:
+
+                Math.random() *
+
+                snowWidth,
+
+            y:
+
+                Math.random() *
+
+                snowHeight,
+
+            radius:
+
+                Math.random() *
+
+                3 +
+
+                1,
+
+            speed:
+
+                Math.random() *
+
+                1.8 +
+
+                .5,
+
+            wind:
+
+                Math.random() *
+
+                .8 -
+
+                .4,
+
+            opacity:
+
+                Math.random() *
+
+                .7 +
+
+                .3,
+
+            swing:
+
+                Math.random() *
+
+                Math.PI *
+
+                2
+
+        });
+
+    }
+
+}
+
+
+createSnowflakes();
+
+
+function drawSnow(){
+
+    snowCtx.clearRect(
+
+        0,
+
+        0,
+
+        snowWidth,
+
+        snowHeight
+
+    );
+
+    snowflakes.forEach(
+
+        flake=>{
+
+            snowCtx.beginPath();
+
+            snowCtx.fillStyle =
+
+                "rgba(255,255,255," +
+
+                flake.opacity +
+
+                ")";
+
+            snowCtx.arc(
+
+                flake.x,
+
+                flake.y,
+
+                flake.radius,
+
+                0,
+
+                Math.PI * 2
+
+            );
+
+            snowCtx.fill();
+
+            flake.y +=
+
+                flake.speed;
+
+            flake.swing +=
+
+                .01;
+
+            flake.x +=
+
+                flake.wind +
+
+                Math.sin(
+
+                    flake.swing
+
+                ) * .3;
+
+            if(
+
+                flake.y >
+
+                snowHeight + 10
+
+            ){
+
+                flake.y = -10;
+
+                flake.x =
+
+                    Math.random() *
+
+                    snowWidth;
+
+            }
+
+            if(
+
+                flake.x >
+
+                snowWidth + 10
+
+            ){
+
+                flake.x = -10;
+
+            }
+
+            if(
+
+                flake.x < -10
+
+            ){
+
+                flake.x =
+
+                    snowWidth + 10;
+
+            }
+
+        }
+
+    );
+
+    requestAnimationFrame(
+
+        drawSnow
+
+    );
+
+}
+
+
+drawSnow();
+
+
+/* =========================================================
+   STAR EFFECT
+========================================================= */
+
+function createStars(){
+
+    const starLayer =
+
+        document.createElement(
+
+            "div"
+
+        );
+
+    starLayer.id =
+
+        "starLayer";
+
+    starLayer.style.position =
+
+        "fixed";
+
+    starLayer.style.inset =
+
+        "0";
+
+    starLayer.style.pointerEvents =
+
+        "none";
+
+    starLayer.style.zIndex =
+
+        "-1";
+
+    document.body.appendChild(
+
+        starLayer
+
+    );
+
+    for(
+
+        let i = 0;
+
+        i < 70;
+
+        i++
+
+    ){
+
+        const star =
+
+            document.createElement(
+
+                "span"
+
+            );
+
+        star.style.position =
+
+            "absolute";
+
+        star.style.left =
+
+            Math.random() *
+
+            100 +
+
+            "%";
+
+        star.style.top =
+
+            Math.random() *
+
+            65 +
+
+            "%";
+
+        const size =
+
+            Math.random() *
+
+            2.5 +
+
+            1;
+
+        star.style.width =
+
+            size +
+
+            "px";
+
+        star.style.height =
+
+            size +
+
+            "px";
+
+        star.style.borderRadius =
+
+            "50%";
+
+        star.style.background =
+
+            "white";
+
+        star.style.opacity =
+
+            Math.random();
+
+        star.style.boxShadow =
+
+            "0 0 8px white";
+
+        star.style.animation =
+
+            "starTwinkle " +
+
+            (
+
+                Math.random() *
+
+                4 +
+
+                2
+
+            ) +
+
+            "s ease-in-out infinite";
+
+        star.style.animationDelay =
+
+            Math.random() *
+
+            4 +
+
+            "s";
+
+        starLayer.appendChild(
+
+            star
+
+        );
+
+    }
+
+}
+
+
+createStars();
+
+
+/* =========================================================
+   BUTTON CONNECTIONS
+========================================================= */
+
+const menuButtons =
+
+    startScreen.querySelectorAll(
+
+        ".btn"
+
+    );
+
+
+/*
+
+Button 1 = New Game
+
+Button 2 = Continue
+
+Button 3 = Settings
+
+*/
+
+if(menuButtons[0]){
+
+    menuButtons[0].addEventListener(
+
+        "click",
+
+        newGame
+
+    );
+
+}
+
+
+if(menuButtons[1]){
+
+    menuButtons[1].addEventListener(
+
+        "click",
+
+        continueGame
+
+    );
+
+}
+
+
+if(menuButtons[2]){
+
+    menuButtons[2].addEventListener(
+
+        "click",
+
+        openSettings
+
+    );
+
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+function openSettings(){
+
+    let existing =
+
+        document.getElementById(
+
+            "titleSettings"
+
+        );
+
+    if(existing){
+
+        existing.remove();
+
+    }
+
+    const overlay =
+
+        document.createElement(
+
+            "div"
+
+        );
+
+    overlay.id =
+
+        "titleSettings";
+
+    overlay.style.position =
+
+        "fixed";
+
+    overlay.style.inset =
+
+        "0";
+
+    overlay.style.background =
+
+        "rgba(2,6,23,.85)";
+
+    overlay.style.backdropFilter =
+
+        "blur(12px)";
+
+    overlay.style.display =
+
+        "flex";
+
+    overlay.style.alignItems =
+
+        "center";
+
+    overlay.style.justifyContent =
+
+        "center";
+
+    overlay.style.zIndex =
+
+        "100";
+
+    overlay.innerHTML = `
+
+        <div style="
+
+            width:min(90%,430px);
+
+            background:rgba(15,23,42,.96);
+
+            border:1px solid rgba(255,255,255,.12);
+
+            border-radius:25px;
+
+            padding:30px;
+
+            box-shadow:0 30px 70px rgba(0,0,0,.6);
+
+        ">
+
+            <h2 style="margin-bottom:25px;">
+
+                ⚙ Settings
+
+            </h2>
+
+            <div style="margin-bottom:20px;">
+
+                <label>
+
+                    ❄ Snow Effect
+
+                </label>
+
+                <input
+
+                    id="titleSnowToggle"
+
+                    type="checkbox"
+
+                    checked
+
+                    style="margin-left:10px;"
+
+                >
+
+            </div>
+
+            <div style="margin-bottom:20px;">
+
+                <label>
+
+                    ✨ Visual Effects
+
+                </label>
+
+                <input
+
+                    id="titleEffectToggle"
+
+                    type="checkbox"
+
+                    checked
+
+                    style="margin-left:10px;"
+
+                >
+
+            </div>
+
+            <div style="margin-bottom:20px;">
+
+                <label>
+
+                    ⌨ Text Speed
+
+                </label>
+
+                <input
+
+                    id="titleSpeed"
+
+                    type="range"
+
+                    min="10"
+
+                    max="80"
+
+                    value="${typingSpeed}"
+
+                    style="width:100%;margin-top:10px;"
+
+                >
+
+            </div>
+
+            <button
+
+                id="closeTitleSettings"
+
+                class="btn primary"
+
+                style="width:100%;"
+
+            >
+
+                ✓ Done
+
+            </button>
+
+        </div>
+
+    `;
+
+    document.body.appendChild(
+
+        overlay
+
+    );
+
+    document
+
+        .getElementById(
+
+            "titleSpeed"
+
+        )
+
+        .addEventListener(
+
+            "input",
+
+            e=>{
+
+                typingSpeed =
+
+                    Number(
+
+                        e.target.value
+
+                    );
+
+            }
+
+        );
+
+    document
+
+        .getElementById(
+
+            "titleSnowToggle"
+
+        )
+
+        .addEventListener(
+
+            "change",
+
+            e=>{
+
+                snowCanvas.style.display =
+
+                    e.target.checked
+
+                    ? "block"
+
+                    : "none";
+
+            }
+
+        );
+
+    document
+
+        .getElementById(
+
+            "titleEffectToggle"
+
+        )
+
+        .addEventListener(
+
+            "change",
+
+            e=>{
+
+                document.body.classList.toggle(
+
+                    "effects-off",
+
+                    !e.target.checked
+
+                );
+
+            }
+
+        );
+
+    document
+
+        .getElementById(
+
+            "closeTitleSettings"
+
+        )
+
+        .addEventListener(
+
+            "click",
+
+            ()=>{
+
+                overlay.remove();
+
+            }
+
+        );
+
+}
+
+
+/* =========================================================
+   KEYBOARD SHORTCUTS
+========================================================= */
+
+document.addEventListener(
+
+    "keydown",
+
+    e=>{
+
+        if(e.key === "Escape"){
+
+            if(isTyping){
+
+                skipTyping = true;
+
+            }
+
+        }
+
+    }
+
+);
+
+
+/* =========================================================
+   INITIAL SAVE CHECK
+========================================================= */
+
+function updateContinueButton(){
+
+    const continueButton =
+
+        menuButtons[1];
+
+    if(!continueButton){
+
+        return;
+
+    }
+
+    if(hasSave()){
+
+        continueButton.innerHTML =
+
+            "▶ Continue";
+
+        continueButton.style.opacity =
+
+            "1";
+
+    }else{
+
+        continueButton.innerHTML =
+
+            "▶ Continue";
+
+        continueButton.style.opacity =
+
+            ".5";
+
+    }
+
+}
+
+
+updateContinueButton();
+
+
+/* =========================================================
+   AUTO SAVE
+========================================================= */
+
+setInterval(
+
+    ()=>{
+
+        if(
+
+            gameScreen.style.display !==
+
+            "none"
+
+        ){
+
+            saveGame();
+
+        }
+
+    },
+
+    10000
+
+);
 
 </script>
 <script>
 
-/* ================= ENDINGS ================= */
+/* =========================================================
+   STORY DATA
+========================================================= */
 
-STORY.endtrue={
+const STORY={
 
-truth:100,
+/* =========================================================
+   CHAPTER 1
+========================================================= */
+
+intro:{
+
+chapter:1,
 
 text:`
 
-❄️ TRUE ENDING
+หิมะแรกของปีตกลงมาอย่างเงียบงัน
 
-หิมะยังคงตกอย่างเงียบงัน
+คุณยืนอยู่บนชานชาลาของสถานีรถไฟเล็ก ๆ ในเมืองที่ไม่ได้กลับมาเยือนนานถึงเจ็ดปี
 
-คุณตัดสินใจอยู่เคียงข้างอีธาน
+ทุกอย่างยังคงเหมือนเดิม
 
-หลักฐานทั้งหมดถูกส่งต่อไปยังหน่วยงานที่เกี่ยวข้อง
+เสียงลมเย็นพัดผ่าน
 
-องค์กรลับถูกเปิดโปง
+แสงไฟสีส้มส่องกระทบเกล็ดหิมะที่ลอยลงมาจากท้องฟ้า
 
-หลายปีต่อมา
+ในกระเป๋าเสื้อของคุณมีจดหมายสีขาวเพียงฉบับเดียว
 
-คุณทั้งสองกลับมาที่คฤหาสน์แห่งนี้อีกครั้ง
+จดหมายที่ส่งมาหาคุณเมื่อสามวันก่อน
 
-ไม่มีความลับ
+'ถ้าเธอยังจำฉันได้ กลับมาที่สถานีแห่งนี้'
 
-ไม่มีการหลบหนี
+ผู้ส่งคือ อีธาน
 
-เหลือเพียงความทรงจำอันแสนอบอุ่น
+คนรักที่หายตัวไปเมื่อเจ็ดปีก่อน
+
+ไม่มีใครรู้ว่าเขาหายไปไหน
+
+ไม่มีใครรู้ว่าเกิดอะไรขึ้นในคืนนั้น
+
+แต่ตอนนี้ คุณกลับมายืนอยู่ที่นี่อีกครั้ง
+
+`,
+
+choices:[
+
+{
+
+text:"🚉 สำรวจสถานีรถไฟ",
+
+next:"station",
+
+effect:{memory:15}
+
+},
+
+{
+
+text:"🏨 กลับไปที่โรงแรม",
+
+next:"hotel",
+
+effect:{trust:10}
+
+},
+
+{
+
+text:"📨 อ่านจดหมายอีกครั้ง",
+
+next:"letter",
+
+effect:{truth:10}
+
+}
+
+]
+
+},
+
+/* ========================================================= */
+
+station:{
+
+chapter:1,
+
+text:`
+
+สถานีรถไฟแทบไม่มีผู้คน
+
+ม้านั่งไม้ตัวเดิมยังคงตั้งอยู่ที่เดิม
+
+คุณเดินเข้าไปใกล้และพบกล่องดนตรีวางอยู่บนที่นั่ง
+
+เมื่อเปิดมันออก เสียงเพลงเก่า ๆ ก็ดังขึ้น
+
+เป็นเพลงที่อีธานชอบเปิดให้คุณฟังเสมอ
+
+ใต้กล่องดนตรีมีโน้ตสั้น ๆ ซ่อนอยู่
+
+'ฉันขอโทษ'
+
+`,
+
+choices:[
+
+{
+
+text:"🎵 เก็บกล่องดนตรี",
+
+next:"lake",
+
+effect:{memory:20}
+
+},
+
+{
+
+text:"🔎 สำรวจรอบสถานี",
+
+next:"town",
+
+effect:{truth:15}
+
+},
+
+{
+
+text:"🚶 ออกเดินตามรางรถไฟ",
+
+next:"cabin",
+
+effect:{courage:15}
+
+}
+
+]
+
+},
+
+/* ========================================================= */
+
+hotel:{
+
+chapter:1,
+
+text:`
+
+โรงแรมเก่าแห่งนี้ยังคงเปิดให้บริการ
+
+เจ้าของโรงแรมจำคุณได้ทันที
+
+เขาบอกว่ามีคนมาฝากกุญแจไว้ให้คุณเมื่อหลายวันก่อน
+
+กุญแจดอกนั้นเป็นกุญแจของบ้านไม้ริมทะเลสาบ
+
+สถานที่ที่คุณและอีธานเคยไปด้วยกันเป็นประจำ
+
+`,
+
+choices:[
+
+{
+
+text:"🔑 รับกุญแจ",
+
+next:"cabin",
+
+effect:{trust:15}
+
+},
+
+{
+
+text:"❓ ถามเรื่องอีธาน",
+
+next:"town",
+
+effect:{truth:15}
+
+},
+
+{
+
+text:"🌙 พักผ่อนก่อน",
+
+next:"dream",
+
+effect:{memory:10}
+
+}
+
+]
+
+},
+
+/* ========================================================= */
+
+letter:{
+
+chapter:1,
+
+text:`
+
+คุณหยิบจดหมายขึ้นมาอีกครั้ง
+
+ตัวอักษรบนกระดาษเริ่มซีดจาง
+
+แต่ประโยคสุดท้ายยังคงชัดเจน
+
+'ถ้าฉันไม่ได้อยู่ที่นั่นแล้ว โปรดให้อภัยฉัน'
+
+หัวใจของคุณเริ่มเต้นแรง
+
+คุณเริ่มสงสัยว่าการกลับมาครั้งนี้อาจไม่ใช่การพบกันธรรมดา
+
+`,
+
+choices:[
+
+{
+
+text:"🏞️ ไปที่ทะเลสาบ",
+
+next:"lake",
+
+effect:{memory:15}
+
+},
+
+{
+
+text:"🏠 ไปที่บ้านไม้",
+
+next:"cabin",
+
+effect:{trust:10}
+
+},
+
+{
+
+text:"🏙️ เดินเข้าเมือง",
+
+next:"town",
+
+effect:{truth:20}
+
+}
+
+]
+
+},
+
+/* =========================================================
+   CHAPTER 2
+========================================================= */
+
+lake:{
+
+chapter:2,
+
+text:`
+
+ทะเลสาบถูกปกคลุมด้วยน้ำแข็ง
+
+หิมะยังคงตกลงมาอย่างต่อเนื่อง
+
+คุณเดินไปจนถึงต้นไม้ต้นหนึ่ง
+
+เปลือกไม้มีรอยสลักรูปหัวใจ
+
+มันเป็นรอยสลักที่คุณกับอีธานช่วยกันทำเมื่อหลายปีก่อน
+
+แต่สิ่งที่ทำให้คุณตกใจคือ
+
+มีดอกไม้สีขาวสดถูกวางไว้ตรงนั้น
+
+ใครบางคนเพิ่งมาที่นี่
+
+`,
+
+choices:[
+
+{
+
+text:"🌹 เก็บดอกไม้",
+
+next:"truth1",
+
+effect:{affection:20}
+
+},
+
+{
+
+text:"👣 ตามรอยเท้า",
+
+next:"cabin",
+
+effect:{courage:20}
+
+},
+
+{
+
+text:"🪑 นั่งรอ",
+
+next:"dream",
+
+effect:{memory:20}
+
+}
+
+]
+
+},
+
+/* ========================================================= */
+
+town:{
+
+chapter:2,
+
+text:`
+
+เมืองเล็ก ๆ แห่งนี้เปลี่ยนไปมาก
+
+ร้านกาแฟที่คุณเคยไปปิดตัวลงแล้ว
+
+แต่ร้านหนังสือยังคงเปิดอยู่
+
+เจ้าของร้านยื่นสมุดบันทึกเล่มหนึ่งให้คุณ
+
+เขาบอกว่าอีธานฝากมันไว้
+
+หน้าสุดท้ายของสมุดมีข้อความสั้น ๆ
+
+'ฉันไม่เคยลืมเธอ'
+
+`,
+
+choices:[
+
+{
+
+text:"📖 อ่านสมุดต่อ",
+
+next:"truth1",
+
+effect:{truth:20}
+
+},
+
+{
+
+text:"🏡 ไปที่บ้านไม้",
+
+next:"cabin",
+
+effect:{trust:10}
+
+},
+
+{
+
+text:"🌨️ กลับไปที่ทะเลสาบ",
+
+next:"lake",
+
+effect:{memory:15}
+
+}
+
+]
+
+},
+
+/* ========================================================= */
+
+dream:{
+
+chapter:2,
+
+text:`
+
+คืนนั้น คุณฝันถึงอดีต
+
+คุณเห็นตัวเองกำลังหัวเราะ
+
+เห็นอีธานกำลังยืนทำอาหารอยู่ในครัว
+
+เห็นตัวเองกำลังวางแผนเรื่องอนาคต
+
+แต่เมื่อคุณพยายามเดินเข้าไปหาเขา
+
+ทุกอย่างกลับหายไป
+
+เมื่อคุณตื่นขึ้นมา
+
+น้ำตากำลังไหลอาบแก้ม
+
+`,
+
+choices:[
+
+{
+
+text:"💭 ตามหาความจริง",
+
+next:"truth1",
+
+effect:{memory:20}
+
+},
+
+{
+
+text:"🏠 ไปที่บ้านไม้",
+
+next:"cabin",
+
+effect:{trust:15}
+
+},
+
+{
+
+text:"🚶 ออกไปข้างนอก",
+
+next:"lake",
+
+effect:{courage:10}
+
+}
+
+]
+
+},
+
+/* ========================================================= */
+
+cabin:{
+
+chapter:3,
+
+text:`
+
+บ้านไม้หลังเล็กยังคงเหมือนเดิม
+
+เตาผิงยังคงตั้งอยู่มุมห้อง
+
+ผ้าห่มผืนเดิมยังคงพับอยู่บนโซฟา
+
+บนโต๊ะมีจดหมายหลายสิบฉบับ
+
+ทุกฉบับเขียนถึงคุณ
+
+แต่ไม่เคยถูกส่งออกไป
+
+คุณค่อย ๆ เปิดอ่านทีละฉบับ
+
+และพบความจริงที่คุณไม่เคยรู้มาก่อน
+
+อีธานไม่ได้ทอดทิ้งคุณ
+
+เขากำลังรักษาตัวอยู่ต่างประเทศ
+
+เขาเลือกจากไปโดยไม่บอกความจริง
+
+เพราะไม่อยากให้คุณต้องใช้ชีวิตอยู่กับความเจ็บปวด
+
+`,
+
+choices:[
+
+{
+
+text:"💌 อ่านจดหมายทั้งหมด",
+
+next:"truth1",
+
+effect:{affection:20}
+
+},
+
+{
+
+text:"❤️ ให้อภัยอีธาน",
+
+next:"meeting",
+
+effect:{trust:25}
+
+},
+
+{
+
+text:"💔 ปิดจดหมายและเดินออกไป",
+
+next:"snowfall",
+
+effect:{courage:20}
+
+}
+
+]
+
+},
+
+/* ========================================================= */
+
+truth1:{
+
+chapter:4,
+
+text:`
+
+หลังจากรวบรวมเรื่องราวทั้งหมดเข้าด้วยกัน
+
+คุณเริ่มเข้าใจเหตุผลของเขา
+
+เขาไม่ได้หายไปเพราะหมดรัก
+
+แต่เขากลัวว่าตัวเองจะเป็นภาระ
+
+เขาจึงเลือกแบกรับทุกอย่างไว้คนเดียว
+
+ในจดหมายฉบับสุดท้ายมีข้อความว่า
+
+'ฉันจะรอเธออยู่ที่เดิม'
+
+`,
+
+choices:[
+
+{
+
+text:"🏠 ไปยังบ้านริมทะเลสาบ",
+
+next:"meeting",
+
+effect:{affection:20}
+
+},
+
+{
+
+text:"🚶 เดินจากไป",
+
+next:"snowfall",
+
+effect:{courage:20}
+
+},
+
+{
+
+text:"❄️ นั่งคิดทบทวน",
+
+next:"reflection",
+
+effect:{memory:20}
+
+}
+
+]
+
+},
+
+/* ========================================================= */
+
+reflection:{
+
+chapter:5,
+
+text:`
+
+คุณนั่งมองหิมะที่กำลังตก
+
+หลายปีที่ผ่านมา
+
+คุณพยายามลืมเขา
+
+แต่ไม่เคยทำได้เลย
+
+บางที การให้อภัยอาจไม่ใช่การยอมรับทุกอย่าง
+
+แต่มันคือการยอมรับความรู้สึกของตัวเอง
+
+และปล่อยให้อดีตกลายเป็นความทรงจำที่งดงาม
+
+`,
+
+choices:[
+
+{
+
+text:"❤️ ไปพบอีธาน",
+
+next:"meeting",
+
+effect:{affection:20}
+
+},
+
+{
+
+text:"🌫️ ปล่อยทุกอย่างไป",
+
+next:"snowfall",
+
+effect:{courage:20}
+
+},
+
+{
+
+text:"📖 อ่านจดหมายอีกครั้ง",
+
+next:"truth1",
+
+effect:{memory:10}
+
+}
+
+]
+
+}
+
+};
+
+</script>
+<script>
+
+/* =========================================================
+   ENDINGS
+========================================================= */
+
+STORY.meeting={
+
+chapter:6,
+
+text:`
+
+คุณเดินไปยังบ้านริมทะเลสาบ
+
+แสงไฟสีส้มส่องลอดผ่านหน้าต่างออกมา
+
+หัวใจของคุณเต้นแรงขึ้นเรื่อย ๆ
+
+เมื่อประตูถูกเปิดออก
+
+คนที่ยืนอยู่ตรงหน้าก็คืออีธาน
+
+เวลาผ่านไปเจ็ดปี
+
+เส้นผมของเขายาวขึ้น
+
+ใบหน้าดูเหนื่อยล้ากว่าเดิม
+
+แต่รอยยิ้มของเขาไม่เคยเปลี่ยนไปเลย
+
+เขาเดินเข้ามาหาคุณช้า ๆ
+
+น้ำตาไหลลงมาบนใบหน้าของทั้งสองคน
+
+'ขอบคุณที่กลับมานะ'
+
+`,
+
+choices:[
+
+{
+
+text:"❤️ กอดเขา",
+
+next:"endingTrue"
+
+},
+
+{
+
+text:"💬 ถามเหตุผลทั้งหมด",
+
+next:"endingPromise"
+
+},
+
+{
+
+text:"😢 บอกลา",
+
+next:"endingBittersweet"
+
+}
+
+]
+
+};
+
+
+/* ========================================================= */
+
+STORY.snowfall={
+
+chapter:6,
+
+text:`
+
+คุณตัดสินใจเดินออกจากเมืองแห่งนี้
+
+หิมะยังคงตกลงมาอย่างต่อเนื่อง
+
+สถานีรถไฟค่อย ๆ หายลับไปจากสายตา
+
+บางคำถามอาจไม่มีคำตอบ
+
+บางความสัมพันธ์อาจไม่มีโอกาสได้เริ่มต้นใหม่
+
+แต่ความทรงจำจะยังคงอยู่ตลอดไป
+
+`,
+
+choices:[
+
+{
+
+text:"🚆 ขึ้นรถไฟ",
+
+next:"endingSnowfall"
+
+},
+
+{
+
+text:"🏙️ กลับเข้าเมือง",
+
+next:"endingLost"
+
+},
+
+{
+
+text:"📨 อ่านจดหมายเป็นครั้งสุดท้าย",
+
+next:"endingLetter"
+
+}
+
+]
+
+};
+
+
+/* ========================================================= */
+
+STORY.endingTrue={
+
+chapter:7,
+
+text:`
+
+❤️ TRUE LOVE ENDING
+
+คุณเลือกกอดเขา
+
+โดยไม่ถามถึงอดีต
+
+โดยไม่เรียกร้องคำอธิบาย
+
+หลายครั้งในชีวิต
+
+ความรักไม่ได้ต้องการคำตอบเสมอไป
+
+มันต้องการเพียงโอกาสอีกครั้ง
+
+ฤดูหนาวปีถัดมา
+
+คุณทั้งสองยังคงอยู่ด้วยกัน
+
+และหิมะแรกของทุกปี
+
+กลายเป็นวันที่พิเศษที่สุดของชีวิต
 
 `,
 
@@ -1447,23 +3055,32 @@ choices:[]
 
 };
 
-STORY.endhappy={
 
-truth:95,
+/* ========================================================= */
+
+STORY.endingPromise={
+
+chapter:7,
 
 text:`
 
-💙 HAPPY ENDING
+💙 WINTER PROMISE ENDING
 
-คุณเลือกเชื่อใจอีธาน
+อีธานเล่าเรื่องราวทั้งหมดให้คุณฟัง
 
-ทั้งคู่หายตัวไปจากเมืองแห่งนี้
+เขาขอโทษสำหรับทุกอย่าง
 
-ไม่มีใครรู้ว่าคุณไปอยู่ที่ไหน
+คุณให้อภัยเขา
 
-แต่ทุกครั้งที่หิมะตก
+แต่ต่างคนต่างรู้ดีว่า
 
-จะมีคนพบชายสองคนเดินจับมือกันอยู่ริมทะเลสาบ
+เวลาที่หายไปเจ็ดปี
+
+ไม่สามารถย้อนกลับมาได้
+
+คุณทั้งสองสัญญาว่า
+
+จะกลับมาพบกันทุกครั้งที่หิมะแรกของปีตกลงมา
 
 `,
 
@@ -1471,27 +3088,90 @@ choices:[]
 
 };
 
-STORY.endbittersweet={
 
-truth:100,
+/* ========================================================= */
+
+STORY.endingBittersweet={
+
+chapter:7,
 
 text:`
 
-🌨️ BITTERSWEET ENDING
+🥀 BITTERSWEET ENDING
 
-คดีถูกคลี่คลาย
+คุณให้อภัยเขา
 
-ความจริงถูกเปิดเผย
+แต่เลือกเดินจากไป
 
-แต่อีธานเลือกเดินจากไป
+บางครั้ง
 
-เขาทิ้งนาฬิกาพกไว้บนโต๊ะ
+ความรักก็ไม่ได้หมายความว่า
+
+เราจะต้องอยู่ด้วยกันตลอดไป
+
+หิมะตกลงมาอย่างเงียบงัน
+
+และคุณทั้งสองต่างยิ้มให้กันเป็นครั้งสุดท้าย
+
+`,
+
+choices:[]
+
+};
+
+
+/* ========================================================= */
+
+STORY.endingSnowfall={
+
+chapter:7,
+
+text:`
+
+❄️ SNOWFALL ENDING
+
+รถไฟออกจากสถานีช้า ๆ
+
+เมืองเล็ก ๆ แห่งนี้ค่อย ๆ หายไปจากสายตา
+
+คุณไม่ได้พบอีธานอีกเลย
+
+แต่คุณเลือกที่จะจดจำช่วงเวลาที่งดงาม
+
+แทนที่จะจดจำความเจ็บปวด
+
+`,
+
+choices:[]
+
+};
+
+
+/* ========================================================= */
+
+STORY.endingLost={
+
+chapter:7,
+
+text:`
+
+🌫️ LOST MEMORY ENDING
+
+คุณกลับเข้าเมืองอีกครั้ง
+
+แต่บ้านไม้ริมทะเลสาบปิดตาย
+
+ไม่มีใครเคยพบอีธาน
+
+ไม่มีใครเคยเห็นเขา
 
 หลายปีผ่านไป
 
-คุณยังคงเก็บมันเอาไว้
+คุณเริ่มตั้งคำถามกับตัวเอง
 
-และเฝ้ารอการกลับมาของใครบางคน
+เรื่องราวทั้งหมดเกิดขึ้นจริงหรือไม่
+
+หรือมันเป็นเพียงความทรงจำที่คุณสร้างขึ้นมา
 
 `,
 
@@ -1499,51 +3179,26 @@ choices:[]
 
 };
 
-STORY.endlonely={
 
-truth:70,
+/* ========================================================= */
+
+STORY.endingLetter={
+
+chapter:7,
 
 text:`
 
-🥀 LONELY ENDING
+💌 LETTER ENDING
 
-คุณเลือกจากไป
+คุณเปิดจดหมายเป็นครั้งสุดท้าย
 
-ไม่มีการตามหา
+ด้านหลังของกระดาษมีข้อความที่คุณไม่เคยสังเกตเห็น
 
-ไม่มีคำอธิบาย
+'ฉันรักเธอเสมอ'
 
-คฤหาสน์กลับมาเงียบงันอีกครั้ง
+แม้คุณจะไม่ได้พบเขาอีก
 
-ราวกับว่าเรื่องราวทั้งหมดไม่เคยเกิดขึ้น
-
-`,
-
-choices:[]
-
-};
-
-STORY.betrayal={
-
-truth:85,
-
-text:`
-
-🩸 BETRAYAL ENDING
-
-ความจริงอีกด้านถูกเปิดเผย
-
-อีธานอยู่เบื้องหลังทุกอย่าง
-
-เขาใช้คุณเป็นเครื่องมือมาตลอด
-
-หิมะตกหนักขึ้นเรื่อย ๆ
-
-และคุณไม่อาจแยกได้อีกแล้วว่า
-
-อะไรคือความจริง
-
-และอะไรคือความทรงจำ
+แต่คุณก็ได้รับคำตอบที่เฝ้ารอมาตลอด
 
 `,
 
@@ -1551,136 +3206,1320 @@ choices:[]
 
 };
 
-STORY.sacrifice={
 
-truth:100,
+/* ========================================================= */
+
+STORY.endingSacrifice={
+
+chapter:7,
 
 text:`
 
 💔 SACRIFICE ENDING
 
-เสียงปืนดังขึ้น
+คุณมาถึงบ้านไม้ช้าเกินไป
 
-อีธานผลักคุณออกไป
+อีธานจากไปแล้ว
 
-กระสุนพุ่งทะลุร่างของเขา
+บนโต๊ะมีเพียงจดหมายฉบับหนึ่ง
 
-คำพูดสุดท้ายของเขาดังก้องอยู่ในสายลม
+และดอกไม้สีขาวที่เขาเตรียมไว้ให้คุณ
 
-"ขอบคุณที่กลับมานะ"
+บางครั้ง
 
-`,
+ความรักก็เป็นการยอมเสียสละ
 
-choices:[]
-
-};
-
-STORY.bad={
-
-truth:100,
-
-text:`
-
-☠️ BAD ENDING
-
-คุณค้นพบความจริงช้าเกินไป
-
-ประตูคฤหาสน์ปิดลง
-
-แสงไฟทั้งหมดดับลง
-
-และไม่มีใครพบตัวคุณอีกเลย
+แม้จะไม่ได้อยู่ด้วยกันก็ตาม
 
 `,
 
 choices:[]
-
-};
-
-/* ================= RESTART ================= */
-
-const originalLoadScene=loadScene;
-
-loadScene=function(key){
-
-const scene=STORY[key];
-
-if(!scene){
-
-return;
-
-}
-
-truthElement.innerHTML=
-
-"Truth "+scene.truth+"%";
-
-typeWriter(
-
-scene.text,
-
-storyElement,
-
-()=>{
-
-choicesElement.innerHTML="";
-
-if(scene.choices.length>0){
-
-createChoices(scene);
-
-}else{
-
-const button=
-
-document.createElement("button");
-
-button.className=
-
-"btn primary restart";
-
-button.innerText=
-
-"🔄 เล่นอีกครั้ง";
-
-button.onclick=()=>{
-
-playSound("click");
-
-document.getElementById(
-
-"gameScreen"
-
-).style.display="none";
-
-document.getElementById(
-
-"startScreen"
-
-).style.display="block";
-
-storyElement.innerHTML="";
-
-choicesElement.innerHTML="";
-
-};
-
-choicesElement.appendChild(
-
-button
-
-);
-
-}
-
-}
-
-);
 
 };
 
 </script>
+<script>
 
-</body>
+/* =========================================================
+   ENDING SYSTEM
+   ระบบจัดการตอนจบของเกม
+========================================================= */
 
-</html>
+/* =========================================================
+   ENDING INFORMATION
+========================================================= */
+
+const ENDINGS = {
+
+    endingTrue: {
+
+        title: "❤️ TRUE LOVE",
+
+        subtitle: "ความรักที่ได้กลับมาอีกครั้ง",
+
+        description: `
+            หลังจากเวลาผ่านไปเจ็ดปี
+            ในที่สุดคุณและอีธานก็ได้พบกันอีกครั้ง
+
+            คุณเลือกที่จะไม่ถามถึงอดีต
+            ไม่เรียกร้องคำอธิบาย
+            และเลือกที่จะเชื่อในความรู้สึกของตัวเอง
+
+            บางครั้งความรักไม่ได้ต้องการคำตอบทั้งหมด
+
+            มันต้องการเพียงโอกาสอีกครั้ง
+        `,
+
+        rank: "TRUE ENDING",
+
+        color: "#ff6b9d"
+
+    },
+
+
+    endingPromise: {
+
+        title: "💙 WINTER PROMISE",
+
+        subtitle: "คำสัญญาใต้หิมะแรก",
+
+        description: `
+            คุณเลือกที่จะฟังความจริงทั้งหมดจากอีธาน
+
+            แม้เวลาที่หายไปเจ็ดปี
+            จะไม่สามารถย้อนกลับมาได้
+
+            แต่คุณทั้งสองเลือกที่จะไม่ปล่อยให้
+            ความทรงจำในอดีตเป็นสิ่งที่ต้องเสียใจอีกต่อไป
+
+            และได้ให้คำสัญญาต่อกันว่า
+
+            ทุกครั้งที่หิมะแรกของปีตกลงมา
+            พวกคุณจะกลับมาพบกันอีกครั้ง
+        `,
+
+        rank: "SPECIAL ENDING",
+
+        color: "#7cc7ff"
+
+    },
+
+
+    endingBittersweet: {
+
+        title: "🥀 BITTERSWEET",
+
+        subtitle: "รัก แต่ไม่ได้อยู่ด้วยกัน",
+
+        description: `
+            คุณให้อภัยอีธาน
+
+            แต่สุดท้ายคุณเลือกที่จะเดินต่อไป
+            บนเส้นทางของตัวเอง
+
+            ความรักที่เกิดขึ้นระหว่างพวกคุณ
+            ไม่ได้สูญเปล่า
+
+            เพราะบางคนอาจเข้ามาในชีวิตเรา
+            เพื่อทิ้งความทรงจำเอาไว้
+
+            ไม่ใช่เพื่ออยู่กับเราไปตลอดชีวิต
+        `,
+
+        rank: "BITTERSWEET ENDING",
+
+        color: "#d9a7b8"
+
+    },
+
+
+    endingSnowfall: {
+
+        title: "❄️ SNOWFALL",
+
+        subtitle: "เมืองที่ถูกทิ้งไว้เบื้องหลัง",
+
+        description: `
+            คุณเลือกขึ้นรถไฟ
+            และเดินทางออกจากเมืองเล็ก ๆ แห่งนี้
+
+            คุณไม่รู้ว่าอนาคตจะเป็นอย่างไร
+
+            แต่คุณรู้ว่า
+            อย่างน้อยครั้งหนึ่งในชีวิต
+
+            คุณเคยมีช่วงเวลาที่สวยงามกับใครบางคน
+
+            และนั่นก็เพียงพอแล้ว
+        `,
+
+        rank: "NORMAL ENDING",
+
+        color: "#b9dcff"
+
+    },
+
+
+    endingLost: {
+
+        title: "🌫️ LOST MEMORY",
+
+        subtitle: "ความทรงจำที่ไม่มีคำตอบ",
+
+        description: `
+            คุณกลับเข้าไปในเมือง
+
+            แต่บ้านริมทะเลสาบกลับว่างเปล่า
+
+            ไม่มีอีธาน
+
+            ไม่มีจดหมายฉบับใหม่
+
+            ไม่มีหลักฐานว่าเขาเคยอยู่ที่นี่
+
+            และในที่สุดคุณก็เริ่มสงสัยว่า
+
+            เรื่องราวทั้งหมดนั้นเกิดขึ้นจริงหรือไม่
+
+            หรือทั้งหมดเป็นเพียงความทรงจำ
+            ที่คุณไม่สามารถปล่อยวางได้
+        `,
+
+        rank: "MYSTERY ENDING",
+
+        color: "#aeb7c7"
+
+    },
+
+
+    endingLetter: {
+
+        title: "💌 LETTER",
+
+        subtitle: "คำตอบที่มาถึงช้าเกินไป",
+
+        description: `
+            คุณเปิดจดหมายเป็นครั้งสุดท้าย
+
+            ด้านหลังของกระดาษ
+            มีข้อความที่คุณไม่เคยสังเกตเห็น
+
+            "ฉันรักเธอเสมอ"
+
+            คุณไม่รู้ว่าอีธานอยู่ที่ไหน
+
+            และอาจไม่มีโอกาสได้พบเขาอีก
+
+            แต่ในที่สุด
+            คุณก็ได้รับคำตอบที่รอคอยมาตลอด
+        `,
+
+        rank: "SECRET ENDING",
+
+        color: "#f5d0e0"
+
+    },
+
+
+    endingSacrifice: {
+
+        title: "💔 SACRIFICE",
+
+        subtitle: "สิ่งสุดท้ายที่เขาทิ้งไว้",
+
+        description: `
+            คุณมาถึงบ้านริมทะเลสาบช้าเกินไป
+
+            อีธานจากไปแล้ว
+
+            สิ่งเดียวที่เหลืออยู่บนโต๊ะ
+            คือจดหมายหนึ่งฉบับ
+
+            และดอกไม้สีขาว
+            ที่เขาเตรียมเอาไว้ให้คุณ
+
+            คุณไม่เคยรู้ว่าเขาจากไปเพราะอะไร
+
+            แต่คุณเข้าใจสิ่งหนึ่ง
+
+            บางครั้งความรัก
+            อาจหมายถึงการยอมเสียสละ
+            เพื่อให้คนอีกคนได้เดินต่อไป
+        `,
+
+        rank: "SAD ENDING",
+
+        color: "#c4c4c4"
+
+    }
+
+};
+
+
+/* =========================================================
+   CURRENT ENDING
+========================================================= */
+
+let currentEnding = null;
+
+
+/* =========================================================
+   SAVE ENDING
+========================================================= */
+
+function saveEnding(endingId) {
+
+    if (!ENDINGS[endingId]) {
+        console.warn("ไม่พบ Ending:", endingId);
+        return;
+    }
+
+    currentEnding = endingId;
+
+    let unlocked = [];
+
+    try {
+
+        unlocked =
+            JSON.parse(
+                localStorage.getItem("winter_story_endings")
+            ) || [];
+
+    } catch (error) {
+
+        unlocked = [];
+
+    }
+
+
+    if (!unlocked.includes(endingId)) {
+
+        unlocked.push(endingId);
+
+    }
+
+
+    localStorage.setItem(
+        "winter_story_endings",
+        JSON.stringify(unlocked)
+    );
+
+}
+
+
+/* =========================================================
+   GET UNLOCKED ENDINGS
+========================================================= */
+
+function getUnlockedEndings() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("winter_story_endings")
+        ) || [];
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================================
+   COUNT ENDINGS
+========================================================= */
+
+function getEndingProgress() {
+
+    const unlocked = getUnlockedEndings();
+
+    const total = Object.keys(ENDINGS).length;
+
+    return {
+
+        unlocked: unlocked.length,
+
+        total: total,
+
+        percent:
+            Math.round(
+                (unlocked.length / total) * 100
+            )
+
+    };
+
+}
+
+
+/* =========================================================
+   SHOW ENDING SCREEN
+========================================================= */
+
+function showEndingScreen(endingId) {
+
+    const ending = ENDINGS[endingId];
+
+    if (!ending) {
+
+        console.error(
+            "Ending ไม่ถูกต้อง:",
+            endingId
+        );
+
+        return;
+
+    }
+
+
+    saveEnding(endingId);
+
+
+    const progress =
+        getEndingProgress();
+
+
+    /* -----------------------------------------------------
+       FIND GAME CONTAINER
+    ----------------------------------------------------- */
+
+    const game =
+        document.querySelector("#game") ||
+        document.querySelector(".game-container") ||
+        document.body;
+
+
+    /* -----------------------------------------------------
+       CREATE ENDING SCREEN
+    ----------------------------------------------------- */
+
+    let screen =
+        document.querySelector("#endingScreen");
+
+
+    if (!screen) {
+
+        screen =
+            document.createElement("div");
+
+        screen.id = "endingScreen";
+
+        document.body.appendChild(screen);
+
+    }
+
+
+    screen.innerHTML = `
+
+        <div class="ending-overlay">
+
+            <div class="ending-stars"></div>
+
+            <div class="ending-card">
+
+                <div class="ending-small-title">
+                    THE END
+                </div>
+
+
+                <div class="ending-icon">
+                    ${ending.title.split(" ")[0]}
+                </div>
+
+
+                <h1 class="ending-title">
+                    ${ending.title}
+                </h1>
+
+
+                <h2 class="ending-subtitle">
+                    ${ending.subtitle}
+                </h2>
+
+
+                <div class="ending-line"></div>
+
+
+                <div class="ending-description">
+                    ${ending.description
+                        .trim()
+                        .replace(/\n/g, "<br>")
+                    }
+                </div>
+
+
+                <div class="ending-rank">
+                    ${ending.rank}
+                </div>
+
+
+                <div class="ending-progress">
+
+                    <span>
+                        ENDINGS DISCOVERED
+                    </span>
+
+                    <strong>
+                        ${progress.unlocked}
+                        /
+                        ${progress.total}
+                    </strong>
+
+                </div>
+
+
+                <div class="ending-buttons">
+
+                    <button
+                        class="ending-btn primary"
+                        onclick="restartGame()"
+                    >
+                        ↻ เล่นอีกครั้ง
+                    </button>
+
+
+                    <button
+                        class="ending-btn secondary"
+                        onclick="showEndingGallery()"
+                    >
+                        📖 Ending Gallery
+                    </button>
+
+
+                    <button
+                        class="ending-btn secondary"
+                        onclick="backToTitle()"
+                    >
+                        🏠 กลับหน้าหลัก
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    screen.classList.add("active");
+
+
+    /* -----------------------------------------------------
+       ENDING EFFECT
+    ----------------------------------------------------- */
+
+    setTimeout(() => {
+
+        screen.classList.add(
+            "show"
+        );
+
+    }, 50);
+
+}
+
+
+/* =========================================================
+   ENDING GALLERY
+========================================================= */
+
+function showEndingGallery() {
+
+    const unlocked =
+        getUnlockedEndings();
+
+
+    const progress =
+        getEndingProgress();
+
+
+    let screen =
+        document.querySelector("#endingScreen");
+
+
+    if (!screen) {
+
+        screen =
+            document.createElement("div");
+
+        screen.id =
+            "endingScreen";
+
+        document.body.appendChild(screen);
+
+    }
+
+
+    let cards = "";
+
+
+    Object.keys(ENDINGS)
+        .forEach((id, index) => {
+
+            const ending =
+                ENDINGS[id];
+
+            const isUnlocked =
+                unlocked.includes(id);
+
+
+            if (isUnlocked) {
+
+                cards += `
+
+                    <div
+                        class="gallery-card unlocked"
+                        onclick="openEndingFromGallery('${id}')"
+                    >
+
+                        <div class="gallery-number">
+                            ${String(index + 1).padStart(2, "0")}
+                        </div>
+
+                        <div class="gallery-icon">
+                            ${ending.title.split(" ")[0]}
+                        </div>
+
+                        <div class="gallery-title">
+                            ${ending.title}
+                        </div>
+
+                        <div class="gallery-subtitle">
+                            ${ending.subtitle}
+                        </div>
+
+                        <div class="gallery-status">
+                            ✓ DISCOVERED
+                        </div>
+
+                    </div>
+
+                `;
+
+            } else {
+
+                cards += `
+
+                    <div
+                        class="gallery-card locked"
+                    >
+
+                        <div class="gallery-number">
+                            ${String(index + 1).padStart(2, "0")}
+                        </div>
+
+                        <div class="gallery-icon">
+                            ?
+                        </div>
+
+                        <div class="gallery-title">
+                            ????
+                        </div>
+
+                        <div class="gallery-subtitle">
+                            Ending ที่ยังไม่ค้นพบ
+                        </div>
+
+                        <div class="gallery-status">
+                            🔒 LOCKED
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+
+        });
+
+
+    screen.innerHTML = `
+
+        <div class="ending-overlay gallery-overlay">
+
+            <div class="gallery-container">
+
+                <div class="gallery-header">
+
+                    <div>
+
+                        <div class="ending-small-title">
+                            WINTER MEMORY
+                        </div>
+
+                        <h1>
+                            Ending Gallery
+                        </h1>
+
+                        <p>
+                            ค้นพบ ${progress.unlocked}
+                            จาก ${progress.total}
+                            ตอนจบ
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="gallery-close"
+                        onclick="closeEndingGallery()"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <div class="gallery-grid">
+
+                    ${cards}
+
+                </div>
+
+
+                <div class="gallery-footer">
+
+                    <div class="gallery-progress-bar">
+
+                        <div
+                            style="
+                                width:${progress.percent}%;
+                            "
+                        ></div>
+
+                    </div>
+
+                    <span>
+                        ${progress.percent}% COMPLETE
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    setTimeout(() => {
+
+        screen.classList.add("show");
+
+    }, 50);
+
+}
+
+
+/* =========================================================
+   OPEN ENDING FROM GALLERY
+========================================================= */
+
+function openEndingFromGallery(endingId) {
+
+    const unlocked =
+        getUnlockedEndings();
+
+
+    if (!unlocked.includes(endingId)) {
+
+        return;
+
+    }
+
+
+    const ending =
+        ENDINGS[endingId];
+
+
+    const screen =
+        document.querySelector(
+            "#endingScreen"
+        );
+
+
+    if (!screen) {
+
+        return;
+
+    }
+
+
+    screen.innerHTML = `
+
+        <div class="ending-overlay">
+
+            <div class="ending-card">
+
+                <div class="ending-small-title">
+                    MEMORY ${endingId}
+                </div>
+
+
+                <div class="ending-icon">
+                    ${ending.title.split(" ")[0]}
+                </div>
+
+
+                <h1 class="ending-title">
+                    ${ending.title}
+                </h1>
+
+
+                <h2 class="ending-subtitle">
+                    ${ending.subtitle}
+                </h2>
+
+
+                <div class="ending-line"></div>
+
+
+                <div class="ending-description">
+                    ${ending.description
+                        .trim()
+                        .replace(/\n/g, "<br>")
+                    }
+                </div>
+
+
+                <div class="ending-rank">
+                    ${ending.rank}
+                </div>
+
+
+                <div class="ending-buttons">
+
+                    <button
+                        class="ending-btn secondary"
+                        onclick="showEndingGallery()"
+                    >
+                        ← กลับ Gallery
+                    </button>
+
+
+                    <button
+                        class="ending-btn primary"
+                        onclick="restartGame()"
+                    >
+                        ↻ เล่นอีกครั้ง
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    setTimeout(() => {
+
+        screen.classList.add("show");
+
+    }, 50);
+
+}
+
+
+/* =========================================================
+   CLOSE GALLERY
+========================================================= */
+
+function closeEndingGallery() {
+
+    const screen =
+        document.querySelector(
+            "#endingScreen"
+        );
+
+
+    if (!screen) {
+
+        return;
+
+    }
+
+
+    screen.classList.remove(
+        "show"
+    );
+
+
+    setTimeout(() => {
+
+        screen.remove();
+
+    }, 400);
+
+}
+
+
+/* =========================================================
+   RESTART GAME
+========================================================= */
+
+function restartGame() {
+
+    currentEnding = null;
+
+
+    const screen =
+        document.querySelector(
+            "#endingScreen"
+        );
+
+
+    if (screen) {
+
+        screen.remove();
+
+    }
+
+
+    /* -----------------------------------------------------
+       RESET GAME VARIABLES
+    ----------------------------------------------------- */
+
+    if (typeof currentStory !== "undefined") {
+
+        currentStory = "start";
+
+    }
+
+
+    if (typeof currentScene !== "undefined") {
+
+        currentScene = "start";
+
+    }
+
+
+    if (typeof currentChapter !== "undefined") {
+
+        currentChapter = 1;
+
+    }
+
+
+    if (typeof playerChoices !== "undefined") {
+
+        playerChoices = [];
+
+    }
+
+
+    /* -----------------------------------------------------
+       TRY EXISTING GAME FUNCTION
+    ----------------------------------------------------- */
+
+    if (
+        typeof startGame === "function"
+    ) {
+
+        startGame();
+
+        return;
+
+    }
+
+
+    if (
+        typeof startStory === "function"
+    ) {
+
+        startStory();
+
+        return;
+
+    }
+
+
+    if (
+        typeof loadStory === "function"
+    ) {
+
+        loadStory("start");
+
+        return;
+
+    }
+
+
+    /* -----------------------------------------------------
+       FALLBACK
+    ----------------------------------------------------- */
+
+    location.reload();
+
+}
+
+
+/* =========================================================
+   BACK TO TITLE
+========================================================= */
+
+function backToTitle() {
+
+    const screen =
+        document.querySelector(
+            "#endingScreen"
+        );
+
+
+    if (screen) {
+
+        screen.remove();
+
+    }
+
+
+    if (
+        typeof showTitleScreen ===
+        "function"
+    ) {
+
+        showTitleScreen();
+
+        return;
+
+    }
+
+
+    if (
+        typeof showMainMenu ===
+        "function"
+    ) {
+
+        showMainMenu();
+
+        return;
+
+    }
+
+
+    location.reload();
+
+}
+
+
+/* =========================================================
+   CONNECT STORY ENDINGS
+========================================================= */
+
+function handleEndingNode(nodeId) {
+
+    if (
+        ENDINGS[nodeId]
+    ) {
+
+        showEndingScreen(
+            nodeId
+        );
+
+        return true;
+
+    }
+
+
+    return false;
+
+}
+
+
+/* =========================================================
+   PATCH STORY ENGINE
+   ตรวจสอบ Ending ก่อนแสดง Scene ปกติ
+========================================================= */
+
+function processStoryNode(nodeId) {
+
+    if (
+        handleEndingNode(nodeId)
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        typeof STORY === "undefined"
+    ) {
+
+        console.error(
+            "ไม่พบ STORY"
+        );
+
+        return;
+
+    }
+
+
+    const node =
+        STORY[nodeId];
+
+
+    if (!node) {
+
+        console.error(
+            "ไม่พบ Story Node:",
+            nodeId
+        );
+
+        return;
+
+    }
+
+
+    /* -----------------------------------------------------
+       UPDATE CHAPTER
+    ----------------------------------------------------- */
+
+    if (
+        typeof node.chapter !==
+        "undefined"
+    ) {
+
+        if (
+            typeof currentChapter !==
+            "undefined"
+        ) {
+
+            currentChapter =
+                node.chapter;
+
+        }
+
+    }
+
+
+    /* -----------------------------------------------------
+       FIND TEXT ELEMENT
+    ----------------------------------------------------- */
+
+    const textElement =
+        document.querySelector(
+            "#storyText"
+        ) ||
+        document.querySelector(
+            ".story-text"
+        ) ||
+        document.querySelector(
+            "#text"
+        );
+
+
+    if (textElement) {
+
+        textElement.innerHTML =
+            node.text
+                .trim()
+                .replace(
+                    /\n/g,
+                    "<br>"
+                );
+
+    }
+
+
+    /* -----------------------------------------------------
+       FIND CHOICE ELEMENT
+    ----------------------------------------------------- */
+
+    const choiceElement =
+        document.querySelector(
+            "#choices"
+        ) ||
+        document.querySelector(
+            ".choices"
+        );
+
+
+    if (!choiceElement) {
+
+        return;
+
+    }
+
+
+    choiceElement.innerHTML = "";
+
+
+    if (
+        !node.choices ||
+        node.choices.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    node.choices.forEach(
+        (choice) => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "choice-button";
+
+
+            button.innerHTML =
+                choice.text;
+
+
+            button.onclick = () => {
+
+                processStoryNode(
+                    choice.next
+                );
+
+            };
+
+
+            choiceElement.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   AUTO DETECT ORIGINAL STORY FUNCTION
+========================================================= */
+
+function continueStory(nextNode) {
+
+    processStoryNode(
+        nextNode
+    );
+
+}
+
+
+/* =========================================================
+   ENDING DEBUG COMMAND
+   ใช้ทดสอบ Ending ตอนพัฒนาเกม
+========================================================= */
+
+function testEnding(endingId) {
+
+    if (
+        !ENDINGS[endingId]
+    ) {
+
+        console.warn(
+            "ไม่พบ Ending:",
+            endingId
+        );
+
+        return;
+
+    }
+
+
+    showEndingScreen(
+        endingId
+    );
+
+}
+
+
+/* =========================================================
+   RESET ALL ENDINGS
+========================================================= */
+
+function resetEndingProgress() {
+
+    localStorage.removeItem(
+        "winter_story_endings"
+    );
+
+
+    console.log(
+        "ลบข้อมูล Ending ทั้งหมดแล้ว"
+    );
+
+
+    alert(
+        "รีเซ็ต Ending ทั้งหมดเรียบร้อยแล้ว"
+    );
+
+}
+
+
+/* =========================================================
+   EXPORT ENDING DATA
+========================================================= */
+
+window.ENDINGS =
+    ENDINGS;
+
+window.saveEnding =
+    saveEnding;
+
+window.getUnlockedEndings =
+    getUnlockedEndings;
+
+window.getEndingProgress =
+    getEndingProgress;
+
+window.showEndingScreen =
+    showEndingScreen;
+
+window.showEndingGallery =
+    showEndingGallery;
+
+window.openEndingFromGallery =
+    openEndingFromGallery;
+
+window.closeEndingGallery =
+    closeEndingGallery;
+
+window.restartGame =
+    restartGame;
+
+window.backToTitle =
+    backToTitle;
+
+window.handleEndingNode =
+    handleEndingNode;
+
+window.processStoryNode =
+    processStoryNode;
+
+window.continueStory =
+    continueStory;
+
+window.testEnding =
+    testEnding;
+
+window.resetEndingProgress =
+    resetEndingProgress;
+
+
+/* =========================================================
+   ENDING SYSTEM READY
+========================================================= */
+
+console.log(
+    "❄️ Winter Story Ending System Ready"
+);
+
+console.log(
+    "Ending Progress:",
+    getEndingProgress()
+);
+
+</script>
