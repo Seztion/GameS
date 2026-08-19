@@ -1,1243 +1,1705 @@
-```html
 <!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Winter Memory — ความทรงจำใต้หิมะ</title>
+
+<title>WINTER MEMORY — ความทรงจำใต้หิมะ</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Kanit:wght@300;400;500;600&display=swap');
+
+/* =========================================================
+   ROOT
+========================================================= */
 
 :root{
-    --bg:#050b13;
-    --bg2:#0b1828;
-    --ice:#bfe8ff;
-    --ice2:#78c8f5;
-    --white:#f4f9ff;
-    --text:#dcecf8;
-    --muted:#91aabd;
-    --glass:rgba(6,18,31,.78);
-    --line:rgba(185,225,250,.22);
-    --glow:rgba(120,200,245,.22);
+    --bg:#02060b;
+    --bg2:#07131f;
+
+    --panel:rgba(7,16,26,.88);
+    --panel2:rgba(12,26,39,.76);
+
+    --text:#edf8ff;
+    --muted:#9eb2c0;
+
+    --ice:#ccefff;
+    --ice2:#83d2f4;
+    --blue:#5b9fc7;
+
+    --line:rgba(190,230,250,.14);
+
+    --gold:#e8d8b0;
+    --memory:#b7dff2;
+
+    --shadow:
+        0 35px 100px rgba(0,0,0,.65);
+
+    --transition:.8s cubic-bezier(.22,.61,.36,1);
 }
+
+/* =========================================================
+   RESET
+========================================================= */
 
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
 }
 
-html,body{
-    width:100%;
-    height:100%;
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-    background:#02070d;
-    color:var(--text);
-    font-family:"Kanit",sans-serif;
-    overflow:hidden;
-}
+    min-height:100vh;
 
-/* =====================================================
-   GAME
-===================================================== */
-
-#game{
-    position:relative;
-    width:100%;
-    height:100vh;
-    overflow:hidden;
-    background:#050b13;
-}
-
-/* =====================================================
-   BACKGROUND
-===================================================== */
-
-#background{
-    position:absolute;
-    inset:0;
     background:
-        linear-gradient(
-            180deg,
-            rgba(3,10,18,.15),
-            rgba(2,7,13,.92)
+        radial-gradient(
+            circle at 50% 10%,
+            rgba(80,145,180,.14),
+            transparent 34%
         ),
         radial-gradient(
-            circle at 50% 20%,
-            rgba(100,170,220,.18),
-            transparent 40%
-        );
-    transition:1.2s ease;
-}
-
-#background::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:
-        radial-gradient(
-            circle at 50% 35%,
-            transparent 0,
-            rgba(0,0,0,.12) 45%,
-            rgba(0,0,0,.75) 100%
-        );
-}
-
-/* Different scenes */
-
-.scene-room{
-    background:
-        linear-gradient(rgba(5,12,20,.28),rgba(3,7,13,.9)),
-        radial-gradient(
-            circle at 70% 30%,
-            rgba(220,170,100,.16),
-            transparent 25%
-        ),
-        linear-gradient(
-            135deg,
-            #111b26,
-            #07111c 55%,
-            #02070c
-        ) !important;
-}
-
-.scene-snow{
-    background:
-        linear-gradient(rgba(5,15,26,.25),rgba(2,7,13,.9)),
-        radial-gradient(
-            circle at 50% 25%,
-            rgba(150,215,255,.25),
-            transparent 35%
-        ),
-        linear-gradient(
-            180deg,
-            #13283c,
-            #07111c 55%,
-            #02070d
-        ) !important;
-}
-
-.scene-lake{
-    background:
-        linear-gradient(rgba(3,13,22,.28),rgba(2,7,13,.92)),
-        radial-gradient(
-            ellipse at 50% 55%,
-            rgba(50,130,175,.25),
-            transparent 40%
-        ),
-        linear-gradient(
-            180deg,
-            #0b2436,
-            #071522 50%,
-            #02070d
-        ) !important;
-}
-
-.scene-station{
-    background:
-        linear-gradient(rgba(2,8,14,.25),rgba(2,5,10,.95)),
-        radial-gradient(
-            ellipse at 50% 30%,
-            rgba(185,220,240,.15),
+            circle at 15% 80%,
+            rgba(55,105,140,.08),
             transparent 30%
         ),
         linear-gradient(
-            160deg,
-            #182635,
-            #08131f 55%,
+            145deg,
+            #010409,
+            #07111c 55%,
             #02060b
-        ) !important;
+        );
+
+    color:var(--text);
+
+    font-family:'Kanit',sans-serif;
+
+    overflow-x:hidden;
 }
 
-.scene-memory{
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.background{
+    position:fixed;
+    inset:0;
+
+    pointer-events:none;
+
+    overflow:hidden;
+
+    z-index:0;
+}
+
+.moon{
+    position:absolute;
+
+    width:280px;
+    height:280px;
+
+    right:8%;
+    top:7%;
+
+    border-radius:50%;
+
     background:
-        linear-gradient(rgba(60,75,90,.25),rgba(3,8,13,.92)),
         radial-gradient(
-            circle at 50% 30%,
-            rgba(210,230,240,.18),
-            transparent 35%
-        ),
-        linear-gradient(
-            180deg,
-            #344452,
-            #172532 50%,
-            #050b12
-        ) !important;
+            circle at 35% 30%,
+            #ffffff 0%,
+            #e5f7ff 22%,
+            #b5dbea 58%,
+            rgba(115,170,195,.7) 100%
+        );
+
+    box-shadow:
+        0 0 55px rgba(180,225,255,.16),
+        0 0 160px rgba(100,180,220,.08);
+
+    opacity:.58;
+
+    transition:
+        transform 2s ease,
+        opacity 2s ease;
 }
 
-/* =====================================================
-   SNOW
-===================================================== */
+.moon:after{
+    content:"";
 
-#snow{
     position:absolute;
     inset:0;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 60% 30%,
+            rgba(80,130,155,.15) 0 8%,
+            transparent 9%
+        ),
+        radial-gradient(
+            circle at 35% 65%,
+            rgba(80,130,155,.12) 0 10%,
+            transparent 11%
+        ),
+        radial-gradient(
+            circle at 70% 70%,
+            rgba(80,130,155,.12) 0 6%,
+            transparent 7%
+        );
+}
+
+.fog{
+    position:absolute;
+
+    width:1000px;
+    height:300px;
+
+    left:-300px;
+    bottom:5%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(160,215,235,.08),
+            transparent 70%
+        );
+
+    filter:blur(25px);
+
+    animation:fogMove 20s ease-in-out infinite alternate;
+}
+
+.fog.two{
+    left:auto;
+    right:-400px;
+    bottom:25%;
+
+    animation-delay:-8s;
+    animation-duration:26s;
+}
+
+@keyframes fogMove{
+    from{
+        transform:translateX(-60px);
+    }
+
+    to{
+        transform:translateX(260px);
+    }
+}
+
+/* =========================================================
+   LIGHT PARTICLES
+========================================================= */
+
+.light-particles{
+    position:fixed;
+    inset:0;
+
     pointer-events:none;
+
+    z-index:1;
+
+    overflow:hidden;
+}
+
+.light-particle{
+    position:absolute;
+
+    width:2px;
+    height:2px;
+
+    border-radius:50%;
+
+    background:#d9f4ff;
+
+    box-shadow:
+        0 0 8px rgba(190,235,255,.7);
+
+    opacity:.15;
+
+    animation:
+        particleFloat
+        linear infinite;
+}
+
+@keyframes particleFloat{
+    from{
+        transform:translateY(105vh);
+        opacity:0;
+    }
+
+    20%{
+        opacity:.2;
+    }
+
+    80%{
+        opacity:.12;
+    }
+
+    to{
+        transform:translateY(-10vh);
+        opacity:0;
+    }
+}
+
+/* =========================================================
+   SNOW
+========================================================= */
+
+.snow{
+    position:fixed;
+    inset:0;
+
+    pointer-events:none;
+
     z-index:20;
+
     overflow:hidden;
 }
 
 .snowflake{
     position:absolute;
-    top:-20px;
-    border-radius:50%;
-    background:white;
-    box-shadow:
-        0 0 8px rgba(255,255,255,.8);
-    opacity:.7;
-    animation:snowFall linear infinite;
+
+    top:-40px;
+
+    color:#fff;
+
+    opacity:.6;
+
+    text-shadow:
+        0 0 8px rgba(210,240,255,.9);
+
+    animation:
+        snowfall
+        linear infinite;
 }
 
-@keyframes snowFall{
-    from{
-        transform:translate3d(0,-20px,0);
-    }
-    to{
+@keyframes snowfall{
+
+    0%{
         transform:
-            translate3d(var(--drift),110vh,0)
+            translate3d(0,-40px,0)
+            rotate(0deg);
+    }
+
+    25%{
+        transform:
+            translate3d(25px,25vh,0)
+            rotate(90deg);
+    }
+
+    50%{
+        transform:
+            translate3d(-20px,50vh,0)
+            rotate(180deg);
+    }
+
+    75%{
+        transform:
+            translate3d(30px,75vh,0)
+            rotate(270deg);
+    }
+
+    100%{
+        transform:
+            translate3d(-10px,110vh,0)
             rotate(360deg);
     }
 }
 
-/* =====================================================
-   DISTANT LIGHTS
-===================================================== */
-
-.lights{
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-    z-index:2;
-}
-
-.light{
-    position:absolute;
-    width:3px;
-    height:3px;
-    border-radius:50%;
-    background:#c8eaff;
-    box-shadow:0 0 15px #c8eaff;
-    opacity:.35;
-    animation:lightPulse 4s ease-in-out infinite;
-}
-
-@keyframes lightPulse{
-    0%,100%{opacity:.15}
-    50%{opacity:.65}
-}
-
-/* =====================================================
-   VIGNETTE
-===================================================== */
-
-.vignette{
-    position:absolute;
-    inset:0;
-    z-index:25;
-    pointer-events:none;
-    background:
-        radial-gradient(
-            ellipse at center,
-            transparent 25%,
-            rgba(0,0,0,.18) 60%,
-            rgba(0,0,0,.78) 100%
-        );
-}
-
-/* =====================================================
-   TOP
-===================================================== */
+/* =========================================================
+   TOP BAR
+========================================================= */
 
 .topbar{
-    position:absolute;
+    position:fixed;
+
     top:0;
     left:0;
     right:0;
-    height:82px;
-    z-index:50;
+
+    height:74px;
 
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
 
-    padding:0 32px;
+    padding:0 35px;
+
+    z-index:30;
 
     background:
         linear-gradient(
-            180deg,
-            rgba(2,8,14,.78),
+            to bottom,
+            rgba(2,6,11,.94),
+            rgba(2,6,11,.48),
             transparent
         );
 }
 
 .logo{
-    font-family:"Playfair Display",serif;
-    letter-spacing:5px;
-    font-size:17px;
-    color:#f1f8ff;
+    letter-spacing:7px;
+
+    font-size:14px;
+
+    color:#eaf8ff;
+
+    font-weight:500;
 }
 
 .logo span{
-    color:var(--ice);
+    color:#83c8e9;
 }
 
-.top-actions{
+.controls{
     display:flex;
-    gap:9px;
+    gap:10px;
 }
 
-.icon-button{
+.control-btn{
     width:42px;
     height:42px;
 
+    border:1px solid rgba(190,230,250,.15);
+
     border-radius:50%;
 
-    border:1px solid rgba(190,225,245,.22);
-    background:rgba(255,255,255,.055);
+    background:rgba(8,18,28,.65);
 
-    color:white;
-    font-size:17px;
+    color:#d9effa;
 
     cursor:pointer;
+
     transition:.3s;
+
+    font-size:16px;
 }
 
-.icon-button:hover{
-    border-color:var(--ice2);
-    background:rgba(120,200,245,.12);
-    transform:translateY(-2px);
+.control-btn:hover{
+    border-color:rgba(190,230,250,.45);
+
+    background:rgba(30,55,72,.7);
+
+    transform:
+        translateY(-2px)
+        scale(1.04);
 }
 
-/* =====================================================
-   STORY AREA
-===================================================== */
+/* =========================================================
+   GAME
+========================================================= */
 
-.story-area{
-    position:absolute;
-    left:50%;
-    bottom:34px;
-    transform:translateX(-50%);
+.game{
+    position:relative;
 
-    width:min(1000px,calc(100% - 30px));
+    z-index:5;
 
-    z-index:40;
+    width:min(1050px,calc(100% - 35px));
+
+    min-height:100vh;
+
+    margin:auto;
+
+    padding:125px 0 80px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
 }
 
-.chapter-label{
+.scene{
+    width:100%;
+
+    position:relative;
+}
+
+/* =========================================================
+   CHAPTER HEADER
+========================================================= */
+
+.chapter{
     text-align:center;
+
+    margin-bottom:30px;
+
+    animation:
+        chapterAppear
+        1s ease;
+}
+
+@keyframes chapterAppear{
+
+    from{
+        opacity:0;
+        transform:
+            translateY(25px)
+            scale(.97);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+.chapter-number{
+    font-size:11px;
+
+    letter-spacing:6px;
+
+    color:#7fb7d3;
+
     margin-bottom:10px;
 
-    font-size:12px;
-    letter-spacing:5px;
-
-    color:rgba(190,225,245,.72);
+    text-transform:uppercase;
 }
 
-.story-panel{
-    border:1px solid var(--line);
-    border-radius:24px;
+.chapter-title{
+    font-family:'Itim',cursive;
+
+    font-size:47px;
+
+    letter-spacing:3px;
+
+    color:#effaff;
+
+    text-shadow:
+        0 0 25px rgba(130,210,245,.18),
+        0 0 70px rgba(100,180,220,.06);
+}
+
+.chapter-line{
+    width:90px;
+    height:1px;
+
+    margin:18px auto 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(180,230,255,.45),
+            transparent
+        );
+}
+
+/* =========================================================
+   STORY BOX
+========================================================= */
+
+.story-box{
+    position:relative;
 
     background:
         linear-gradient(
             145deg,
-            rgba(6,18,31,.91),
-            rgba(6,18,31,.72)
+            rgba(9,20,31,.94),
+            rgba(4,11,18,.93)
         );
 
-    backdrop-filter:blur(16px);
+    border:
+        1px solid var(--line);
 
-    box-shadow:
-        0 30px 90px rgba(0,0,0,.55),
-        inset 0 1px rgba(255,255,255,.04);
+    border-radius:28px;
 
-    padding:28px 32px 22px;
+    box-shadow:var(--shadow);
+
+    overflow:hidden;
+
+    backdrop-filter:blur(14px);
 }
+
+.story-box:before{
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            110deg,
+            transparent 0%,
+            rgba(180,230,255,.025) 45%,
+            transparent 75%
+        );
+
+    animation:
+        panelLight
+        8s ease-in-out infinite;
+}
+
+@keyframes panelLight{
+
+    0%,100%{
+        transform:translateX(-30%);
+    }
+
+    50%{
+        transform:translateX(30%);
+    }
+}
+
+.story-box:after{
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    top:0;
+
+    height:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(180,230,255,.45),
+            transparent
+        );
+}
+
+/* =========================================================
+   MEMORY DECOR
+========================================================= */
+
+.memory-mark{
+    position:absolute;
+
+    right:28px;
+    top:24px;
+
+    font-size:10px;
+
+    letter-spacing:3px;
+
+    color:rgba(190,225,240,.28);
+
+    writing-mode:vertical-rl;
+
+    pointer-events:none;
+}
+
+/* =========================================================
+   STORY CONTENT
+========================================================= */
 
 .story-content{
-    max-height:43vh;
-    overflow-y:auto;
+    position:relative;
 
-    scrollbar-width:thin;
-    scrollbar-color:
-        rgba(150,215,245,.4)
-        transparent;
+    padding:65px 85px 45px;
 }
 
-.story-content::-webkit-scrollbar{
-    width:5px;
+.story-text{
+    font-size:18px;
+
+    line-height:2.25;
+
+    color:#dce8ee;
+
+    white-space:pre-line;
+
+    min-height:390px;
+
+    text-shadow:
+        0 1px 1px rgba(0,0,0,.3);
 }
 
-.story-content::-webkit-scrollbar-thumb{
-    background:rgba(150,215,245,.4);
-    border-radius:10px;
+.story-text .special{
+    color:#c8edff;
 }
 
-/* =====================================================
-   TEXT
-===================================================== */
+.story-text strong{
+    color:#f3fbff;
 
-.story-paragraph{
-    font-size:17px;
-    line-height:2;
-    color:#e1eef7;
-    margin-bottom:18px;
-
-    animation:textFade .5s ease;
+    font-weight:500;
 }
 
-@keyframes textFade{
+/* =========================================================
+   MEMORY QUOTE
+========================================================= */
+
+.memory-quote{
+    margin:
+        10px 0
+        25px;
+
+    padding:
+        22px 25px;
+
+    border-left:
+        2px solid
+        rgba(130,205,240,.4);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(130,200,235,.045),
+            transparent
+        );
+
+    color:#c7eafb;
+
+    font-family:'Itim',cursive;
+
+    font-size:22px;
+
+    line-height:1.8;
+
+    text-align:left;
+}
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress-area{
+    padding:
+        0 85px
+        25px;
+}
+
+.progress-top{
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#718795;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    margin-bottom:9px;
+}
+
+.progress{
+    width:100%;
+
+    height:2px;
+
+    background:
+        rgba(180,220,240,.1);
+
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+
+    width:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            #5c91b2,
+            #d8f4ff
+        );
+
+    box-shadow:
+        0 0 15px
+        rgba(130,205,240,.5);
+
+    transition:
+        width 1.2s
+        cubic-bezier(.22,.61,.36,1);
+}
+
+/* =========================================================
+   CONTINUE
+========================================================= */
+
+.continue-area{
+    display:flex;
+
+    justify-content:center;
+
+    padding:
+        0 85px
+        40px;
+}
+
+.read-btn{
+    position:relative;
+
+    min-width:220px;
+
+    padding:15px 34px;
+
+    border:
+        1px solid
+        rgba(180,225,245,.22);
+
+    border-radius:999px;
+
+    background:
+        rgba(130,190,220,.055);
+
+    color:#e8f8ff;
+
+    font-family:'Kanit',sans-serif;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+    overflow:hidden;
+}
+
+.read-btn:before{
+    content:"";
+
+    position:absolute;
+
+    left:-100%;
+
+    top:0;
+
+    width:100%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(210,245,255,.12),
+            transparent
+        );
+
+    transition:.6s;
+}
+
+.read-btn:hover:before{
+    left:100%;
+}
+
+.read-btn:hover{
+    background:
+        rgba(130,190,220,.13);
+
+    border-color:
+        rgba(190,230,250,.5);
+
+    box-shadow:
+        0 0 30px
+        rgba(100,190,230,.12);
+
+    transform:translateY(-2px);
+}
+
+.read-btn.hidden{
+    display:none;
+}
+
+/* =========================================================
+   CHOICES
+========================================================= */
+
+.choices{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:14px;
+
+    padding:
+        0 85px
+        50px;
+
+    animation:
+        choicesAppear
+        .7s ease;
+}
+
+@keyframes choicesAppear{
+
     from{
         opacity:0;
-        transform:translateY(5px);
+        transform:translateY(15px);
     }
+
     to{
         opacity:1;
         transform:translateY(0);
     }
 }
 
-.emphasis{
-    color:#c5eaff;
-    text-shadow:
-        0 0 18px rgba(125,205,250,.28);
-}
-
-.sound-text{
-    text-align:center;
-    color:#90c9e9;
-    letter-spacing:3px;
-    margin:20px 0;
-}
-
-/* =====================================================
-   DIALOGUE
-===================================================== */
-
-.dialogue{
-    margin:22px 0;
-    padding:17px 20px;
-
-    border-left:3px solid var(--ice2);
-    border-radius:
-        0 14px 14px 0;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(110,190,240,.08),
-            transparent
-        );
-
-    animation:dialogueAppear .55s ease;
-}
-
-@keyframes dialogueAppear{
-    from{
-        opacity:0;
-        transform:translateX(-8px);
-    }
-    to{
-        opacity:1;
-        transform:translateX(0);
-    }
-}
-
-.dialogue-name{
-    display:block;
-
-    margin-bottom:5px;
-
-    color:#a9ddfa;
-    font-weight:500;
-}
-
-.dialogue-text{
-    font-size:16px;
-    line-height:1.85;
-}
-
-/* =====================================================
-   CONTINUE
-===================================================== */
-
-.continue-wrap{
-    display:flex;
-    justify-content:center;
-    margin-top:20px;
-}
-
-#continueButton{
-    padding:11px 28px;
-
-    border-radius:30px;
-
-    border:1px solid
-        rgba(175,220,245,.4);
-
-    background:
-        rgba(130,200,240,.08);
-
-    color:white;
-
-    font-family:inherit;
-    font-size:15px;
-
-    cursor:pointer;
-
-    transition:.3s;
-}
-
-#continueButton:hover{
-    background:
-        rgba(130,200,240,.16);
-
-    box-shadow:
-        0 0 30px
-        rgba(130,200,240,.12);
-
-    transform:translateY(-2px);
-}
-
-/* =====================================================
-   CHOICES
-===================================================== */
-
-#choices{
-    display:none;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(220px,1fr)
-        );
-
-    gap:12px;
-
-    margin-top:22px;
-}
-
-.choice-button{
+.choice{
     position:relative;
 
-    min-height:64px;
+    width:100%;
 
-    padding:14px 18px;
+    min-height:95px;
 
     text-align:left;
 
-    border-radius:15px;
+    padding:
+        18px
+        22px;
 
     border:
         1px solid
-        rgba(175,220,245,.2);
+        rgba(180,225,245,.13);
+
+    border-radius:15px;
 
     background:
-        rgba(255,255,255,.045);
+        linear-gradient(
+            145deg,
+            rgba(11,25,37,.72),
+            rgba(7,17,27,.75)
+        );
 
-    color:#eef8ff;
+    color:#dcecf4;
 
-    font-family:inherit;
+    font-family:'Kanit',sans-serif;
+
     font-size:15px;
 
     cursor:pointer;
 
+    transition:.35s;
+
     overflow:hidden;
-
-    transition:.3s;
 }
 
-.choice-button::before{
-    content:"";
-    position:absolute;
-    inset:0;
+.choice-number{
+    display:block;
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(120,205,250,.13),
-            transparent
-        );
+    color:#7394a6;
 
-    transform:translateX(-100%);
-    transition:.4s;
+    font-size:9px;
+
+    letter-spacing:3px;
+
+    margin-bottom:7px;
 }
 
-.choice-button:hover::before{
-    transform:translateX(0);
-}
+.choice-title{
+    display:block;
 
-.choice-button:hover{
-    transform:translateY(-3px);
+    color:#e6f7ff;
 
-    border-color:
-        rgba(170,220,245,.55);
+    font-size:16px;
 
-    box-shadow:
-        0 12px 35px rgba(0,0,0,.28);
-}
-
-/* =====================================================
-   PROGRESS
-===================================================== */
-
-.progress{
-    position:absolute;
-    top:77px;
-    left:50%;
-    transform:translateX(-50%);
-
-    z-index:45;
-
-    width:150px;
-    height:2px;
-
-    background:rgba(255,255,255,.08);
-}
-
-.progress-bar{
-    height:100%;
-    width:0;
-
-    background:
-        linear-gradient(
-            90deg,
-            #6ebce5,
-            #d9f4ff
-        );
-
-    box-shadow:
-        0 0 10px rgba(130,210,250,.45);
-
-    transition:.6s;
-}
-
-/* =====================================================
-   SETTINGS
-===================================================== */
-
-.modal{
-    position:fixed;
-    inset:0;
-    z-index:100;
-
-    display:none;
-
-    justify-content:center;
-    align-items:center;
-
-    background:rgba(0,0,0,.68);
-
-    backdrop-filter:blur(9px);
-}
-
-.modal.active{
-    display:flex;
-}
-
-.modal-box{
-    width:min(440px,calc(100% - 30px));
-
-    padding:30px;
-
-    border-radius:24px;
-
-    background:
-        rgba(7,20,34,.97);
-
-    border:
-        1px solid var(--line);
-
-    box-shadow:
-        0 30px 90px rgba(0,0,0,.7);
-}
-
-.modal-title{
-    font-family:"Playfair Display",serif;
-    font-size:29px;
-    margin-bottom:25px;
-}
-
-.setting{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding:15px 0;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.07);
-}
-
-.setting span{
-    color:#a9bdcd;
-}
-
-.switch{
-    width:42px;
-    height:22px;
-}
-
-.range{
-    width:120px;
-    accent-color:#8bd2f5;
-}
-
-.modal-close{
-    width:100%;
-
-    margin-top:24px;
-
-    padding:11px;
-
-    border-radius:12px;
-
-    border:1px solid
-        rgba(255,255,255,.14);
-
-    background:
-        rgba(255,255,255,.05);
-
-    color:white;
-
-    font-family:inherit;
-
-    cursor:pointer;
-}
-
-/* =====================================================
-   GALLERY
-===================================================== */
-
-.gallery-overlay{
-    position:fixed;
-    inset:0;
-    z-index:110;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(55,115,155,.18),
-            rgba(0,0,0,.95)
-        );
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    padding:20px;
-}
-
-.gallery-box{
-    width:min(1050px,100%);
-    max-height:90vh;
-
-    overflow:auto;
-
-    padding:30px;
-
-    border-radius:25px;
-
-    background:
-        rgba(6,18,31,.96);
-
-    border:
-        1px solid var(--line);
-}
-
-.gallery-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    margin-bottom:25px;
-}
-
-.gallery-top h2{
-    font-family:"Playfair Display",serif;
-    font-size:35px;
-}
-
-.gallery-close{
-    width:40px;
-    height:40px;
-    border-radius:50%;
-
-    border:1px solid rgba(255,255,255,.15);
-
-    background:rgba(255,255,255,.05);
-
-    color:white;
-
-    cursor:pointer;
-}
-
-.gallery-grid{
-    display:grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(220px,1fr)
-        );
-
-    gap:14px;
-}
-
-.gallery-card{
-    min-height:200px;
-
-    padding:22px;
-
-    border-radius:18px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.09);
-
-    background:
-        rgba(255,255,255,.035);
-
-    transition:.3s;
-}
-
-.gallery-card.unlocked{
-    cursor:pointer;
-}
-
-.gallery-card.unlocked:hover{
-    transform:translateY(-5px);
-
-    border-color:
-        rgba(160,220,245,.4);
-}
-
-.gallery-card.locked{
-    opacity:.35;
-}
-
-.gallery-icon{
-    font-size:40px;
-    margin-bottom:13px;
-}
-
-.gallery-title{
-    font-size:18px;
     margin-bottom:4px;
 }
 
-.gallery-subtitle{
-    color:#91aabd;
-    font-size:13px;
-}
+.choice-description{
+    display:block;
 
-.gallery-status{
-    margin-top:15px;
+    color:#8198a5;
 
     font-size:11px;
-    letter-spacing:1px;
 
-    color:#9eddf8;
+    line-height:1.6;
 }
 
-/* =====================================================
-   ENDING
-===================================================== */
+.choice:before{
+    content:"";
 
-.ending-overlay{
+    position:absolute;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:3px;
+
+    background:transparent;
+
+    transition:.35s;
+}
+
+.choice:hover{
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(170,220,245,.35);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25,48,64,.8),
+            rgba(11,25,37,.8)
+        );
+
+    box-shadow:
+        0 12px 30px
+        rgba(0,0,0,.25);
+}
+
+.choice:hover:before{
+    background:#8dd3f2;
+
+    box-shadow:
+        0 0 15px
+        #8dd3f2;
+}
+
+/* =========================================================
+   MEMORY FRAGMENT
+========================================================= */
+
+.fragment{
+    margin:
+        0 85px
+        35px;
+
+    padding:
+        16px 20px;
+
+    border:
+        1px solid
+        rgba(190,225,240,.08);
+
+    border-radius:12px;
+
+    background:
+        rgba(180,220,240,.025);
+
+    color:#78909d;
+
+    font-size:11px;
+
+    letter-spacing:1px;
+
+    line-height:1.8;
+
+    animation:
+        fadeIn
+        1s ease;
+}
+
+.fragment span{
+    color:#a9d5e9;
+}
+
+/* =========================================================
+   START SCREEN
+========================================================= */
+
+.start-screen{
     position:fixed;
+
     inset:0;
-    z-index:120;
+
+    z-index:100;
 
     display:flex;
-    align-items:center;
+
     justify-content:center;
 
-    padding:20px;
+    align-items:center;
 
     background:
         radial-gradient(
             circle at center,
-            rgba(100,175,220,.2),
-            rgba(0,0,0,.95)
-        );
+            rgba(42,78,101,.2),
+            transparent 42%
+        ),
+        rgba(2,6,11,.97);
 
-    backdrop-filter:blur(12px);
-
-    animation:endingIn .8s ease;
+    transition:
+        opacity 1s ease,
+        visibility 1s ease;
 }
 
-@keyframes endingIn{
-    from{
-        opacity:0;
-    }
-    to{
-        opacity:1;
-    }
+.start-screen.hide{
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
 }
 
-.ending-card{
-    width:min(720px,100%);
-    max-height:90vh;
-
-    overflow:auto;
-
-    padding:42px;
+.start-content{
+    width:min(
+        720px,
+        calc(100% - 35px)
+    );
 
     text-align:center;
 
-    border-radius:28px;
+    animation:
+        startAppear
+        1.4s ease;
+}
 
-    background:
-        rgba(5,17,29,.95);
+@keyframes startAppear{
+
+    from{
+        opacity:0;
+        transform:
+            translateY(25px);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            translateY(0);
+    }
+}
+
+.start-small{
+    font-size:11px;
+
+    letter-spacing:8px;
+
+    color:#83b7cf;
+
+    margin-bottom:22px;
+}
+
+.start-title{
+    font-family:'Itim',cursive;
+
+    font-size:82px;
+
+    letter-spacing:10px;
+
+    color:#eefaff;
+
+    text-shadow:
+        0 0 25px rgba(170,225,250,.13),
+        0 0 80px rgba(100,180,220,.08);
+}
+
+.start-sub{
+    color:#91a7b4;
+
+    margin:
+        15px 0
+        50px;
+
+    font-size:15px;
+
+    line-height:2;
+
+    letter-spacing:1px;
+}
+
+.start-btn{
+    padding:
+        15px
+        58px;
+
+    border-radius:999px;
 
     border:
         1px solid
-        rgba(170,220,245,.28);
+        rgba(190,230,250,.28);
+
+    background:
+        rgba(120,185,215,.08);
+
+    color:#eaf8ff;
+
+    font-family:'Kanit',sans-serif;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.35s;
+}
+
+.start-btn:hover{
+    background:
+        rgba(130,200,235,.16);
+
+    border-color:
+        rgba(210,240,255,.6);
 
     box-shadow:
-        0 30px 100px rgba(0,0,0,.75);
+        0 0 40px
+        rgba(100,190,230,.14);
+
+    transform:
+        translateY(-3px);
 }
 
-.ending-small{
-    font-size:11px;
+.start-line{
+    width:90px;
+
+    height:1px;
+
+    margin:
+        40px
+        auto 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #a9dff5,
+            transparent
+        );
+}
+
+/* =========================================================
+   CINEMATIC TRANSITION
+========================================================= */
+
+.scene-transition{
+    position:fixed;
+
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(190,230,250,.1),
+            rgba(2,6,11,.96)
+        );
+
+    z-index:90;
+
+    pointer-events:none;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:
+        opacity .6s ease,
+        visibility .6s ease;
+}
+
+.scene-transition.active{
+    opacity:1;
+    visibility:visible;
+}
+
+/* =========================================================
+   END SCREEN
+========================================================= */
+
+.end-screen{
+    text-align:center;
+
+    padding:
+        65px
+        30px
+        75px;
+
+    animation:
+        endAppear
+        1.4s ease;
+}
+
+@keyframes endAppear{
+
+    from{
+        opacity:0;
+        transform:
+            translateY(25px);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            translateY(0);
+    }
+}
+
+.end-icon{
+    font-size:48px;
+
+    margin-bottom:15px;
+
+    filter:
+        drop-shadow(
+            0 0 20px
+            rgba(200,235,255,.2)
+        );
+}
+
+.end-label{
+    color:#789aaa;
+
+    font-size:10px;
+
     letter-spacing:5px;
-    color:#9fdcf7;
+
+    margin-bottom:12px;
 }
 
-.ending-icon{
-    font-size:65px;
-    margin:18px 0;
+.end-title{
+    font-family:'Itim',cursive;
+
+    font-size:48px;
+
+    letter-spacing:4px;
+
+    margin-bottom:28px;
+
+    color:#edfaff;
+
+    text-shadow:
+        0 0 25px
+        rgba(130,210,245,.15);
 }
 
-.ending-title{
-    font-family:"Playfair Display",serif;
+.end-text{
+    max-width:680px;
 
-    font-size:
-        clamp(30px,6vw,52px);
+    margin:auto;
 
-    margin-bottom:5px;
-}
+    white-space:pre-line;
 
-.ending-subtitle{
-    color:#91aabd;
+    line-height:2.25;
+
+    color:#c7d9e2;
+
     font-size:17px;
 }
 
-.ending-line{
-    width:90px;
+.end-divider{
+    width:100px;
+
     height:1px;
 
-    margin:24px auto;
-
-    background:#9bdaf6;
-
-    box-shadow:
-        0 0 15px
-        rgba(150,220,250,.5);
-}
-
-.ending-content{
-    line-height:2;
-    color:#dcecf7;
-}
-
-.ending-rank{
-    display:inline-block;
-
-    margin-top:22px;
-
-    padding:6px 14px;
-
-    border-radius:20px;
-
-    border:
-        1px solid
-        rgba(150,220,245,.25);
-
-    color:#9ddaf5;
-
-    font-size:11px;
-
-    letter-spacing:2px;
-}
-
-.ending-buttons{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-
-    gap:10px;
-
-    margin-top:28px;
-}
-
-.ending-button{
-    padding:11px 20px;
-
-    border-radius:12px;
-
-    border:
-        1px solid
-        rgba(160,220,245,.25);
+    margin:
+        35px
+        auto;
 
     background:
-        rgba(255,255,255,.05);
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(190,225,240,.4),
+            transparent
+        );
+}
 
-    color:white;
+.end-memory{
+    font-family:'Itim',cursive;
 
-    font-family:inherit;
+    color:#b6dced;
+
+    font-size:21px;
+
+    line-height:1.8;
+}
+
+.end-actions{
+    margin-top:40px;
+
+    display:flex;
+
+    gap:12px;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+}
+
+.end-btn{
+    padding:
+        12px
+        28px;
+
+    border-radius:999px;
+
+    border:
+        1px solid
+        rgba(190,230,250,.18);
+
+    background:
+        rgba(130,190,220,.06);
+
+    color:#e8f8ff;
+
+    font-family:'Kanit',sans-serif;
 
     cursor:pointer;
 
     transition:.3s;
 }
 
-.ending-button:hover{
-    transform:translateY(-2px);
+.end-btn:hover{
     background:
-        rgba(130,205,245,.12);
+        rgba(130,190,220,.13);
+
+    transform:
+        translateY(-2px);
 }
 
-/* =====================================================
-   MOBILE
-===================================================== */
+/* =========================================================
+   TYPE CURSOR
+========================================================= */
 
-@media(max-width:700px){
+.cursor{
+    display:inline-block;
+
+    width:2px;
+
+    height:1em;
+
+    background:#bfeaff;
+
+    margin-left:4px;
+
+    vertical-align:-2px;
+
+    animation:
+        blink
+        .7s
+        infinite;
+}
+
+@keyframes blink{
+
+    50%{
+        opacity:0;
+    }
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:760px){
 
     .topbar{
-        padding:0 15px;
+        padding:0 18px;
+        height:60px;
     }
 
     .logo{
-        font-size:14px;
+        font-size:10px;
         letter-spacing:3px;
     }
 
-    .story-area{
-        width:calc(100% - 14px);
-        bottom:8px;
+    .control-btn{
+        width:37px;
+        height:37px;
     }
 
-    .story-panel{
-        padding:20px 18px 17px;
-        border-radius:18px;
+    .game{
+        width:calc(100% - 18px);
+        padding-top:85px;
+    }
+
+    .chapter-title{
+        font-size:36px;
     }
 
     .story-content{
-        max-height:47vh;
+        padding:
+            40px
+            25px
+            30px;
     }
 
-    .story-paragraph{
-        font-size:15px;
-        line-height:1.85;
+    .story-text{
+        font-size:16px;
+        line-height:2.05;
+        min-height:400px;
     }
 
-    #choices{
+    .progress-area{
+        padding:
+            0 25px
+            20px;
+    }
+
+    .continue-area{
+        padding:
+            0 25px
+            30px;
+    }
+
+    .choices{
         grid-template-columns:1fr;
+
+        padding:
+            0 25px
+            30px;
     }
 
-    .ending-card{
-        padding:28px 19px;
+    .fragment{
+        margin:
+            0 25px
+            25px;
+    }
+
+    .choice{
+        min-height:85px;
+    }
+
+    .moon{
+        width:150px;
+        height:150px;
+
+        right:-30px;
+        top:100px;
+
+        opacity:.3;
+    }
+
+    .start-title{
+        font-size:48px;
+        letter-spacing:5px;
+    }
+
+    .start-small{
+        letter-spacing:4px;
+    }
+
+    .end-title{
+        font-size:37px;
+    }
+
+    .end-screen{
+        padding:
+            45px
+            20px
+            55px;
     }
 }
-
 </style>
 </head>
 
-
 <body>
 
-<div id="game">
+<!-- =========================================================
+     BACKGROUND
+========================================================= -->
 
-    <div id="background"></div>
+<div class="background">
 
-    <div class="lights" id="lights"></div>
+    <div class="moon"></div>
 
-    <div id="snow"></div>
+    <div class="fog"></div>
 
-    <div class="vignette"></div>
-
-
-    <!-- TOP BAR -->
-
-    <header class="topbar">
-
-        <div class="logo">
-            WINTER <span>MEMORY</span>
-        </div>
-
-        <div class="top-actions">
-
-            <button
-                class="icon-button"
-                onclick="openSettings()"
-                title="ตั้งค่า"
-            >
-                ⚙
-            </button>
-
-            <button
-                class="icon-button"
-                onclick="openGallery()"
-                title="ตอนจบ"
-            >
-                📖
-            </button>
-
-        </div>
-
-    </header>
-
-
-    <!-- PROGRESS -->
-
-    <div class="progress">
-        <div
-            class="progress-bar"
-            id="progressBar"
-        ></div>
-    </div>
-
-
-    <!-- STORY -->
-
-    <main class="story-area">
-
-        <div
-            class="chapter-label"
-            id="chapterLabel"
-        ></div>
-
-        <section class="story-panel">
-
-            <div
-                class="story-content"
-                id="storyContent"
-            ></div>
-
-            <div
-                id="choices"
-            ></div>
-
-            <div
-                class="continue-wrap"
-                id="continueWrap"
-            >
-
-                <button
-                    id="continueButton"
-                    onclick="continueStory()"
-                >
-                    ดำเนินเรื่องต่อ
-                </button>
-
-            </div>
-
-        </section>
-
-    </main>
+    <div class="fog two"></div>
 
 </div>
 
+<div class="light-particles" id="lightParticles"></div>
 
-<!-- SETTINGS -->
+<div class="snow" id="snow"></div>
 
-<div
-    class="modal"
-    id="settingsModal"
->
+<div class="scene-transition" id="sceneTransition"></div>
 
-    <div class="modal-box">
 
-        <div class="modal-title">
-            Settings
-        </div>
+<!-- =========================================================
+     TOP BAR
+========================================================= -->
 
-        <div class="setting">
+<header class="topbar">
 
-            <span>
-                🔊 เสียงเอฟเฟกต์
-            </span>
+    <div class="logo">
+        WINTER <span>MEMORY</span>
+    </div>
 
-            <input
-                class="switch"
-                type="checkbox"
-                id="soundEnabled"
-                checked
-                onchange="updateSoundSetting()"
-            >
-
-        </div>
-
-        <div class="setting">
-
-            <span>
-                เสียงตัวหนังสือ
-            </span>
-
-            <input
-                class="switch"
-                type="checkbox"
-                id="typeEnabled"
-                checked
-                onchange="updateSoundSetting()"
-            >
-
-        </div>
-
-        <div class="setting">
-
-            <span>
-                ระดับเสียง
-            </span>
-
-            <input
-                class="range"
-                type="range"
-                id="volume"
-                min="0"
-                max="1"
-                step=".01"
-                value=".55"
-            >
-
-        </div>
+    <div class="controls">
 
         <button
-            class="modal-close"
-            onclick="closeSettings()"
+            class="control-btn"
+            id="soundBtn"
+            title="เปิด / ปิดเสียง"
         >
-            ปิด Settings
+            🔊
+        </button>
+
+        <button
+            class="control-btn"
+            id="restartBtn"
+            title="เริ่มเรื่องใหม่"
+        >
+            ↻
         </button>
 
     </div>
 
+</header>
+
+
+<!-- =========================================================
+     START SCREEN
+========================================================= -->
+
+<div
+    class="start-screen"
+    id="startScreen"
+>
+
+    <div class="start-content">
+
+        <div class="start-small">
+            A STORY OF LOVE • LOSS • MEMORY
+        </div>
+
+        <div class="start-title">
+            WINTER MEMORY
+        </div>
+
+        <div class="start-sub">
+
+            บางความทรงจำไม่ได้หายไป<br>
+            มันเพียงรอวันที่หิมะแรกตกลงมา<br>
+            เพื่อกลับมาทวงถามคำสัญญาที่เราเคยลืม
+
+        </div>
+
+        <button
+            class="start-btn"
+            id="startBtn"
+        >
+            ❄ เริ่มเรื่องราว
+        </button>
+
+        <div class="start-line"></div>
+
+    </div>
+
 </div>
+
+
+<!-- =========================================================
+     GAME
+========================================================= -->
+
+<main class="game">
+
+    <section class="scene">
+
+        <div class="chapter">
+
+            <div
+                class="chapter-number"
+                id="chapterNumber"
+            >
+                PROLOGUE
+            </div>
+
+            <div
+                class="chapter-title"
+                id="chapterTitle"
+            >
+                จดหมายจากฤดูหนาว
+            </div>
+
+            <div class="chapter-line"></div>
+
+        </div>
+
+
+        <div class="story-box">
+
+            <div class="memory-mark">
+                MEMORY
+            </div>
+
+
+            <div class="story-content">
+
+                <div
+                    class="story-text"
+                    id="storyText"
+                ></div>
+
+            </div>
+
+
+            <div
+                class="fragment"
+                id="fragment"
+            >
+                ความทรงจำบางอย่างยังไม่ถูกเปิดเผย
+            </div>
+
+
+            <div class="progress-area">
+
+                <div class="progress-top">
+
+                    <span>
+                        MEMORY FRAGMENT
+                    </span>
+
+                    <span id="progressText">
+                        0%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div
+                        class="progress-bar"
+                        id="progressBar"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="continue-area">
+
+                <button
+                    class="read-btn"
+                    id="continueBtn"
+                >
+                    อ่านต่อ
+                </button>
+
+            </div>
+
+
+            <div
+                class="choices"
+                id="choices"
+            ></div>
+
+        </div>
+
+    </section>
+
+</main>
 
 
 <script>
 
 /* =========================================================
-   AUDIO ENGINE
-   ไม่มีไฟล์เสียงภายนอก
+   AUDIO
 ========================================================= */
 
+let audioEnabled = true;
 let audioContext = null;
-
-let masterVolume = .55;
-
-let soundEnabled = true;
-
-let typeEnabled = true;
-
-
-/* ---------------------------------------------------------
-   START AUDIO
---------------------------------------------------------- */
 
 function initAudio(){
 
@@ -1259,20 +1721,14 @@ function initAudio(){
 
 }
 
-
-/* ---------------------------------------------------------
-   BASIC TONE
---------------------------------------------------------- */
-
-function tone(
-    frequency,
-    duration,
-    type="sine",
-    volume=.08,
-    delay=0
+function playTone(
+    frequency = 500,
+    duration = .05,
+    type = "sine",
+    volume = .02
 ){
 
-    if(!soundEnabled) return;
+    if(!audioEnabled) return;
 
     initAudio();
 
@@ -1287,25 +1743,14 @@ function tone(
     oscillator.frequency.value =
         frequency;
 
-    const start =
-        audioContext.currentTime + delay;
-
-    const end =
-        start + duration;
-
     gain.gain.setValueAtTime(
-        0,
-        start
-    );
-
-    gain.gain.linearRampToValueAtTime(
-        volume * masterVolume,
-        start + .01
+        volume,
+        audioContext.currentTime
     );
 
     gain.gain.exponentialRampToValueAtTime(
         .001,
-        end
+        audioContext.currentTime + duration
     );
 
     oscillator.connect(gain);
@@ -1314,173 +1759,165 @@ function tone(
         audioContext.destination
     );
 
-    oscillator.start(start);
+    oscillator.start();
 
-    oscillator.stop(end + .02);
-
-}
-
-
-/* ---------------------------------------------------------
-   CLICK
---------------------------------------------------------- */
-
-function soundClick(){
-
-    tone(
-        620,
-        .055,
-        "sine",
-        .12
-    );
-
-    tone(
-        920,
-        .035,
-        "sine",
-        .05,
-        .015
+    oscillator.stop(
+        audioContext.currentTime +
+        duration
     );
 
 }
 
+function clickSound(){
 
-/* ---------------------------------------------------------
-   READ
---------------------------------------------------------- */
-
-function soundRead(){
-
-    tone(
-        390,
-        .08,
-        "sine",
-        .055
-    );
-
-    tone(
-        590,
-        .12,
-        "sine",
+    playTone(
+        460,
         .045,
-        .05
+        "sine",
+        .022
     );
+
+    setTimeout(()=>{
+
+        playTone(
+            690,
+            .035,
+            "sine",
+            .014
+        );
+
+    },35);
 
 }
 
+function typeSound(){
 
-/* ---------------------------------------------------------
-   CHOICE
---------------------------------------------------------- */
+    if(Math.random() > .25){
 
-function soundChoice(){
+        playTone(
+            500 + Math.random()*100,
+            .015,
+            "triangle",
+            .006
+        );
 
-    tone(
-        500,
-        .08,
-        "triangle",
-        .09
-    );
-
-    tone(
-        760,
-        .12,
-        "triangle",
-        .07,
-        .06
-    );
+    }
 
 }
 
+function choiceSound(){
 
-/* ---------------------------------------------------------
-   SCENE
---------------------------------------------------------- */
-
-function soundScene(){
-
-    tone(
-        240,
-        .15,
-        "sine",
-        .045
-    );
-
-    tone(
-        480,
-        .22,
-        "sine",
-        .035,
-        .1
-    );
-
-}
-
-
-/* ---------------------------------------------------------
-   ENDING
---------------------------------------------------------- */
-
-function soundEnding(){
-
-    tone(
-        392,
-        .2,
-        "sine",
-        .07
-    );
-
-    tone(
-        523,
-        .25,
-        "sine",
-        .07,
-        .15
-    );
-
-    tone(
-        659,
-        .35,
-        "sine",
+    playTone(
+        330,
         .06,
-        .3
+        "sine",
+        .022
     );
 
-    tone(
-        784,
-        .55,
+    setTimeout(()=>{
+
+        playTone(
+            560,
+            .09,
+            "sine",
+            .015
+        );
+
+    },60);
+
+}
+
+function memorySound(){
+
+    playTone(
+        240,
+        .18,
         "sine",
-        .045,
-        .5
+        .018
     );
+
+    setTimeout(()=>{
+
+        playTone(
+            420,
+            .25,
+            "sine",
+            .012
+        );
+
+    },100);
 
 }
 
 
-/* ---------------------------------------------------------
-   TYPE SOUND
---------------------------------------------------------- */
+/* =========================================================
+   SNOW
+========================================================= */
 
-let lastTypeSound = 0;
+const snow =
+    document.getElementById("snow");
 
-function typeTick(){
+for(let i=0;i<95;i++){
 
-    if(!soundEnabled || !typeEnabled)
-        return;
+    const flake =
+        document.createElement("div");
 
-    const now =
-        performance.now();
+    flake.className =
+        "snowflake";
 
-    if(now - lastTypeSound < 45)
-        return;
+    flake.textContent =
+        Math.random() > .55
+        ? "•"
+        : "❄";
 
-    lastTypeSound = now;
+    flake.style.left =
+        Math.random()*100 + "%";
 
-    tone(
-        700 + Math.random()*150,
-        .018,
-        "square",
-        .025
+    flake.style.fontSize =
+        (Math.random()*7 + 3) + "px";
+
+    flake.style.opacity =
+        Math.random()*.6 + .15;
+
+    flake.style.animationDuration =
+        (Math.random()*13 + 8) + "s";
+
+    flake.style.animationDelay =
+        Math.random()*14 + "s";
+
+    snow.appendChild(flake);
+
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+const particles =
+    document.getElementById(
+        "lightParticles"
+    );
+
+for(let i=0;i<25;i++){
+
+    const particle =
+        document.createElement("div");
+
+    particle.className =
+        "light-particle";
+
+    particle.style.left =
+        Math.random()*100 + "%";
+
+    particle.style.animationDuration =
+        (Math.random()*18 + 15) + "s";
+
+    particle.style.animationDelay =
+        Math.random()*15 + "s";
+
+    particles.appendChild(
+        particle
     );
 
 }
@@ -1492,1364 +1929,1980 @@ function typeTick(){
 
 const STORY = {
 
-    intro:{
-        chapter:"PROLOGUE — หิมะแรก",
-        scene:"snow",
+    /* =====================================================
+       PROLOGUE
+    ===================================================== */
+
+    prologue:{
+
+        chapter:"PROLOGUE",
+
+        title:"จดหมายจากฤดูหนาว",
+
+        progress:5,
+
+        fragment:
+            "ความทรงจำที่ถูกปิดผนึก • คืนที่หิมะแรกตก",
 
         text:`
-            <p class="story-paragraph">
-                หิมะตกลงมาเป็นครั้งแรกของปีในคืนที่ทุกอย่างเริ่มต้นขึ้น
-            </p>
 
-            <p class="story-paragraph">
-                เมืองเล็ก ๆ ทางเหนือเงียบกว่าปกติ ถนนทุกสายถูกปกคลุมด้วยสีขาว แสงไฟจากบ้านเรือนส่องผ่านม่านหิมะจนดูราวกับดาวดวงเล็ก ๆ ที่ลอยอยู่บนพื้นดิน
-            </p>
+หิมะแรกของปีตกลงมาในคืนที่คุณไม่คิดว่าจะต้องพบกับอดีตอีกครั้ง
 
-            <p class="story-paragraph">
-                คุณนั่งอยู่คนเดียวในห้องนั่งเล่น หนังสือเล่มหนึ่งเปิดค้างอยู่บนโต๊ะ แต่คุณอ่านมันมานานเกือบครึ่งชั่วโมงแล้วโดยไม่ได้จำอะไรเลย
-            </p>
+เกล็ดสีขาวค่อย ๆ ลอยผ่านหน้าต่างห้องของคุณอย่างเงียบงัน
 
-            <p class="story-paragraph">
-                ข้างนอกมีเพียงเสียงลม
-            </p>
+เจ็ดปีแล้ว...
 
-            <p class="story-paragraph">
-                จนกระทั่ง...
-            </p>
+เจ็ดปีนับจากคืนที่เด็กหนุ่มคนหนึ่งหายไปจากเมืองนี้
 
-            <p class="sound-text">
-                ก๊อก... ก๊อก... ก๊อก...
-            </p>
+และจากชีวิตของคุณ
 
-            <p class="story-paragraph">
-                เสียงเคาะประตูดังขึ้นสามครั้ง
-            </p>
+อีธาน
 
-            <p class="story-paragraph">
-                คุณเงยหน้าขึ้นจากหนังสือ
-            </p>
+ชื่อของเขาเป็นเพียงความทรงจำที่คุณพยายามไม่เรียกหาอีก
 
-            <p class="story-paragraph">
-                ไม่มีใครควรมาหาคุณในคืนนี้
-            </p>
+คุณเคยคิดว่าเวลาจะช่วยให้ลืมได้
 
-            <p class="story-paragraph">
-                คุณเดินไปที่ประตูอย่างช้า ๆ และมองผ่านช่องกระจก
-            </p>
+แต่คุณคิดผิด
 
-            <p class="story-paragraph">
-                ไม่มีใครอยู่ตรงนั้น
-            </p>
+เพราะทุกครั้งที่ฤดูหนาวกลับมา
 
-            <p class="story-paragraph">
-                เมื่อเปิดประตูออก คุณพบเพียงซองจดหมายสีขาวหนึ่งฉบับวางอยู่บนพื้น
-            </p>
+คุณยังคงได้ยินเสียงหัวเราะของเขา
 
-            <p class="story-paragraph">
-                ไม่มีชื่อผู้ส่ง
-            </p>
+ยังจำมือที่เคยยื่นมาให้
 
-            <p class="story-paragraph">
-                แต่ชื่อของคุณถูกเขียนอยู่ด้านหน้า
-            </p>
+ยังจำทะเลสาบที่เคยสะท้อนเงาของพวกคุณสองคน
 
-            <p class="story-paragraph emphasis">
-                และลายมือนั้น...
-            </p>
+และยังจำคำสัญญาเล็ก ๆ ที่เด็กสองคนเคยให้กัน
 
-            <p class="story-paragraph">
-                คุณจำได้
-            </p>
+"ถ้าหิมะแรกตกลงมาเมื่อไหร่..."
 
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    คุณ
-                </span>
+"เราจะกลับมาเจอกันที่นี่"
 
-                <div class="dialogue-text">
-                    "...อีธาน?"
-                </div>
-            </div>
+คุณเคยคิดว่ามันเป็นเพียงคำพูดของเด็ก
 
-            <p class="story-paragraph">
-                คนที่หายไปจากชีวิตคุณเมื่อเจ็ดปีก่อน
-            </p>
+จนกระทั่งคืนนี้
 
-            <p class="story-paragraph">
-                คนที่คุณเคยสัญญาว่าจะไม่มีวันลืม
-            </p>
+ก๊อก...
 
-            <p class="story-paragraph">
-                และคนที่คุณคิดว่าจะไม่มีวันได้พบอีก
-            </p>
-        `,
+ก๊อก...
+
+เสียงเคาะประตูดังขึ้น
+
+คุณลุกจากเก้าอี้
+
+เมื่อเปิดประตูออก...
+
+ไม่มีใครอยู่ตรงนั้น
+
+มีเพียงกล่องไม้เก่า ๆ วางอยู่บนพื้น
+
+บนฝากล่องมีชื่อของคุณ
+
+และข้างในมีของอยู่สามอย่าง
+
+รูปถ่ายหนึ่งใบ
+
+กุญแจสนิมเขรอะหนึ่งดอก
+
+และจดหมายหนึ่งฉบับ
+
+บนซองเขียนว่า
+
+"ถึงเธอ...ในวันที่หิมะแรกตก"
+
+คุณจำลายมือนั้นได้ทันที
+
+ลายมือของอีธาน
+
+คนที่หายไปเมื่อเจ็ดปีก่อน
+`,
 
         choices:[
+
             {
-                text:"✉️ เปิดจดหมาย",
+                title:"เปิดจดหมาย",
+                description:
+                    "เผชิญหน้ากับความทรงจำที่คุณพยายามลืม",
                 next:"letter"
             },
+
             {
-                text:"🔍 ตรวจสอบซองก่อน",
-                next:"inspect"
+                title:"เปิดกล่องให้ละเอียด",
+                description:
+                    "ตรวจดูสิ่งของทุกชิ้นก่อนตัดสินใจ",
+                next:"memoryPhoto"
             }
+
         ]
+
     },
+
+
+    /* =====================================================
+       LETTER
+    ===================================================== */
 
     letter:{
-        chapter:"บทที่ 1 — จดหมาย",
-        scene:"room",
+
+        chapter:"CHAPTER I",
+
+        title:"จดหมายที่ไม่ควรกลับมา",
+
+        progress:15,
+
+        fragment:
+            "ประโยคหนึ่งจากอดีต • ฉันยังอยู่ที่เดิม",
 
         text:`
-            <p class="story-paragraph">
-                คุณนำจดหมายกลับเข้ามาในบ้านแล้วปิดประตู
-            </p>
 
-            <p class="story-paragraph">
-                มือของคุณสั่นเล็กน้อยตอนฉีกซอง
-            </p>
+กระดาษในซองเก่าและเหลืองตามกาลเวลา
 
-            <p class="story-paragraph">
-                ภายในมีเพียงกระดาษหนึ่งแผ่น
-            </p>
+แต่ลายมือยังชัดเจน
 
-            <p class="story-paragraph">
-                ข้อความมีเพียงไม่กี่บรรทัด
-            </p>
+คุณค่อย ๆ คลี่มันออก
 
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    จดหมาย
-                </span>
+ข้อความมีเพียงไม่กี่บรรทัด
 
-                <div class="dialogue-text">
-                    "ถ้าเธอยังจำทะเลสาบทางเหนือได้
-                    กลับมาที่นั่นในคืนหิมะแรก"
-                </div>
-            </div>
+"ถ้าเธอได้รับจดหมายฉบับนี้..."
 
-            <p class="story-paragraph">
-                คุณอ่านซ้ำหลายครั้ง
-            </p>
+"แสดงว่าหิมะแรกตกลงมาแล้ว"
 
-            <p class="story-paragraph">
-                ทะเลสาบทางเหนือ
-            </p>
+"ฉันไม่รู้ว่าเธอยังจำคำสัญญาของเราได้ไหม"
 
-            <p class="story-paragraph">
-                สถานที่ที่คุณและอีธานเคยไปด้วยกัน
-            </p>
+"แต่ฉันยังอยู่ที่เดิม"
 
-            <p class="story-paragraph">
-                สถานที่ที่มีทั้งความทรงจำที่สวยงามและวันที่เจ็บปวดที่สุดในชีวิตของคุณ
-            </p>
+คุณหยุดอ่าน
 
-            <p class="story-paragraph">
-                คุณจำคำพูดของเขาในวันสุดท้ายได้
-            </p>
+หัวใจเหมือนถูกบีบแน่น
 
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    อีธาน
-                </span>
+ประโยคสุดท้ายทำให้มือของคุณสั่น
 
-                <div class="dialogue-text">
-                    "ถ้าเราต้องจากกันจริง ๆ กลับมาที่นี่ในวันที่หิมะแรกตกนะ"
-                </div>
-            </div>
+"ถ้าเธอยังอยากรู้ความจริง..."
 
-            <p class="story-paragraph">
-                ตอนนั้นคุณคิดว่าเป็นเพียงคำพูดเล่น ๆ
-            </p>
+"มาที่บ้านริมทะเลสาบ"
 
-            <p class="story-paragraph emphasis">
-                แต่คืนนี้...
-            </p>
+ไม่มีชื่อ
 
-            <p class="story-paragraph">
-                หิมะแรกกำลังตก
-            </p>
-        `,
+ไม่มีวันที่ในจดหมายฉบับนั้น
 
+แต่คุณรู้ว่าใครเขียน
+
+อีธาน
+
+คนที่คุณเคยคิดว่าทิ้งคุณไป
+
+คนที่คุณเคยโกรธ
+
+และเป็นคนเดียวที่คุณไม่เคยลืม
+
+`
+
+        ,
         choices:[
+
             {
-                text:"🚆 ไปทะเลสาบคืนนี้",
-                next:"journey"
+                title:"ไปที่บ้านริมทะเลสาบ",
+                description:
+                    "ทำตามคำขอของอีธาน",
+                next:"lakeRoad"
             },
+
             {
-                text:"📱 โทรหาเพื่อนก่อน",
-                next:"friend"
-            },
-            {
-                text:"🌙 รอจนเช้า",
-                next:"wait"
+                title:"ค้นหาความจริงจากรูปถ่าย",
+                description:
+                    "บางทีภาพเก่าอาจมีคำตอบที่จดหมายไม่มี",
+                next:"memoryPhoto"
             }
+
         ]
+
     },
 
-    inspect:{
-        chapter:"บทที่ 1 — สิ่งที่ซ่อนอยู่",
-        scene:"room",
+
+    /* =====================================================
+       PHOTO
+    ===================================================== */
+
+    memoryPhoto:{
+
+        chapter:"CHAPTER I",
+
+        title:"ภาพถ่ายของคนสองคน",
+
+        progress:13,
+
+        fragment:
+            "ภาพถ่ายใบหนึ่ง • ความทรงจำที่ถูกซ่อน",
 
         text:`
-            <p class="story-paragraph">
-                คุณยังไม่เปิดจดหมาย
-            </p>
 
-            <p class="story-paragraph">
-                มีบางอย่างในใจบอกว่าควรตรวจสอบมันก่อน
-            </p>
+คุณหยิบรูปถ่ายขึ้นมา
 
-            <p class="story-paragraph">
-                คุณพลิกซองไปมา
-            </p>
+มันเป็นภาพของคุณกับอีธานตอนอายุสิบเจ็ด
 
-            <p class="story-paragraph">
-                กระดาษด้านหลังมีรอยพับหลายครั้ง
-            </p>
+พวกคุณยืนอยู่ริมทะเลสาบ
 
-            <p class="story-paragraph">
-                เมื่อคุณใช้นิ้วลูบผ่านขอบซอง คุณพบกระดาษบาง ๆ ซ่อนอยู่ด้านใน
-            </p>
+หิมะตกอยู่ด้านหลัง
 
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    ข้อความลับ
-                </span>
+อีธานกำลังยิ้ม
 
-                <div class="dialogue-text">
-                    "อย่าให้ใครรู้ว่าฉันติดต่อเธอ"
-                </div>
-            </div>
+ส่วนคุณกำลังหัวเราะ
 
-            <p class="story-paragraph">
-                ความรู้สึกเย็นวาบผ่านร่างกาย
-            </p>
+ภาพนั้นดูเหมือนความทรงจำธรรมดา
 
-            <p class="story-paragraph">
-                จดหมายนี้ไม่ใช่การนัดพบธรรมดา
-            </p>
+จนกระทั่งคุณพลิกมันกลับด้าน
 
-            <p class="story-paragraph emphasis">
-                มีบางอย่างเกิดขึ้นกับอีธาน
-            </p>
-        `,
+มีข้อความเขียนอยู่ด้านหลัง
 
+"ถ้าวันหนึ่งเธออ่านสิ่งนี้..."
+
+"อย่าเชื่อทุกอย่างที่พวกเขาบอก"
+
+คุณนิ่งไป
+
+"พวกเขา?"
+
+คุณไม่เคยรู้ว่าคำพูดนี้หมายถึงใคร
+
+แต่เมื่อมองรูปอีกครั้ง
+
+คุณสังเกตเห็นบางอย่าง
+
+ด้านหลังพวกคุณมีชายคนหนึ่งยืนอยู่ไกล ๆ
+
+คนที่คุณจำไม่ได้ว่าอยู่ในวันนั้น
+
+และที่น่ากลัวกว่านั้น...
+
+ตรงขอบภาพมีตราประทับของโรงพยาบาล
+
+`
+
+        ,
         choices:[
+
             {
-                text:"✉️ เปิดจดหมาย",
-                next:"letter"
+                title:"ไปโรงพยาบาลเก่า",
+                description:
+                    "ค้นหาว่าอีธานเกี่ยวข้องกับโรงพยาบาลอย่างไร",
+                next:"hospital"
             },
+
             {
-                text:"🔒 ซ่อนจดหมาย",
-                next:"hide"
+                title:"ไปบ้านริมทะเลสาบ",
+                description:
+                    "บางทีคำตอบอาจรอคุณอยู่ที่นั่น",
+                next:"lakeRoad"
             }
+
         ]
+
     },
 
-    hide:{
-        chapter:"บทที่ 1 — ร่องรอย",
-        scene:"snow",
+
+    /* =====================================================
+       LAKE ROAD
+    ===================================================== */
+
+    lakeRoad:{
+
+        chapter:"CHAPTER II",
+
+        title:"ถนนที่หิมะยังจำได้",
+
+        progress:25,
+
+        fragment:
+            "เจ็ดปีก่อน • คำสัญญาของเด็กสองคน",
 
         text:`
-            <p class="story-paragraph">
-                คุณเก็บจดหมายไว้ในลิ้นชัก
-            </p>
 
-            <p class="story-paragraph">
-                คุณพยายามบอกตัวเองว่าเรื่องทั้งหมดควรจบลงตรงนี้
-            </p>
+คุณออกจากบ้านในเวลาสามทุ่ม
 
-            <p class="story-paragraph">
-                เจ็ดปีที่ผ่านมา คุณใช้เวลานานมากกว่าจะสร้างชีวิตใหม่ขึ้นมาได้
-            </p>
+เมืองทั้งเมืองถูกปกคลุมด้วยหิมะ
 
-            <p class="story-paragraph">
-                คุณไม่อยากกลับไปเป็นคนเดิมอีก
-            </p>
+ถนนเส้นเดิม
 
-            <p class="story-paragraph">
-                แต่ในคืนนั้นเอง...
-            </p>
+เสาไฟต้นเดิม
 
-            <p class="sound-text">
-                กึก...
-            </p>
+ร้านกาแฟที่เคยไปด้วยกัน
 
-            <p class="story-paragraph">
-                มีเสียงบางอย่างดังจากหน้าต่าง
-            </p>
+ทุกอย่างยังอยู่
 
-            <p class="story-paragraph">
-                คุณเปิดม่าน
-            </p>
+มีเพียงคนคนหนึ่งที่หายไป
 
-            <p class="story-paragraph">
-                ไม่มีใครอยู่ตรงนั้น
-            </p>
+ระหว่างทาง คุณหยุดอยู่หน้าสถานีรถไฟ
 
-            <p class="story-paragraph">
-                แต่บนพื้นหิมะมีรอยเท้าคน
-            </p>
+ความทรงจำหนึ่งย้อนกลับมา
 
-            <p class="story-paragraph emphasis">
-                และมันกำลังมุ่งหน้าไปทางเหนือ
-            </p>
-        `,
+คืนสุดท้ายที่คุณเจอกับอีธาน
 
+เขายืนอยู่ตรงนี้
+
+หิมะตกเหมือนคืนนี้
+
+และเขาพูดว่า
+
+"รอฉันนะ"
+
+คุณหัวเราะแล้วตอบว่า
+
+"จะไปไหนของนาย?"
+
+เขาไม่ตอบ
+
+เพียงยิ้ม
+
+จากนั้นเขาก็เดินออกไป
+
+และไม่กลับมาอีกเลย
+
+คุณหลับตา
+
+ก่อนจะเดินต่อ
+
+เมื่อถึงทางแยก
+
+คุณพบว่ามีสองเส้นทาง
+
+เส้นหนึ่งตรงไปยังบ้านริมทะเลสาบ
+
+อีกเส้นหนึ่งขึ้นไปยังสถานีรถไฟเก่า
+
+`
+
+        ,
         choices:[
+
             {
-                text:"🚶 ตามรอยเท้า",
-                next:"journey"
-            },
-            {
-                text:"🏠 อยู่ในบ้าน",
-                next:"stay"
-            }
-        ]
-    },
-
-    journey:{
-        chapter:"บทที่ 2 — ทางกลับ",
-        scene:"snow",
-
-        text:`
-            <p class="story-paragraph">
-                คุณออกจากบ้านในคืนนั้น
-            </p>
-
-            <p class="story-paragraph">
-                หิมะตกหนักขึ้นเรื่อย ๆ
-            </p>
-
-            <p class="story-paragraph">
-                ถนนที่คุ้นเคยกลับดูแปลกตาเมื่อถูกปกคลุมด้วยสีขาว
-            </p>
-
-            <p class="story-paragraph">
-                คุณเดินไปยังสถานีรถไฟเก่า
-            </p>
-
-            <p class="story-paragraph">
-                ระหว่างทาง ความทรงจำในอดีตกลับมาอย่างไม่หยุดหย่อน
-            </p>
-
-            <p class="story-paragraph">
-                คุณจำได้ว่าอีธานมักเดินนำหน้าคุณเสมอ
-            </p>
-
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    อีธานในความทรงจำ
-                </span>
-
-                <div class="dialogue-text">
-                    "เร็วหน่อยสิ ถ้าหิมะตกหนักกว่านี้เราจะมองไม่เห็นทางแล้ว"
-                </div>
-            </div>
-
-            <p class="story-paragraph">
-                คุณยิ้มออกมาโดยไม่รู้ตัว
-            </p>
-
-            <p class="story-paragraph">
-                แต่รอยยิ้มนั้นจางหายเมื่อคุณจำได้ว่า...
-            </p>
-
-            <p class="story-paragraph emphasis">
-                วันสุดท้ายที่เห็นเขา ก็เป็นวันที่หิมะตกเหมือนคืนนี้
-            </p>
-        `,
-
-        choices:[
-            {
-                text:"🚆 รีบไปสถานี",
-                next:"station"
-            },
-            {
-                text:"🧠 หยุดคิดถึงอดีต",
-                next:"memory"
-            }
-        ]
-    },
-
-    friend:{
-        chapter:"บทที่ 2 — คนที่รู้เรื่อง",
-        scene:"room",
-
-        text:`
-            <p class="story-paragraph">
-                คุณโทรหาเพื่อนสนิท
-            </p>
-
-            <p class="story-paragraph">
-                หลังจากเล่าเรื่องจดหมายทั้งหมด ปลายสายกลับเงียบไป
-            </p>
-
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    เพื่อน
-                </span>
-
-                <div class="dialogue-text">
-                    "...เธอแน่ใจเหรอว่าเป็นเขา?"
-                </div>
-            </div>
-
-            <p class="story-paragraph">
-                คุณตอบว่าไม่แน่ใจ
-            </p>
-
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    เพื่อน
-                </span>
-
-                <div class="dialogue-text">
-                    "ฉันเคยได้ยินว่าอีธานกลับมาที่เมืองนี้"
-                </div>
-            </div>
-
-            <p class="story-paragraph">
-                หัวใจของคุณเต้นแรงขึ้น
-            </p>
-
-            <p class="story-paragraph">
-                ถ้าเรื่องนั้นเป็นความจริง...
-            </p>
-
-            <p class="story-paragraph emphasis">
-                เขาอาจอยู่ใกล้คุณมาตลอด
-            </p>
-        `,
-
-        choices:[
-            {
-                text:"🚆 ไปสถานี",
-                next:"station"
-            },
-            {
-                text:"📞 ถามรายละเอียด",
-                next:"friendMore"
-            }
-        ]
-    },
-
-    friendMore:{
-        chapter:"บทที่ 2 — ความลับ",
-        scene:"room",
-
-        text:`
-            <p class="story-paragraph">
-                คุณถามเพื่อนว่ารู้เรื่องอีธานจากไหน
-            </p>
-
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    เพื่อน
-                </span>
-
-                <div class="dialogue-text">
-                    "มีคนเห็นเขาที่บ้านริมทะเลสาบ"
-                </div>
-            </div>
-
-            <p class="story-paragraph">
-                คุณนิ่งไป
-            </p>
-
-            <p class="story-paragraph">
-                บ้านหลังนั้นไม่มีใครอาศัยอยู่มาหลายปี
-            </p>
-
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    เพื่อน
-                </span>
-
-                <div class="dialogue-text">
-                    "ถ้าเป็นเธอ ฉันคงไม่ไปคนเดียว"
-                </div>
-            </div>
-
-            <p class="story-paragraph">
-                แต่คุณรู้ดีว่าคำตอบอยู่ที่ไหน
-            </p>
-
-            <p class="story-paragraph emphasis">
-                บ้านริมทะเลสาบ
-            </p>
-        `,
-
-        choices:[
-            {
-                text:"🏠 ไปบ้านริมทะเลสาบ",
+                title:"ไปบ้านริมทะเลสาบ",
+                description:
+                    "ทำตามคำสัญญาที่เขาทิ้งไว้",
                 next:"lakeHouse"
             },
+
             {
-                text:"🚆 ไปสถานีก่อน",
-                next:"station"
+                title:"ไปสถานีรถไฟเก่า",
+                description:
+                    "ค้นหาว่าคืนสุดท้ายเกิดอะไรขึ้น",
+                next:"oldStation"
             }
+
         ]
+
     },
 
-    station:{
-        chapter:"บทที่ 3 — สถานีรถไฟ",
-        scene:"station",
+
+    /* =====================================================
+       HOSPITAL
+    ===================================================== */
+
+    hospital:{
+
+        chapter:"CHAPTER II",
+
+        title:"ชื่อบนเอกสาร",
+
+        progress:25,
+
+        fragment:
+            "วันที่ 18 ธันวาคม • ผู้ป่วยหมายเลข 0712",
 
         text:`
-            <p class="story-paragraph">
-                รถไฟขบวนสุดท้ายกำลังรออยู่
-            </p>
 
-            <p class="story-paragraph">
-                คุณขึ้นไปบนขบวนที่เกือบไม่มีผู้โดยสาร
-            </p>
+โรงพยาบาลเก่าถูกทิ้งร้างมาหลายปี
 
-            <p class="story-paragraph">
-                เมื่อรถไฟเคลื่อนตัว เมืองที่คุณอาศัยอยู่มาหลายปีค่อย ๆ หายไปจากสายตา
-            </p>
+ประตูด้านข้างเปิดค้าง
 
-            <p class="story-paragraph">
-                ความเงียบในขบวนรถทำให้คุณได้ยินเสียงล้อรถไฟกระทบรางอย่างชัดเจน
-            </p>
+คุณเดินเข้าไป
 
-            <p class="sound-text">
-                ตึก... ตัก... ตึก... ตัก...
-            </p>
+กลิ่นฝุ่นและความชื้นทำให้ความทรงจำเก่ากลับมาอย่างประหลาด
 
-            <p class="story-paragraph">
-                ผ่านไปเกือบหนึ่งชั่วโมง ไฟในขบวนดับลงชั่วขณะ
-            </p>
+คุณเดินไปถึงห้องเก็บเอกสาร
 
-            <p class="story-paragraph">
-                เมื่อไฟกลับมา...
-            </p>
+บนโต๊ะมีแฟ้มเก่าอยู่หลายแฟ้ม
 
-            <p class="story-paragraph emphasis">
-                มีผ้าพันคอสีน้ำเงินวางอยู่บนเบาะตรงข้าม
-            </p>
+คุณค้นหาอยู่นาน
 
-            <p class="story-paragraph">
-                คุณจำมันได้ทันที
-            </p>
+จนพบชื่อหนึ่ง
 
-            <p class="story-paragraph">
-                มันเป็นผ้าพันคอของอีธาน
-            </p>
-        `,
+ETHAN
+
+วันที่เข้ารับการรักษา
+
+ตรงกับคืนที่เขาหายไป
+
+หัวใจของคุณเต้นแรง
+
+คุณเปิดแฟ้ม
+
+รายงานระบุว่า
+
+อีธานประสบอุบัติเหตุทางรถยนต์
+
+ได้รับบาดเจ็บบริเวณศีรษะ
+
+และสูญเสียความทรงจำบางส่วน
+
+แต่มีบันทึกอีกบรรทัดหนึ่ง
+
+"ผู้ป่วยเรียกชื่อบุคคลหนึ่งซ้ำ ๆ"
+
+ชื่อของคุณ
+
+คุณยืนอยู่นานโดยไม่สามารถอ่านต่อได้
+
+ตลอดเจ็ดปี...
+
+เขาไม่ได้ลืมคุณ
+
+เขาเพียงจำไม่ได้ว่าจะกลับไปหาคุณอย่างไร
+`,
 
         choices:[
+
             {
-                text:"🧣 หยิบผ้าพันคอ",
-                next:"scarf"
+                title:"ค้นเอกสารต่อ",
+                description:
+                    "บางทีโรงพยาบาลอาจซ่อนความจริงไว้มากกว่านี้",
+                next:"hospitalTruth"
             },
+
             {
-                text:"👀 มองหาคนที่วางมันไว้",
-                next:"trainPerson"
+                title:"ไปบ้านริมทะเลสาบ",
+                description:
+                    "ถ้าอีธานกลับมา เขาน่าจะอยู่ที่นั่น",
+                next:"lakeHouse"
             }
+
         ]
+
     },
 
-    scarf:{
-        chapter:"บทที่ 3 — ร่องรอยของเขา",
-        scene:"station",
+
+    /* =====================================================
+       HOSPITAL TRUTH
+    ===================================================== */
+
+    hospitalTruth:{
+
+        chapter:"CHAPTER III",
+
+        title:"ความจริงที่ไม่มีใครพูด",
+
+        progress:39,
+
+        fragment:
+            "บันทึกของแพทย์ • ครอบครัวของอีธาน",
 
         text:`
-            <p class="story-paragraph">
-                ผ้าพันคอยังอุ่นอยู่
-            </p>
 
-            <p class="story-paragraph">
-                นั่นหมายความว่ามีใครบางคนเพิ่งวางมันไว้
-            </p>
+คุณค้นแฟ้มต่อ
 
-            <p class="story-paragraph">
-                คุณมองไปรอบขบวน
-            </p>
+และพบเอกสารที่ไม่ควรอยู่ตรงนั้น
 
-            <p class="story-paragraph">
-                ไม่มีใคร
-            </p>
+มันเป็นบันทึกของแพทย์
 
-            <p class="story-paragraph">
-                มีเพียงประตูตู้โดยสารด้านท้ายที่กำลังเปิดอยู่
-            </p>
+หลังจากอีธานเริ่มจำอดีตได้
 
-            <p class="story-paragraph emphasis">
-                และมีรอยเท้าบนพื้น
-            </p>
-        `,
+เขาพยายามถามหาคุณ
+
+แต่ครอบครัวของเขากลับบอกว่า
+
+คุณย้ายออกจากเมืองไปแล้ว
+
+พวกเขาไม่เคยบอกเขาว่าคุณยังอยู่
+
+หลายปีต่อมา
+
+อีธานกลับมายังเมืองนี้
+
+แต่เขาไม่กล้าเข้าหาคุณ
+
+เขาเขียนจดหมาย
+
+ปีแล้วปีเล่า
+
+แต่ไม่เคยส่ง
+
+จนกระทั่งปีนี้
+
+เขาตัดสินใจว่าจะส่งมัน
+
+ในคืนที่หิมะแรกตก
+
+คุณอ่านบรรทัดสุดท้าย
+
+"หากวันหนึ่งเขากลับไปหาเธอ..."
+
+"โปรดอย่าถามว่าเหตุใดเขาจึงจากไป"
+
+"เพราะเด็กคนนั้นไม่เคยเลือกที่จะจากเธอ"
+
+น้ำตาของคุณไหลลงบนกระดาษ
+`,
 
         choices:[
+
             {
-                text:"🚪 เดินตามรอยเท้า",
-                next:"trainPerson"
+                title:"ไปหาอีธาน",
+                description:
+                    "คุณไม่อยากเสียเวลาอีกเจ็ดปี",
+                next:"lakeHouse"
             },
+
             {
-                text:"🧣 เก็บผ้าพันคอไว้",
-                next:"lakeHouse"
+                title:"ขอเวลาทำใจ",
+                description:
+                    "ความจริงบางอย่างเจ็บเกินกว่าจะรับในทันที",
+                next:"lakeNight"
             }
+
         ]
+
     },
 
-    trainPerson:{
-        chapter:"บทที่ 3 — คนแปลกหน้า",
-        scene:"station",
+
+    /* =====================================================
+       OLD STATION
+    ===================================================== */
+
+    oldStation:{
+
+        chapter:"CHAPTER III",
+
+        title:"รถไฟขบวนสุดท้าย",
+
+        progress:36,
+
+        fragment:
+            "คืนสุดท้าย • ชานชาลาที่ไม่มีใครรอ",
 
         text:`
-            <p class="story-paragraph">
-                คุณเดินไปทางท้ายขบวน
-            </p>
 
-            <p class="story-paragraph">
-                แต่ไม่มีใครอยู่ตรงนั้น
-            </p>
+สถานีรถไฟเก่าแทบไม่มีไฟเหลืออยู่
 
-            <p class="story-paragraph">
-                ประตูเปิดออกสู่ความมืดและหิมะด้านนอก
-            </p>
+คุณเดินไปยังชานชาลา
 
-            <p class="story-paragraph">
-                บนพื้นมีรอยเท้าสดใหม่
-            </p>
+หิมะปกคลุมรางรถไฟ
 
-            <p class="story-paragraph">
-                รอยเท้าหยุดอยู่ตรงหน้าต่าง
-            </p>
+แล้วความทรงจำก็กลับมา
 
-            <p class="story-paragraph">
-                มีข้อความถูกเขียนไว้บนกระจก
-            </p>
+อีธานเคยยืนอยู่ตรงนี้
 
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    ข้อความบนกระจก
-                </span>
+ในคืนสุดท้าย
 
-                <div class="dialogue-text">
-                    "เธอมาถูกทางแล้ว"
-                </div>
-            </div>
-        `,
+เขาถือกระเป๋าใบหนึ่ง
 
+และกำลังร้องไห้
+
+คุณจำได้แล้ว
+
+เขาเคยบอกว่า
+
+"ฉันอาจต้องไป"
+
+คุณคิดว่าเขาหมายถึงการเดินทางธรรมดา
+
+แต่ตอนนี้คุณรู้แล้ว
+
+คืนนั้นเขาไม่ได้หนี
+
+เขากำลังจะถูกพาออกจากเมือง
+
+เพราะอุบัติเหตุเกิดขึ้นก่อนที่เขาจะได้ขึ้นรถไฟ
+
+คุณพบกระดาษใบเล็กใต้เก้าอี้
+
+ลายมือของอีธาน
+
+"ถ้าเธอมาที่นี่..."
+
+"แปลว่าฉันกลับมาแล้ว"
+
+คุณกำกระดาษแน่น
+
+แล้วมองไปยังเส้นทางทะเลสาบ
+
+`
+
+        ,
         choices:[
+
             {
-                text:"🏠 ไปบ้านริมทะเลสาบ",
+                title:"กลับไปที่บ้านริมทะเลสาบ",
+                description:
+                    "คำตอบสุดท้ายอยู่ที่นั่น",
                 next:"lakeHouse"
-            }
-        ]
-    },
-
-    memory:{
-        chapter:"บทที่ 3 — เจ็ดปีก่อน",
-        scene:"memory",
-
-        text:`
-            <p class="story-paragraph">
-                คุณหลับตาลง
-            </p>
-
-            <p class="story-paragraph">
-                และภาพของวันนั้นก็กลับมา
-            </p>
-
-            <p class="story-paragraph">
-                คุณกับอีธานยืนอยู่ริมทะเลสาบ
-            </p>
-
-            <p class="story-paragraph">
-                หิมะตกเหมือนคืนนี้
-            </p>
-
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    อีธาน
-                </span>
-
-                <div class="dialogue-text">
-                    "ฉันมีเรื่องสำคัญจะบอก"
-                </div>
-            </div>
-
-            <p class="story-paragraph">
-                แต่โทรศัพท์ของเขาดังขึ้น
-            </p>
-
-            <p class="story-paragraph">
-                สีหน้าของอีธานเปลี่ยนไป
-            </p>
-
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    อีธาน
-                </span>
-
-                <div class="dialogue-text">
-                    "ฉันต้องไปแล้ว"
-                </div>
-            </div>
-
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    คุณ
-                </span>
-
-                <div class="dialogue-text">
-                    "แล้วนายจะกลับมาไหม?"
-                </div>
-            </div>
-
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    อีธาน
-                </span>
-
-                <div class="dialogue-text">
-                    "รอฉัน"
-                </div>
-            </div>
-
-            <p class="story-paragraph">
-                นั่นคือคำพูดสุดท้าย
-            </p>
-        `,
-
-        choices:[
-            {
-                text:"🚶 กลับไปสถานี",
-                next:"station"
             },
+
             {
-                text:"🏠 ไปบ้านริมทะเลสาบ",
-                next:"lakeHouse"
+                title:"กลับบ้าน",
+                description:
+                    "คุณยังไม่พร้อมเผชิญหน้ากับเขา",
+                next:"homeNight"
             }
+
         ]
+
     },
 
-    wait:{
-        chapter:"บทที่ 2 — คืนที่ไม่หลับ",
-        scene:"room",
+
+    /* =====================================================
+       HOME NIGHT
+    ===================================================== */
+
+    homeNight:{
+
+        chapter:"CHAPTER III",
+
+        title:"คืนที่คุณยังไม่พร้อม",
+
+        progress:45,
+
+        fragment:
+            "บางครั้งการให้อภัยต้องใช้เวลา",
 
         text:`
-            <p class="story-paragraph">
-                คุณตัดสินใจรอจนเช้า
-            </p>
 
-            <p class="story-paragraph">
-                จดหมายถูกวางไว้บนโต๊ะ
-            </p>
+คุณกลับบ้าน
 
-            <p class="story-paragraph">
-                แต่ตลอดทั้งคืนคุณกลับไม่สามารถหลับได้
-            </p>
+จดหมายยังวางอยู่บนโต๊ะ
 
-            <p class="story-paragraph">
-                ทุกครั้งที่หลับตา คุณเห็นใบหน้าของอีธาน
-            </p>
+คุณนั่งมองมันอยู่นาน
 
-            <p class="story-paragraph">
-                จนเวลาผ่านไปถึงตีสาม
-            </p>
+บางส่วนของคุณอยากไปหาเขา
 
-            <p class="sound-text">
-                ก๊อก... ก๊อก...
-            </p>
+แต่อีกส่วนหนึ่งกลัว
 
-            <p class="story-paragraph">
-                มีเสียงเคาะหน้าต่าง
-            </p>
+กลัวว่าความจริงจะทำลายภาพความทรงจำที่คุณเก็บไว้มาตลอดเจ็ดปี
 
-            <p class="story-paragraph">
-                คุณเปิดม่าน
-            </p>
+คืนนั้นคุณนอนไม่หลับ
 
-            <p class="story-paragraph emphasis">
-                มีรอยเท้าอยู่หน้าบ้าน
-            </p>
+จนกระทั่งเวลาเกือบตีหนึ่ง
 
-            <p class="story-paragraph">
-                และรอยเท้านั้นมุ่งหน้าไปทางเหนือ
-            </p>
-        `,
+โทรศัพท์ของคุณดังขึ้น
 
+ไม่มีหมายเลข
+
+มีเพียงข้อความเดียว
+
+"ฉันจะรอถึงเช้า"
+
+คุณรู้ทันทีว่าเป็นใคร
+
+`
+
+        ,
         choices:[
+
             {
-                text:"🚶 ตามรอยเท้า",
-                next:"journey"
+                title:"ไปหาเขา",
+                description:
+                    "บางคำตอบไม่ควรถูกเลื่อนออกไปอีก",
+                next:"lakeHouse"
+            },
+
+            {
+                title:"ตอบกลับว่าให้เขากลับมา",
+                description:
+                    "คุณต้องการให้เขาเป็นฝ่ายเดินเข้ามาหา",
+                next:"returnHim"
             }
+
         ]
+
     },
 
-    stay:{
-        chapter:"บทที่ 2 — คนที่ไม่มา",
-        scene:"room",
+
+    /* =====================================================
+       RETURN HIM
+    ===================================================== */
+
+    returnHim:{
+
+        chapter:"CHAPTER IV",
+
+        title:"คนที่เดินกลับมา",
+
+        progress:56,
+
+        fragment:
+            "เสียงเคาะประตู • เจ็ดปีที่หายไป",
 
         text:`
-            <p class="story-paragraph">
-                คุณเลือกไม่ออกจากบ้าน
-            </p>
 
-            <p class="story-paragraph">
-                เช้าวันต่อมา หิมะหยุดตก
-            </p>
+เช้าวันต่อมา
 
-            <p class="story-paragraph">
-                คุณเปิดประตูออกไป
-            </p>
+เสียงเคาะประตูดังขึ้น
 
-            <p class="story-paragraph">
-                จดหมายที่วางไว้บนโต๊ะหายไป
-            </p>
+ก๊อก...
 
-            <p class="story-paragraph">
-                แต่มีของบางอย่างวางอยู่แทน
-            </p>
+ก๊อก...
 
-            <p class="story-paragraph emphasis">
-                ผ้าพันคอสีน้ำเงิน
-            </p>
+คุณยืนอยู่หน้าประตู
 
-            <p class="story-paragraph">
-                และกระดาษแผ่นเล็ก ๆ
-            </p>
+หัวใจเต้นแรง
 
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    ข้อความ
-                </span>
+เมื่อเปิดออก
 
-                <div class="dialogue-text">
-                    "ฉันรอเธอที่เดิม"
-                </div>
-            </div>
-        `,
+อีธานยืนอยู่ตรงนั้น
 
+หิมะติดอยู่บนเสื้อของเขา
+
+เขาดูแตกต่างจากเด็กหนุ่มในความทรงจำ
+
+โตขึ้น
+
+เหนื่อยขึ้น
+
+แต่ดวงตายังคงเหมือนเดิม
+
+"สวัสดี"
+
+เขาพูดเบา ๆ
+
+คุณไม่ตอบ
+
+เขาก้มหน้าลง
+
+"ฉันไม่รู้ว่าควรเริ่มจากตรงไหน"
+
+คุณจึงถามคำถามเดียว
+
+"ทำไมถึงไม่กลับมาเร็วกว่านี้?"
+
+อีธานเงียบไป
+
+"เพราะฉันกลัว"
+
+"กลัวว่าเธอจะเกลียดฉัน"
+
+`
+
+        ,
         choices:[
+
             {
-                text:"🏠 ไปทะเลสาบ",
-                next:"lakeHouse"
+                title:"พาเขาเข้าไปข้างใน",
+                description:
+                    "ให้โอกาสเขาเล่าทุกอย่าง",
+                next:"truthTalk"
+            },
+
+            {
+                title:"ถามเรื่องครอบครัวของเขา",
+                description:
+                    "ความจริงเรื่องเจ็ดปีต้องถูกเปิดออก",
+                next:"familyTruth"
             }
+
         ]
+
     },
+
+
+    /* =====================================================
+       LAKE HOUSE
+    ===================================================== */
 
     lakeHouse:{
-        chapter:"บทที่ 4 — บ้านริมทะเลสาบ",
-        scene:"lake",
+
+        chapter:"CHAPTER IV",
+
+        title:"บ้านที่ยังเปิดไฟรอ",
+
+        progress:52,
+
+        fragment:
+            "บ้านริมทะเลสาบ • ไฟดวงเดิม",
 
         text:`
-            <p class="story-paragraph">
-                บ้านไม้หลังเก่าปรากฏขึ้นท่ามกลางม่านหิมะ
-            </p>
 
-            <p class="story-paragraph">
-                แสงไฟสีส้มลอดออกมาจากหน้าต่าง
-            </p>
+บ้านริมทะเลสาบยังอยู่
 
-            <p class="story-paragraph">
-                บ้านหลังนี้ไม่ควรมีไฟ
-            </p>
+และสิ่งที่ทำให้คุณหยุดหายใจคือ...
 
-            <p class="story-paragraph">
-                เพราะมันถูกทิ้งร้างมานานหลายปี
-            </p>
+ไฟด้านในยังเปิดอยู่
 
-            <p class="story-paragraph">
-                คุณเดินขึ้นบันไดทีละขั้น
-            </p>
+คุณเปิดประตูด้วยกุญแจเก่า
 
-            <p class="story-paragraph">
-                มือแตะลูกบิดประตู
-            </p>
+ภายในเหมือนเดิม
 
-            <p class="story-paragraph sound-text">
-                กึก...
-            </p>
+เตาผิง
 
-            <p class="story-paragraph">
-                ประตูเปิดออก
-            </p>
+โต๊ะไม้
 
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    เสียงจากด้านใน
-                </span>
+ชั้นหนังสือ
 
-                <div class="dialogue-text">
-                    "เธอมาจริง ๆ ด้วย"
-                </div>
-            </div>
+และแก้วสองใบ
 
-            <p class="story-paragraph">
-                คุณหยุดนิ่ง
-            </p>
+วางอยู่ข้างกัน
 
-            <p class="story-paragraph emphasis">
-                เสียงนั้น...
-            </p>
+เหมือนมีใครบางคนกำลังรอ
 
-            <p class="story-paragraph">
-                คุณจำได้ทันที
-            </p>
+คุณเดินเข้าไป
 
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    อีธาน
-                </span>
+บนโต๊ะมีสมุดเล่มหนึ่ง
 
-                <div class="dialogue-text">
-                    "ขอโทษที่ให้รอนาน"
-                </div>
-            </div>
+หน้าปกเขียนชื่อของคุณ
 
-            <p class="story-paragraph">
-                เขายืนอยู่ตรงหน้า
-            </p>
+คุณเปิดหน้าแรก
 
-            <p class="story-paragraph">
-                เจ็ดปีผ่านไป แต่ดวงตาคู่นั้นยังเหมือนเดิม
-            </p>
+วันที่เมื่อเจ็ดปีก่อน
 
-            <p class="story-paragraph">
-                เพียงแต่คราวนี้มันเต็มไปด้วยความเหนื่อยล้า
-            </p>
+หน้าแล้วหน้าเล่า
 
-            <p class="story-paragraph">
-                และความรู้สึกผิด
-            </p>
-        `,
+เต็มไปด้วยเรื่องราวของคุณ
+
+จนถึงหน้าปัจจุบัน
+
+มีประโยคหนึ่ง
+
+"คืนนี้ฉันจะรอ"
+
+ทันใดนั้น
+
+เสียงฝีเท้าดังมาจากด้านหลัง
+
+คุณหันกลับไป
+
+ชายคนหนึ่งยืนอยู่ตรงประตู
+
+เขามองคุณ
+
+และพูดคำเดียว
+
+"ขอโทษนะ"
+
+`
+
+        ,
+        choices:[
+
+            {
+                title:"วิ่งเข้าไปกอดเขา",
+                description:
+                    "ความคิดถึงชนะความโกรธ",
+                next:"embrace"
+            },
+
+            {
+                title:"ถามความจริงก่อน",
+                description:
+                    "คุณต้องการคำตอบก่อนให้อภัย",
+                next:"truthTalk"
+            },
+
+            {
+                title:"ถอยออกมา",
+                description:
+                    "เจ็ดปีนั้นไม่สามารถหายไปในคืนเดียว",
+                next:"distance"
+            }
+
+        ]
+
+    },
+
+
+    /* =====================================================
+       TRUTH TALK
+    ===================================================== */
+
+    truthTalk:{
+
+        chapter:"CHAPTER V",
+
+        title:"สิ่งที่หายไปเจ็ดปี",
+
+        progress:67,
+
+        fragment:
+            "คำสารภาพ • ฉันไม่เคยเลือกที่จะจากไป",
+
+        text:`
+
+อีธานเล่าทุกอย่าง
+
+คืนที่เกิดอุบัติเหตุ
+
+เดือนแรกในโรงพยาบาล
+
+วันที่เขาจำชื่อคุณได้
+
+วันที่เขาพยายามกลับมา
+
+และวันที่เขารู้ว่าครอบครัวเคยโกหกเขา
+
+เขาไม่เคยเลือกที่จะจากคุณไป
+
+แต่เขายอมรับว่า
+
+มีบางช่วงที่เขาเองก็กลัว
+
+กลัวว่าจะกลับมาแล้วพบว่าคุณมีชีวิตใหม่
+
+กลัวว่าคุณจะไม่ต้องการเขาอีก
+
+คุณนั่งฟัง
+
+โดยไม่พูดอะไร
+
+จนเขาหยิบกล่องใบหนึ่งออกมา
+
+ด้านในมีจดหมายหลายสิบฉบับ
+
+หนึ่งฉบับต่อหนึ่งปี
+
+บางฉบับมีเพียงประโยคเดียว
+
+"วันนี้หิมะตกแล้ว"
+
+"วันนี้ฉันคิดถึงเธอ"
+
+"วันนี้ฉันจำเสียงหัวเราะของเธอได้"
+
+และฉบับสุดท้าย
+
+เขียนเมื่อวาน
+
+"ถ้าฉันยังมีโอกาส..."
+
+"ฉันอยากใช้ชีวิตที่เหลืออยู่กับเธอ"
+`,
 
         choices:[
+
             {
-                text:"❤️ เดินเข้าไปหาเขา",
-                next:"meeting"
+                title:"ให้อภัยเขา",
+                description:
+                    "เริ่มต้นชีวิตใหม่ด้วยกัน",
+                next:"endingLove"
             },
+
             {
-                text:"💢 ถามว่าหายไปทำไม",
-                next:"confront"
+                title:"ให้อภัย แต่ไม่ย้อนกลับไป",
+                description:
+                    "รักได้ แต่บางสิ่งไม่อาจเหมือนเดิม",
+                next:"endingBittersweet"
             },
+
             {
-                text:"🚪 ยังไม่เข้าไป",
-                next:"hesitate"
+                title:"ขอให้เขารอ",
+                description:
+                    "คุณต้องการเวลาเพื่อตัดสินใจ",
+                next:"endingPromise"
             }
+
         ]
+
     },
 
-    hesitate:{
-        chapter:"บทที่ 4 — ระยะห่าง",
-        scene:"lake",
+
+    /* =====================================================
+       FAMILY TRUTH
+    ===================================================== */
+
+    familyTruth:{
+
+        chapter:"CHAPTER V",
+
+        title:"ความจริงของคนที่เหลืออยู่",
+
+        progress:70,
+
+        fragment:
+            "ความจริงบางอย่างไม่มีคนชนะ",
 
         text:`
-            <p class="story-paragraph">
-                คุณยังยืนอยู่หน้าประตู
-            </p>
 
-            <p class="story-paragraph">
-                ระยะห่างเพียงไม่กี่ก้าวกลับรู้สึกเหมือนยาวนานถึงเจ็ดปี
-            </p>
+อีธานหลับตา
 
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    อีธาน
-                </span>
+"ครอบครัวฉันคิดว่าการแยกเราจะทำให้ฉันดีขึ้น"
 
-                <div class="dialogue-text">
-                    "ฉันเข้าใจ"
-                </div>
-            </div>
+"พวกเขากลัวว่าถ้าฉันกลับมา ความทรงจำทั้งหมดจะทำให้อาการแย่ลง"
 
-            <p class="story-paragraph">
-                เขาไม่ได้พยายามเข้ามาหาคุณ
-            </p>
+"ฉันเองก็เชื่อพวกเขา"
 
-            <p class="story-paragraph">
-                เขาเพียงยืนรอ
-            </p>
+คุณถาม
 
-            <p class="story-paragraph">
-                เหมือนกับที่เคยบอกคุณในวันนั้น
-            </p>
+"แล้วนายไม่เคยคิดถึงฉันเลยหรือ?"
 
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    อีธาน
-                </span>
+เขามองคุณ
 
-                <div class="dialogue-text">
-                    "ฉันจะรอจนกว่าเธอจะพร้อม"
-                </div>
-            </div>
-        `,
+"ทุกวัน"
+
+คำตอบนั้นง่ายเกินไป
+
+แต่กลับทำให้คุณเจ็บที่สุด
+
+เพราะมันหมายความว่า
+
+ตลอดเจ็ดปีที่ผ่านมา
+
+คุณทั้งสองต่างใช้ชีวิตโดยคิดถึงกัน
+
+เพียงแต่ไม่มีใครรู้
+
+`
+
+        ,
+        choices:[
+
+            {
+                title:"จับมือเขา",
+                description:
+                    "ปล่อยให้ความทรงจำพาคุณไปข้างหน้า",
+                next:"endingLove"
+            },
+
+            {
+                title:"ขอพบครอบครัวเขา",
+                description:
+                    "คุณต้องการปิดเรื่องราวที่ค้างคา",
+                next:"familyMeeting"
+            },
+
+            {
+                title:"เดินออกไป",
+                description:
+                    "บางคำตอบไม่สามารถซ่อมแซมอดีตได้",
+                next:"endingSnow"
+            }
+
+        ]
+
+    },
+
+
+    /* =====================================================
+       FAMILY MEETING
+    ===================================================== */
+
+    familyMeeting:{
+
+        chapter:"CHAPTER V",
+
+        title:"คนที่อยู่หลังความเงียบ",
+
+        progress:77,
+
+        fragment:
+            "ความจริง • ความผิด • การให้อภัย",
+
+        text:`
+
+คุณได้พบครอบครัวของอีธาน
+
+พวกเขาไม่ปฏิเสธ
+
+พวกเขายอมรับทุกอย่าง
+
+และกล่าวคำขอโทษ
+
+แต่คำขอโทษไม่สามารถคืนเจ็ดปีที่ผ่านมาได้
+
+คุณจึงเข้าใจบางอย่าง
+
+คนบางคนไม่ได้ทำร้ายเราเพราะเกลียดเรา
+
+บางครั้งพวกเขาทำร้ายเรา
+
+เพราะคิดว่ากำลังปกป้องใครบางคน
+
+คุณกลับมาที่ทะเลสาบ
+
+อีธานรออยู่
+
+หิมะยังตกเหมือนเดิม
+
+เขาไม่ถามว่าคุณตัดสินใจอย่างไร
+
+เพียงยื่นมือมา
+
+`
+
+        ,
+        choices:[
+
+            {
+                title:"จับมือเขา",
+                description:
+                    "เลือกอนาคตแทนอดีต",
+                next:"endingLove"
+            },
+
+            {
+                title:"บอกลา",
+                description:
+                    "ให้อดีตเป็นเพียงความทรงจำ",
+                next:"endingSnow"
+            }
+
+        ]
+
+    },
+
+
+    /* =====================================================
+       EMBRACE
+    ===================================================== */
+
+    embrace:{
+
+        chapter:"CHAPTER V",
+
+        title:"กอดของคนที่รอคอย",
+
+        progress:74,
+
+        fragment:
+            "ความคิดถึง • เจ็ดปีในอ้อมกอดเดียว",
+
+        text:`
+
+คุณไม่ได้พูดอะไร
+
+เพียงเดินเข้าไปหาเขา
+
+อีธานชะงัก
+
+ก่อนจะกอดคุณกลับ
+
+แน่นราวกับกลัวว่าคุณจะหายไปอีกครั้ง
+
+ไม่มีคำขอโทษใดสามารถย้อนเจ็ดปีได้
+
+แต่ในอ้อมกอดนั้น
+
+คุณรู้ว่าความรู้สึกบางอย่างไม่เคยหายไป
+
+อีธานกระซิบ
+
+"ฉันคิดถึงเธอ"
+
+คุณหลับตา
+
+"ฉันก็เหมือนกัน"
+
+คืนนั้น
+
+ไม่มีใครพูดถึงอนาคต
+
+เพราะหลังจากรอมานานถึงเจ็ดปี
+
+แค่ได้ยืนอยู่ข้างกัน
+
+ก็เพียงพอแล้ว
+`,
 
         choices:[
+
             {
-                text:"❤️ เข้าไปหาเขา",
-                next:"meeting"
+                title:"อยู่กับเขาจนถึงเช้า",
+                description:
+                    "เริ่มต้นวันใหม่ด้วยกัน",
+                next:"endingLove"
             },
+
             {
-                text:"🥀 กลับบ้าน",
-                next:"endingLost"
+                title:"ขอให้คืนนี้เป็นเพียงความทรงจำ",
+                description:
+                    "บางครั้งการพบกันก็ไม่จำเป็นต้องจบด้วยการครอบครอง",
+                next:"endingBittersweet"
             }
+
         ]
+
     },
 
-    endingLost:{
-        ending:true,
-        title:"LOST MEMORY",
-        icon:"🌫️",
-        subtitle:"ความทรงจำที่ไม่มีคำตอบ",
-        rank:"MYSTERY ENDING",
+
+    /* =====================================================
+       DISTANCE
+    ===================================================== */
+
+    distance:{
+
+        chapter:"CHAPTER V",
+
+        title:"ระยะห่างของเจ็ดปี",
+
+        progress:73,
+
+        fragment:
+            "บางแผลไม่ได้หายเพียงเพราะคนกลับมา",
 
         text:`
-            <p class="story-paragraph">
-                คุณเลือกเดินกลับ
-            </p>
 
-            <p class="story-paragraph">
-                หิมะตกลงมาอย่างเงียบงัน
-            </p>
+คุณถอยออกมา
 
-            <p class="story-paragraph">
-                เมื่อคุณหันกลับไปอีกครั้ง
-            </p>
+อีธานไม่ตาม
 
-            <p class="story-paragraph">
-                บ้านริมทะเลสาบไม่มีแสงไฟแล้ว
-            </p>
+เขาเข้าใจ
 
-            <p class="story-paragraph">
-                ไม่มีอีธาน
-            </p>
+"ฉันรู้ว่าฉันไม่สามารถกลับมาแล้วขอทุกอย่างคืนได้"
 
-            <p class="story-paragraph">
-                ไม่มีรอยเท้า
-            </p>
+เขาพูด
 
-            <p class="story-paragraph">
-                เหลือเพียงทะเลสาบที่เงียบสงบ
-            </p>
+คุณมองเขา
 
-            <p class="story-paragraph emphasis">
-                และคำถามว่า...
-                เรื่องทั้งหมดเกิดขึ้นจริงหรือไม่
-            </p>
-        `
+"ฉันดีใจที่นายยังมีชีวิตอยู่"
+
+น้ำตาไหลลงบนแก้ม
+
+"แต่ฉันไม่รู้ว่าฉันยังเป็นคนเดิมหรือเปล่า"
+
+อีธานยิ้มเศร้า
+
+"ฉันก็ไม่ใช่คนเดิม"
+
+คุณทั้งสองยืนอยู่ตรงนั้น
+
+ห่างกันเพียงไม่กี่ก้าว
+
+แต่เหมือนมีเจ็ดปีคั่นกลาง
+`,
+
+        choices:[
+
+            {
+                title:"ขอเวลาหนึ่งปี",
+                description:
+                    "กลับมาเจอกันในหิมะแรกของปีหน้า",
+                next:"endingPromise"
+            },
+
+            {
+                title:"บอกลาในคืนนี้",
+                description:
+                    "ปล่อยให้ความรักกลายเป็นความทรงจำ",
+                next:"endingBittersweet"
+            },
+
+            {
+                title:"ขึ้นรถไฟเที่ยวสุดท้าย",
+                description:
+                    "เริ่มชีวิตใหม่โดยไม่หันกลับ",
+                next:"endingSnow"
+            }
+
+        ]
+
     },
 
-    endingTrue:{
+
+    /* =====================================================
+       LAKE NIGHT
+    ===================================================== */
+
+    lakeNight:{
+
+        chapter:"CHAPTER IV",
+
+        title:"คนที่ยังรออยู่ริมทะเลสาบ",
+
+        progress:58,
+
+        fragment:
+            "เขายังอยู่ที่เดิม • แต่คุณไม่เหมือนเดิมแล้ว",
+
+        text:`
+
+คุณมาถึงทะเลสาบก่อนพระอาทิตย์ขึ้น
+
+ไม่มีใครอยู่ที่นั่น
+
+แต่มีรอยเท้าอยู่บนหิมะ
+
+มันหยุดอยู่ตรงม้านั่งตัวเดิม
+
+บนม้านั่งมีจดหมาย
+
+"ฉันรู้ว่าเธอต้องใช้เวลา"
+
+"ฉันจะไม่บังคับ"
+
+"ฉันจะอยู่ที่นี่ถึงพระอาทิตย์ขึ้น"
+
+คุณนั่งลง
+
+และเป็นครั้งแรกในรอบเจ็ดปี
+
+คุณร้องไห้โดยไม่พยายามหยุด
+
+เพราะคุณเพิ่งเข้าใจว่า
+
+บางทีสิ่งที่เจ็บที่สุด
+
+ไม่ใช่การที่เขาหายไป
+
+แต่คือการที่คุณทั้งสองยังรักกัน
+
+หลังจากเวลาผ่านไปนานขนาดนี้
+`,
+
+        choices:[
+
+            {
+                title:"รอจนพระอาทิตย์ขึ้น",
+                description:
+                    "ดูว่าเขาจะรักษาสัญญาหรือไม่",
+                next:"morningLake"
+            },
+
+            {
+                title:"กลับก่อนพระอาทิตย์ขึ้น",
+                description:
+                    "คุณยังไม่พร้อมพบเขา",
+                next:"endingSnow"
+            }
+
+        ]
+
+    },
+
+
+    /* =====================================================
+       MORNING LAKE
+    ===================================================== */
+
+    morningLake:{
+
+        chapter:"CHAPTER V",
+
+        title:"เมื่อหิมะหยุดตก",
+
+        progress:82,
+
+        fragment:
+            "เช้าวันใหม่ • ความทรงจำที่ไม่ต้องหนีอีกต่อไป",
+
+        text:`
+
+พระอาทิตย์เริ่มขึ้น
+
+แสงสีทองค่อย ๆ ส่องผ่านต้นไม้
+
+หิมะบนทะเลสาบเปลี่ยนเป็นสีเงิน
+
+และอีธานเดินกลับมา
+
+เขาหยุดอยู่ตรงหน้าคุณ
+
+ไม่ได้พูดอะไร
+
+คุณยิ้ม
+
+"นายรักษาสัญญาจริง ๆ"
+
+เขายิ้มตอบ
+
+"ครั้งนี้ฉันจะไม่ผิดสัญญา"
+
+คุณมองทะเลสาบ
+
+แล้วรู้ว่าคุณไม่จำเป็นต้องตัดสินใจทุกอย่างในวันนี้
+
+บางความสัมพันธ์ไม่จำเป็นต้องรีบตั้งชื่อ
+
+บางความรักไม่จำเป็นต้องสัญญาว่าจะอยู่ตลอดชีวิต
+
+บางครั้ง...
+
+การเริ่มต้นใหม่
+
+อาจเป็นเพียงการยอมให้ใครบางคนเดินอยู่ข้าง ๆ
+`,
+
+        choices:[
+
+            {
+                title:"เดินกลับบ้านพร้อมเขา",
+                description:
+                    "เริ่มต้นบทใหม่อย่างช้า ๆ",
+                next:"endingPromise"
+            },
+
+            {
+                title:"จับมือเขา",
+                description:
+                    "คุณพร้อมให้โอกาสอีกครั้ง",
+                next:"endingLove"
+            }
+
+        ]
+
+    },
+
+
+    /* =====================================================
+       ENDING LOVE
+    ===================================================== */
+
+    endingLove:{
+
+        chapter:"FINAL",
+
+        title:"WHERE THE SNOW REMEMBERS US",
+
+        progress:100,
+
         ending:true,
-        title:"TRUE LOVE",
+
         icon:"❤️",
-        subtitle:"ความรักที่ได้กลับมาอีกครั้ง",
-        rank:"TRUE ENDING",
+
+        memory:
+            "บางคนไม่ได้กลับมาเพื่อคืนอดีต\nแต่กลับมาเพื่อสร้างความทรงจำใหม่",
 
         text:`
-            <p class="story-paragraph">
-                คุณไม่ถามอะไรอีก
-            </p>
 
-            <p class="story-paragraph">
-                คุณเพียงเดินเข้าไปหาเขา
-            </p>
+คุณเดินเข้าไปหาอีธาน
 
-            <p class="story-paragraph">
-                อีธานกอดคุณไว้แน่น
-            </p>
+คราวนี้ไม่มีใครหยุดคุณ
 
-            <p class="story-paragraph">
-                น้ำตาของเขาไหลออกมา
-            </p>
+ไม่มีครอบครัว
 
-            <p class="story-paragraph">
-                เจ็ดปีที่หายไปไม่สามารถย้อนกลับมาได้
-            </p>
+ไม่มีโรงพยาบาล
 
-            <p class="story-paragraph">
-                แต่วันนี้...
-            </p>
+ไม่มีเจ็ดปีที่คั่นกลาง
 
-            <p class="story-paragraph emphasis">
-                คุณทั้งสองยังมีโอกาสเริ่มต้นใหม่
-            </p>
+มีเพียงมือของเขา
 
-            <p class="story-paragraph">
-                หิมะแรกของปีถัดมา
-                กลายเป็นวันที่พิเศษที่สุดของชีวิต
-            </p>
-        `
+และมือของคุณ
+
+อีธานยิ้มทั้งน้ำตา
+
+"ฉันขอโทษที่ทำให้เธอรอ"
+
+คุณส่ายหน้า
+
+"นายกลับมาแล้ว"
+
+เพียงเท่านั้นก็พอ
+
+หนึ่งปีต่อมา
+
+หิมะแรกตกลงมาอีกครั้ง
+
+คุณยืนอยู่ริมทะเลสาบ
+
+ข้าง ๆ คืออีธาน
+
+เขายื่นมือมาให้คุณ
+
+"จำคำสัญญาได้ไหม?"
+
+คุณหัวเราะ
+
+"จำได้"
+
+เขามองหิมะที่ตกลงมา
+
+"ถ้าหิมะแรกตก..."
+
+คุณจับมือเขาแน่น
+
+"เราจะกลับมาเจอกันที่นี่"
+
+ครั้งนี้
+
+ไม่มีใครหายไป
+
+ไม่มีใครต้องรอ
+
+และไม่มีความทรงจำใดต้องถูกลืมอีก
+
+THE END
+`
+
     },
+
+
+    /* =====================================================
+       ENDING PROMISE
+    ===================================================== */
 
     endingPromise:{
+
+        chapter:"FINAL",
+
+        title:"THE WINTER PROMISE",
+
+        progress:100,
+
         ending:true,
-        title:"WINTER PROMISE",
+
         icon:"💙",
-        subtitle:"คำสัญญาใต้หิมะแรก",
-        rank:"SPECIAL ENDING",
+
+        memory:
+            "เราไม่จำเป็นต้องย้อนกลับไปเป็นคนเดิม\nเพียงแค่ไม่หายไปจากชีวิตของกันและกันอีก",
 
         text:`
-            <p class="story-paragraph">
-                คุณให้อภัยเขา
-            </p>
 
-            <p class="story-paragraph">
-                แต่คุณทั้งสองรู้ดีว่าเวลาเจ็ดปีไม่สามารถย้อนกลับได้
-            </p>
+คุณยังไม่รู้ว่าความสัมพันธ์ของคุณกับอีธานจะเป็นอย่างไร
 
-            <div class="dialogue">
-                <span class="dialogue-name">
-                    อีธาน
-                </span>
+แต่คุณรู้สิ่งหนึ่ง
 
-                <div class="dialogue-text">
-                    "ถ้าอย่างนั้น...เรามาเริ่มจากวันนี้ได้ไหม?"
-                </div>
-            </div>
+คุณไม่อยากเสียเขาไปอีก
 
-            <p class="story-paragraph">
-                คุณยื่นมือออกไป
-            </p>
+คุณจึงพูดว่า
 
-            <p class="story-paragraph">
-                เขาจับมือคุณ
-            </p>
+"ทุกปี"
 
-            <p class="story-paragraph">
-                ทั้งสองมองหิมะที่กำลังตก
-            </p>
+"ในวันที่หิมะแรกตก"
 
-            <p class="story-paragraph emphasis">
-                และสัญญาว่าจะกลับมาพบกันทุกครั้งที่หิมะแรกตก
-            </p>
-        `
+"เรากลับมาเจอกันที่นี่"
+
+อีธานยิ้ม
+
+"สัญญา"
+
+ตั้งแต่นั้นมา
+
+ทุกฤดูหนาว
+
+พวกคุณจะกลับมาที่ทะเลสาบ
+
+บางปีพูดกันเป็นชั่วโมง
+
+บางปีเพียงนั่งข้างกัน
+
+บางปีชีวิตของคุณทั้งสองเปลี่ยนไปมาก
+
+แต่ไม่ว่ามันจะเปลี่ยนแค่ไหน
+
+คำสัญญายังคงอยู่
+
+เพราะบางความสัมพันธ์
+
+ไม่ได้เกิดมาเพื่อย้อนกลับไปเป็นเหมือนเดิม
+
+มันเกิดมาเพื่อเตือนว่า
+
+ครั้งหนึ่งเราเคยสำคัญต่อกันมากแค่ไหน
+
+THE END
+`
+
     },
 
+
+    /* =====================================================
+       ENDING BITTERSWEET
+    ===================================================== */
+
     endingBittersweet:{
+
+        chapter:"FINAL",
+
+        title:"THE MEMORY WE COULDN'T KEEP",
+
+        progress:100,
+
         ending:true,
-        title:"BITTERSWEET",
+
         icon:"🥀",
-        subtitle:"รัก แต่ไม่ได้อยู่ด้วยกัน",
-        rank:"BITTERSWEET ENDING",
+
+        memory:
+            "บางคนเป็นบ้านของเราในความทรงจำ\nแต่ไม่ใช่สถานที่ที่เราจะกลับไปอยู่ได้อีก",
 
         text:`
-            <p class="story-paragraph">
-                คุณให้อภัยเขา
-            </p>
 
-            <p class="story-paragraph">
-                แต่คุณรู้ว่าหัวใจของตัวเองเปลี่ยนไปแล้ว
-            </p>
+คุณให้อภัยอีธาน
 
-            <p class="story-paragraph">
-                คุณกับอีธานยิ้มให้กัน
-            </p>
+แต่คุณไม่สามารถย้อนกลับไปเป็นเด็กอายุสิบเจ็ดคนนั้นได้
 
-            <p class="story-paragraph">
-                ไม่มีความโกรธอีกต่อไป
-            </p>
+เจ็ดปีเปลี่ยนคุณ
 
-            <p class="story-paragraph">
-                เพียงแต่เส้นทางของคุณทั้งสองคนไม่ได้เดินไปทางเดียวกันอีกแล้ว
-            </p>
+และเปลี่ยนเขา
 
-            <p class="story-paragraph">
-                หิมะตกลงมาเงียบ ๆ
-            </p>
+คุณยิ้มทั้งน้ำตา
 
-            <p class="story-paragraph emphasis">
-                และคุณเดินจากไปพร้อมกับความทรงจำที่สวยงาม
-            </p>
-        `
+"ฉันดีใจที่นายกลับมา"
+
+อีธานพยักหน้า
+
+"ฉันก็เหมือนกัน"
+
+ไม่มีคำสัญญาว่าจะรักกันตลอดไป
+
+ไม่มีคำสัญญาว่าจะกลับมา
+
+มีเพียงความจริงง่าย ๆ
+
+ครั้งหนึ่งพวกคุณเคยรักกันมาก
+
+มากพอที่จะทำให้ฤดูหนาวทั้งชีวิตมีความหมาย
+
+คุณเดินจากทะเลสาบ
+
+และครั้งนี้
+
+คุณไม่จำเป็นต้องหันกลับไป
+
+เพราะคุณรู้แล้วว่า
+
+ความทรงจำนั้นจะอยู่กับคุณเสมอ
+
+THE END
+`
+
+    },
+
+
+    /* =====================================================
+       ENDING SNOW
+    ===================================================== */
+
+    endingSnow:{
+
+        chapter:"FINAL",
+
+        title:"THE LAST SNOWFALL",
+
+        progress:100,
+
+        ending:true,
+
+        icon:"❄️",
+
+        memory:
+            "การจากลาไม่ได้หมายความว่าเราลืม\nมันหมายความว่าเราเลือกเดินต่อ",
+
+        text:`
+
+คุณเดินออกจากบ้านริมทะเลสาบ
+
+อีธานไม่ได้ตามมา
+
+เขาเพียงยืนมองคุณจากหน้าต่าง
+
+จนร่างของคุณหายไปกับหิมะ
+
+ที่สถานีรถไฟ
+
+รถไฟเที่ยวสุดท้ายกำลังรออยู่
+
+คุณขึ้นไปนั่ง
+
+หยิบรูปถ่ายเก่าออกมาดู
+
+คุณกับอีธานในวัยสิบเจ็ด
+
+เด็กสองคนที่ยังไม่รู้ว่า
+
+ชีวิตจะพรากพวกเขาออกจากกันนานถึงเจ็ดปี
+
+คุณยิ้ม
+
+ก่อนเก็บรูปกลับเข้าไปในกระเป๋า
+
+คุณไม่ได้ลืมเขา
+
+และคงไม่มีวันลืม
+
+แต่คุณไม่จำเป็นต้องกลับไป
+
+เพียงเพื่อพิสูจน์ว่าเคยรัก
+
+รถไฟเคลื่อนตัวออก
+
+หิมะยังคงตก
+
+และเมืองเล็ก ๆ ค่อย ๆ หายไป
+
+บางความทรงจำ
+
+มีไว้ให้เราคิดถึง
+
+ไม่ใช่มีไว้ให้เรากลับไป
+
+THE END
+`
+
     }
+
 };
 
 
 /* =========================================================
-   GAME STATE
+   VARIABLES
 ========================================================= */
 
-let currentNode = "intro";
+let currentScene =
+    "prologue";
 
-let currentChoices = null;
+let isTyping =
+    false;
 
-let storyQueue = [];
+let skipTyping =
+    false;
 
-let queueIndex = 0;
-
-let typingTimer = null;
+let typeTimer =
+    null;
 
 
 /* =========================================================
-   SAVE
+   DOM
 ========================================================= */
 
-function saveEnding(id){
+const storyText =
+    document.getElementById(
+        "storyText"
+    );
 
-    let endings =
-        JSON.parse(
-            localStorage.getItem(
-                "winterMemoryEndings"
-            ) || "[]"
+const chapterNumber =
+    document.getElementById(
+        "chapterNumber"
+    );
+
+const chapterTitle =
+    document.getElementById(
+        "chapterTitle"
+    );
+
+const choicesContainer =
+    document.getElementById(
+        "choices"
+    );
+
+const continueBtn =
+    document.getElementById(
+        "continueBtn"
+    );
+
+const progressBar =
+    document.getElementById(
+        "progressBar"
+    );
+
+const progressText =
+    document.getElementById(
+        "progressText"
+    );
+
+const fragment =
+    document.getElementById(
+        "fragment"
+    );
+
+const startScreen =
+    document.getElementById(
+        "startScreen"
+    );
+
+const sceneTransition =
+    document.getElementById(
+        "sceneTransition"
+    );
+
+
+/* =========================================================
+   TYPEWRITER
+========================================================= */
+
+function typeText(
+    text,
+    callback
+){
+
+    clearTimeout(typeTimer);
+
+    isTyping =
+        true;
+
+    skipTyping =
+        false;
+
+    storyText.innerHTML =
+        "";
+
+    const cursor =
+        document.createElement(
+            "span"
         );
 
-    if(!endings.includes(id)){
-        endings.push(id);
+    cursor.className =
+        "cursor";
+
+    storyText.appendChild(
+        cursor
+    );
+
+    let index =
+        0;
+
+    function type(){
+
+        if(skipTyping){
+
+            storyText.textContent =
+                text;
+
+            isTyping =
+                false;
+
+            if(callback){
+                callback();
+            }
+
+            return;
+        }
+
+        if(index < text.length){
+
+            const char =
+                text.charAt(index);
+
+            cursor.before(
+                document.createTextNode(
+                    char
+                )
+            );
+
+            index++;
+
+            if(
+                char.trim() !== ""
+            ){
+                typeSound();
+            }
+
+            let speed =
+                18;
+
+            if(
+                char === "。" ||
+                char === "!" ||
+                char === "?"
+            ){
+
+                speed =
+                    180;
+
+            }
+
+            if(
+                char === "\n"
+            ){
+
+                speed =
+                    75;
+
+            }
+
+            typeTimer =
+                setTimeout(
+                    type,
+                    speed
+                );
+
+        }else{
+
+            cursor.remove();
+
+            isTyping =
+                false;
+
+            if(callback){
+                callback();
+            }
+
+        }
+
     }
+
+    type();
+
+}
+
+
+/* =========================================================
+   SHOW SCENE
+========================================================= */
+
+function showScene(
+    sceneId
+){
+
+    const scene =
+        STORY[sceneId];
+
+    if(!scene) return;
+
+    currentScene =
+        sceneId;
 
     localStorage.setItem(
-        "winterMemoryEndings",
-        JSON.stringify(endings)
-    );
-}
-
-
-function getEndings(){
-
-    return JSON.parse(
-        localStorage.getItem(
-            "winterMemoryEndings"
-        ) || "[]"
+        "winterMemoryScene",
+        sceneId
     );
 
-}
+    /* cinematic transition */
 
-
-/* =========================================================
-   PARAGRAPH SPLIT
-========================================================= */
-
-function splitStory(html){
-
-    const temp =
-        document.createElement("div");
-
-    temp.innerHTML = html;
-
-    return [
-        ...temp.children
-    ];
-
-}
-
-
-/* =========================================================
-   LOAD NODE
-========================================================= */
-
-function loadNode(id){
-
-    clearInterval(typingTimer);
-
-    initAudio();
-
-    const node =
-        STORY[id];
-
-    if(!node){
-        console.error(
-            "ไม่พบ Node:",
-            id
-        );
-        return;
-    }
-
-    currentNode = id;
-
-    currentChoices =
-        node.choices || [];
-
-    storyQueue =
-        splitStory(node.text);
-
-    queueIndex = 0;
-
-    document.getElementById(
-        "storyContent"
-    ).innerHTML = "";
-
-    document.getElementById(
-        "choices"
-    ).style.display = "none";
-
-    document.getElementById(
-        "choices"
-    ).innerHTML = "";
-
-    document.getElementById(
-        "continueWrap"
-    ).style.display = "flex";
-
-    document.getElementById(
-        "continueButton"
-    ).textContent =
-        "ดำเนินเรื่องต่อ";
-
-    document.getElementById(
-        "chapterLabel"
-    ).textContent =
-        node.chapter || "";
-
-    changeScene(
-        node.scene || "snow"
+    sceneTransition.classList.add(
+        "active"
     );
 
-    updateProgress();
+    setTimeout(()=>{
 
-    soundScene();
+        chapterNumber.textContent =
+            scene.chapter;
 
-    showNextPart();
+        chapterTitle.textContent =
+            scene.title;
 
-}
+        fragment.innerHTML =
+            scene.fragment ||
+            "ความทรงจำกำลังเปิดออก...";
 
+        progressBar.style.width =
+            scene.progress + "%";
 
-/* =========================================================
-   SHOW NEXT PART
-========================================================= */
+        progressText.textContent =
+            scene.progress + "%";
 
-function showNextPart(){
+        choicesContainer.innerHTML =
+            "";
 
-    if(queueIndex >= storyQueue.length){
-
-        finishNode();
-
-        return;
-
-    }
-
-    const element =
-        storyQueue[queueIndex];
-
-    queueIndex++;
-
-    const container =
-        document.getElementById(
-            "storyContent"
+        continueBtn.classList.add(
+            "hidden"
         );
 
-    const wrapper =
-        document.createElement("div");
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
 
-    wrapper.innerHTML =
-        element.outerHTML;
+        sceneTransition.classList.remove(
+            "active"
+        );
 
-    const newElement =
-        wrapper.firstElementChild;
+        memorySound();
 
-    container.appendChild(
-        newElement
-    );
+        typeText(
+            scene.text,
+            ()=>{
 
-    container.scrollTo({
-        top:container.scrollHeight,
-        behavior:"smooth"
-    });
+                if(scene.ending){
 
-    soundRead();
+                    showEnding(
+                        scene
+                    );
 
-    if(typeEnabled){
+                }else{
 
-        typeTick();
+                    continueBtn.classList.remove(
+                        "hidden"
+                    );
 
-    }
+                }
+
+            }
+        );
+
+    },500);
 
 }
 
@@ -2858,218 +3911,100 @@ function showNextPart(){
    CONTINUE
 ========================================================= */
 
-function continueStory(){
+continueBtn.addEventListener(
+    "click",
+    ()=>{
 
-    initAudio();
+        clickSound();
 
-    soundClick();
+        if(isTyping){
 
-    if(queueIndex < storyQueue.length){
+            skipTyping =
+                true;
 
-        showNextPart();
+            return;
 
-        return;
+        }
 
-    }
+        const scene =
+            STORY[currentScene];
 
-    finishNode();
+        if(scene){
 
-}
+            showChoices(
+                scene
+            );
 
-
-/* =========================================================
-   FINISH NODE
-========================================================= */
-
-function finishNode(){
-
-    const node =
-        STORY[currentNode];
-
-    clearInterval(typingTimer);
-
-    if(node.ending){
-
-        showEnding(
-            currentNode,
-            node
-        );
-
-        return;
+        }
 
     }
-
-    document.getElementById(
-        "continueWrap"
-    ).style.display = "none";
-
-    showChoices(
-        node.choices || []
-    );
-
-}
+);
 
 
 /* =========================================================
    SHOW CHOICES
 ========================================================= */
 
-function showChoices(choices){
+function showChoices(
+    scene
+){
 
-    const box =
-        document.getElementById(
-            "choices"
-        );
+    continueBtn.classList.add(
+        "hidden"
+    );
 
-    box.innerHTML = "";
+    choicesContainer.innerHTML =
+        "";
 
-    if(!choices.length){
+    scene.choices.forEach(
+        (choice,index)=>{
 
-        return;
-
-    }
-
-    choices.forEach(choice => {
-
-        const button =
-            document.createElement(
-                "button"
-            );
-
-        button.className =
-            "choice-button";
-
-        button.innerHTML =
-            choice.text;
-
-        button.onclick = () => {
-
-            initAudio();
-
-            soundChoice();
-
-            fadeScene(() => {
-
-                loadNode(
-                    choice.next
+            const button =
+                document.createElement(
+                    "button"
                 );
 
-            });
+            button.className =
+                "choice";
 
-        };
+            button.style.animation =
+                `fadeIn .55s ease ${index*.12}s both`;
 
-        box.appendChild(button);
+            button.innerHTML = `
 
-    });
+                <span class="choice-number">
+                    CHOICE ${String(index+1).padStart(2,"0")}
+                </span>
 
-    box.style.display = "grid";
+                <span class="choice-title">
+                    ${choice.title}
+                </span>
 
-}
+                <span class="choice-description">
+                    ${choice.description}
+                </span>
 
+            `;
 
-/* =========================================================
-   SCENE
-========================================================= */
+            button.addEventListener(
+                "click",
+                ()=>{
 
-function changeScene(scene){
+                    choiceSound();
 
-    const background =
-        document.getElementById(
-            "background"
-        );
+                    showScene(
+                        choice.next
+                    );
 
-    background.className = "";
-
-    background.classList.add(
-        "scene-" + scene
-    );
-
-}
-
-
-/* =========================================================
-   FADE
-========================================================= */
-
-function fadeScene(callback){
-
-    const fade =
-        document.createElement(
-            "div"
-        );
-
-    fade.style.position = "fixed";
-    fade.style.inset = "0";
-    fade.style.zIndex = "200";
-    fade.style.background = "#000";
-    fade.style.opacity = "0";
-    fade.style.transition =
-        "opacity .4s ease";
-
-    document.body.appendChild(
-        fade
-    );
-
-    requestAnimationFrame(() => {
-
-        fade.style.opacity = "1";
-
-    });
-
-    setTimeout(() => {
-
-        callback();
-
-        setTimeout(() => {
-
-            fade.style.opacity = "0";
-
-            setTimeout(() => {
-
-                fade.remove();
-
-            },400);
-
-        },100);
-
-    },400);
-
-}
-
-
-/* =========================================================
-   PROGRESS
-========================================================= */
-
-function updateProgress(){
-
-    const chapters = [
-        "intro",
-        "letter",
-        "journey",
-        "station",
-        "lakeHouse",
-        "meeting"
-    ];
-
-    const index =
-        chapters.indexOf(
-            currentNode
-        );
-
-    const percent =
-        index < 0
-            ? 60
-            : Math.max(
-                8,
-                ((index + 1) /
-                chapters.length) * 100
+                }
             );
 
-    document.getElementById(
-        "progressBar"
-    ).style.width =
-        percent + "%";
+            choicesContainer.appendChild(
+                button
+            );
+
+        }
+    );
 
 }
 
@@ -3078,467 +4013,316 @@ function updateProgress(){
    ENDING
 ========================================================= */
 
-function showEnding(id,node){
+function showEnding(
+    scene
+){
 
-    saveEnding(id);
+    choicesContainer.innerHTML =
+        "";
 
-    soundEnding();
-
-    const screen =
+    const end =
         document.createElement(
             "div"
         );
 
-    screen.className =
-        "ending-overlay";
+    end.className =
+        "end-screen";
 
-    screen.innerHTML = `
+    end.innerHTML = `
 
-        <div class="ending-card">
+        <div class="end-icon">
+            ${scene.icon || "❄️"}
+        </div>
 
-            <div class="ending-small">
-                THE END
-            </div>
+        <div class="end-label">
+            FINAL MEMORY
+        </div>
 
-            <div class="ending-icon">
-                ${node.icon}
-            </div>
+        <div class="end-title">
+            ${scene.title}
+        </div>
 
-            <h1 class="ending-title">
-                ${node.title}
-            </h1>
+        <div class="end-text">
+            ${scene.text}
+        </div>
 
-            <div class="ending-subtitle">
-                ${node.subtitle}
-            </div>
+        <div class="end-divider"></div>
 
-            <div class="ending-line"></div>
+        <div class="end-memory">
+            ${scene.memory}
+        </div>
 
-            <div class="ending-content">
-                ${node.text}
-            </div>
+        <div class="end-actions">
 
-            <div class="ending-rank">
-                ${node.rank}
-            </div>
+            <button
+                class="end-btn"
+                id="endingRestart"
+            >
+                ↻ เล่นเรื่องใหม่
+            </button>
 
-            <div class="ending-buttons">
-
-                <button
-                    class="ending-button"
-                    onclick="restartGame()"
-                >
-                    ↻ เล่นอีกครั้ง
-                </button>
-
-                <button
-                    class="ending-button"
-                    onclick="openGallery();this.closest('.ending-overlay').remove()"
-                >
-                    📖 Ending Gallery
-                </button>
-
-            </div>
+            <button
+                class="end-btn"
+                id="endingTop"
+            >
+                ↑ กลับด้านบน
+            </button>
 
         </div>
 
     `;
 
-    document.body.appendChild(
-        screen
+    choicesContainer.appendChild(
+        end
     );
 
+    document
+        .getElementById(
+            "endingRestart"
+        )
+        .onclick = ()=>{
+
+            clickSound();
+
+            restartGame();
+
+        };
+
+    document
+        .getElementById(
+            "endingTop"
+        )
+        .onclick = ()=>{
+
+            window.scrollTo({
+                top:0,
+                behavior:"smooth"
+            });
+
+        };
+
 }
+
+
+/* =========================================================
+   START GAME
+========================================================= */
+
+document
+    .getElementById(
+        "startBtn"
+    )
+    .addEventListener(
+        "click",
+        ()=>{
+
+            initAudio();
+
+            clickSound();
+
+            startScreen.classList.add(
+                "hide"
+            );
+
+            setTimeout(
+                ()=>{
+                    showScene(
+                        "prologue"
+                    );
+                },
+                450
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   SOUND BUTTON
+========================================================= */
+
+const soundBtn =
+    document.getElementById(
+        "soundBtn"
+    );
+
+soundBtn.addEventListener(
+    "click",
+    ()=>{
+
+        audioEnabled =
+            !audioEnabled;
+
+        soundBtn.textContent =
+            audioEnabled
+            ? "🔊"
+            : "🔇";
+
+        if(audioEnabled){
+
+            initAudio();
+
+            clickSound();
+
+        }
+
+    }
+);
 
 
 /* =========================================================
    RESTART
 ========================================================= */
 
+document
+    .getElementById(
+        "restartBtn"
+    )
+    .addEventListener(
+        "click",
+        ()=>{
+
+            clickSound();
+
+            restartGame();
+
+        }
+    );
+
 function restartGame(){
 
-    document
-        .querySelectorAll(
-            ".ending-overlay,.gallery-overlay"
-        )
-        .forEach(el => el.remove());
+    clearTimeout(
+        typeTimer
+    );
 
-    fadeScene(() => {
+    localStorage.removeItem(
+        "winterMemoryScene"
+    );
 
-        loadNode("intro");
+    currentScene =
+        "prologue";
 
-    });
+    isTyping =
+        false;
 
-}
+    skipTyping =
+        false;
 
+    startScreen.classList.remove(
+        "hide"
+    );
 
-/* =========================================================
-   SETTINGS
-========================================================= */
+    storyText.innerHTML =
+        "";
 
-function openSettings(){
+    choicesContainer.innerHTML =
+        "";
 
-    initAudio();
+    continueBtn.classList.add(
+        "hidden"
+    );
 
-    soundClick();
+    progressBar.style.width =
+        "0%";
 
-    document.getElementById(
-        "settingsModal"
-    ).classList.add("active");
+    progressText.textContent =
+        "0%";
 
-}
-
-
-function closeSettings(){
-
-    soundClick();
-
-    document.getElementById(
-        "settingsModal"
-    ).classList.remove("active");
-
-}
-
-
-function updateSoundSetting(){
-
-    soundEnabled =
-        document.getElementById(
-            "soundEnabled"
-        ).checked;
-
-    typeEnabled =
-        document.getElementById(
-            "typeEnabled"
-        ).checked;
-
-    if(soundEnabled){
-
-        soundClick();
-
-    }
+    fragment.textContent =
+        "ความทรงจำบางอย่างยังไม่ถูกเปิดเผย";
 
 }
 
 
 /* =========================================================
-   VOLUME
+   CLICK TEXT TO SKIP
 ========================================================= */
 
-document.getElementById(
-    "volume"
-).addEventListener(
-    "input",
-    function(){
+storyText.addEventListener(
+    "click",
+    ()=>{
 
-        masterVolume =
-            Number(this.value);
+        if(isTyping){
+
+            skipTyping =
+                true;
+
+        }
 
     }
 );
 
 
 /* =========================================================
-   GALLERY
-========================================================= */
-
-function openGallery(){
-
-    initAudio();
-
-    soundClick();
-
-    const unlocked =
-        getEndings();
-
-    const endings = [
-        {
-            id:"endingTrue",
-            icon:"❤️",
-            title:"TRUE LOVE",
-            subtitle:"ความรักที่ได้กลับมาอีกครั้ง"
-        },
-        {
-            id:"endingPromise",
-            icon:"💙",
-            title:"WINTER PROMISE",
-            subtitle:"คำสัญญาใต้หิมะแรก"
-        },
-        {
-            id:"endingBittersweet",
-            icon:"🥀",
-            title:"BITTERSWEET",
-            subtitle:"รัก แต่ไม่ได้อยู่ด้วยกัน"
-        },
-        {
-            id:"endingLost",
-            icon:"🌫️",
-            title:"LOST MEMORY",
-            subtitle:"ความทรงจำที่ไม่มีคำตอบ"
-        }
-    ];
-
-    const overlay =
-        document.createElement(
-            "div"
-        );
-
-    overlay.className =
-        "gallery-overlay";
-
-    let cards = "";
-
-    endings.forEach(end => {
-
-        const found =
-            unlocked.includes(
-                end.id
-            );
-
-        cards += `
-
-            <div
-                class="
-                    gallery-card
-                    ${found ? "unlocked" : "locked"}
-                "
-                ${found
-                    ? `onclick="openUnlockedEnding('${end.id}')"`
-                    : ""
-                }
-            >
-
-                <div class="gallery-icon">
-                    ${found ? end.icon : "?"}
-                </div>
-
-                <div class="gallery-title">
-                    ${found ? end.title : "????"}
-                </div>
-
-                <div class="gallery-subtitle">
-                    ${found
-                        ? end.subtitle
-                        : "ยังไม่ค้นพบ"
-                    }
-                </div>
-
-                <div class="gallery-status">
-                    ${found
-                        ? "✓ DISCOVERED"
-                        : "🔒 LOCKED"
-                    }
-                </div>
-
-            </div>
-
-        `;
-
-    });
-
-    overlay.innerHTML = `
-
-        <div class="gallery-box">
-
-            <div class="gallery-top">
-
-                <div>
-
-                    <div
-                        style="
-                            color:#9eddf8;
-                            letter-spacing:4px;
-                            font-size:11px;
-                        "
-                    >
-                        WINTER MEMORY
-                    </div>
-
-                    <h2>
-                        Ending Gallery
-                    </h2>
-
-                </div>
-
-                <button
-                    class="gallery-close"
-                    onclick="this.closest('.gallery-overlay').remove()"
-                >
-                    ×
-                </button>
-
-            </div>
-
-            <div class="gallery-grid">
-                ${cards}
-            </div>
-
-        </div>
-
-    `;
-
-    document.body.appendChild(
-        overlay
-    );
-
-}
-
-
-function openUnlockedEnding(id){
-
-    const node =
-        STORY[id];
-
-    if(!node) return;
-
-    soundChoice();
-
-    const overlay =
-        document.querySelector(
-            ".gallery-overlay"
-        );
-
-    if(overlay)
-        overlay.remove();
-
-    showEnding(
-        id,
-        node
-    );
-
-}
-
-
-/* =========================================================
-   SNOW GENERATOR
-========================================================= */
-
-function createSnow(){
-
-    const container =
-        document.getElementById(
-            "snow"
-        );
-
-    for(
-        let i=0;
-        i<90;
-        i++
-    ){
-
-        const snow =
-            document.createElement(
-                "span"
-            );
-
-        snow.className =
-            "snowflake";
-
-        const size =
-            Math.random()*5+2;
-
-        snow.style.width =
-            size+"px";
-
-        snow.style.height =
-            size+"px";
-
-        snow.style.left =
-            Math.random()*100+"%";
-
-        snow.style.animationDuration =
-            7 + Math.random()*12+"s";
-
-        snow.style.animationDelay =
-            -Math.random()*15+"s";
-
-        snow.style.setProperty(
-            "--drift",
-            (Math.random()*180-90)+"px"
-        );
-
-        snow.style.opacity =
-            .25 + Math.random()*.65;
-
-        container.appendChild(
-            snow
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   LIGHTS
-========================================================= */
-
-function createLights(){
-
-    const container =
-        document.getElementById(
-            "lights"
-        );
-
-    for(
-        let i=0;
-        i<35;
-        i++
-    ){
-
-        const light =
-            document.createElement(
-                "span"
-            );
-
-        light.className =
-            "light";
-
-        light.style.left =
-            Math.random()*100+"%";
-
-        light.style.top =
-            Math.random()*75+"%";
-
-        light.style.animationDelay =
-            Math.random()*4+"s";
-
-        container.appendChild(
-            light
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   FIRST USER INTERACTION
+   KEYBOARD
 ========================================================= */
 
 document.addEventListener(
-    "click",
-    function(){
+    "keydown",
+    (event)=>{
 
-        initAudio();
+        if(
+            event.code ===
+            "Space"
+        ){
 
-    },
-    {once:true}
+            event.preventDefault();
+
+            if(isTyping){
+
+                skipTyping =
+                    true;
+
+            }else if(
+                !continueBtn.classList.contains(
+                    "hidden"
+                )
+            ){
+
+                continueBtn.click();
+
+            }
+
+        }
+
+    }
 );
 
 
 /* =========================================================
-   START
+   LOAD SAVED SCENE
 ========================================================= */
 
-createSnow();
+window.addEventListener(
+    "load",
+    ()=>{
 
-createLights();
+        const saved =
+            localStorage.getItem(
+                "winterMemoryScene"
+            );
 
-loadNode("intro");
+        /*
+           ตั้งใจไม่เปิดเกมอัตโนมัติ
+           เพื่อให้ผู้เล่นเริ่มจากหน้า Title
+        */
+
+        if(saved &&
+            STORY[saved] &&
+            saved !== "prologue"
+        ){
+
+            /*
+              สามารถนำระบบ Resume
+              มาเพิ่มภายหลังได้
+            */
+
+        }
+
+    }
+);
 
 </script>
 
 </body>
 </html>
-```
